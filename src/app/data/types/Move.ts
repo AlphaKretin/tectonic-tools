@@ -45,6 +45,6 @@ export class Move {
     }
 
     public isSpread(): boolean {
-        return this.target in spreadTargets;
+        return spreadTargets.indexOf(this.target) > -1;
     }
 }
