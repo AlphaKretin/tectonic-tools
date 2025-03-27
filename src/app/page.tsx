@@ -339,9 +339,15 @@ const PokemonDamageCalculator: NextPage = () => {
                                                     <option value="" className="bg-gray-800">
                                                         Select Move
                                                     </option>
-                                                    {playerPokemon.moves.map((p) => (
-                                                        <option key={p.id} value={p.id} className="bg-gray-800">
-                                                            {p.name}
+                                                    {playerPokemon.moves.map((m) => (
+                                                        <option
+                                                            key={m.id}
+                                                            value={m.id}
+                                                            className={`bg-gray-800 ${
+                                                                m.isSTAB(playerPokemon) ? "font-bold text-blue-400" : ""
+                                                            }`}
+                                                        >
+                                                            {m.name}
                                                         </option>
                                                     ))}
                                                 </select>

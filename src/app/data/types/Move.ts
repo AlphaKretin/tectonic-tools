@@ -1,4 +1,5 @@
 import { MoveCategory, PokemonType } from "./BasicData";
+import { Pokemon } from "./Pokemon";
 
 export interface LoadedMove {
     id: string;
@@ -46,5 +47,9 @@ export class Move {
 
     public isSpread(): boolean {
         return spreadTargets.indexOf(this.target) > -1;
+    }
+
+    public isSTAB(mon: Pokemon): boolean {
+        return mon.type1 === this.type || mon.type2 === this.type;
     }
 }
