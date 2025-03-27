@@ -6,4 +6,22 @@ export interface Move {
     type: PokemonType;
     bp: number;
     category: MoveCategory;
+    target: MoveTarget;
 }
+
+export type MoveTarget =
+    | "FoeSide"
+    | "NearFoe"
+    | "ClosestNearFoe"
+    | "AllBattlers"
+    | "Ally"
+    | "UserAndAllies"
+    | "UserSide"
+    | "AllNearFoes"
+    | "AllNearOthers"
+    | "NearAlly"
+    | "None"
+    | "NearOther"
+    | "BothSides"
+    | "User"
+    | "UserOrNearOther";
