@@ -196,6 +196,9 @@ const PokemonDamageCalculator: NextPage = () => {
         if (playerMove.isSpread() && multiBattle) {
             finalMult *= 0.75;
         }
+        if (playerMove.isSTAB(playerPokemon)) {
+            finalMult *= 1.5;
+        }
         const typeEffectMult = calculateTypeEffect(playerMove.type, opponentPokemon.type1, opponentPokemon.type2);
         finalMult *= typeEffectMult;
 
@@ -339,17 +342,21 @@ const PokemonDamageCalculator: NextPage = () => {
                                                     <option value="" className="bg-gray-800">
                                                         Select Move
                                                     </option>
-                                                    {playerPokemon.moves.map((m) => (
-                                                        <option
-                                                            key={m.id}
-                                                            value={m.id}
-                                                            className={`bg-gray-800 ${
-                                                                m.isSTAB(playerPokemon) ? "font-bold text-blue-400" : ""
-                                                            }`}
-                                                        >
-                                                            {m.name}
-                                                        </option>
-                                                    ))}
+                                                    {playerPokemon.moves
+                                                        .filter((m) => m.bp > 0)
+                                                        .map((m) => (
+                                                            <option
+                                                                key={m.id}
+                                                                value={m.id}
+                                                                className={`bg-gray-800 ${
+                                                                    m.isSTAB(playerPokemon)
+                                                                        ? "font-bold text-blue-400"
+                                                                        : ""
+                                                                }`}
+                                                            >
+                                                                {m.name}
+                                                            </option>
+                                                        ))}
                                                 </select>
                                             </div>
                                         )}
