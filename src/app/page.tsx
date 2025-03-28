@@ -80,7 +80,6 @@ const PokemonDamageCalculator: NextPage = () => {
 
     const MIN_LEVEL = 1;
     const MAX_LEVEL = 70;
-    const DEFAULT_LEVEL = MAX_LEVEL;
     const STYLE_POINT_CAP = 50;
     const MIN_SP = 0;
     const MAX_SP = 20;
@@ -89,7 +88,7 @@ const PokemonDamageCalculator: NextPage = () => {
         if (!isNull(pokemon)) {
             setPokemon[side](pokemon);
             const baseStats = pokemon.stats;
-            const level = DEFAULT_LEVEL;
+            const level = getLevel[side];
             const stylePoints = getStylePoints[side];
             const newStats: Stats = {
                 hp: calculateHP(baseStats.hp, level, stylePoints.hp),
