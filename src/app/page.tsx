@@ -1,8 +1,8 @@
 "use client";
 
 import type { NextPage } from "next";
-import { useState } from "react";
-import { CalcPokemon, calculateDamage } from "./damageCalc";
+import { ReactNode, useState } from "react";
+import { CalcPokemon, calculateDamage, DamageResult } from "./damageCalc";
 import { moves, nullMove } from "./data/moves";
 import { nullPokemon, pokemon } from "./data/pokemon";
 import { defaultStylePoints, StylePoints } from "./data/types/BasicData";
@@ -265,6 +265,43 @@ const PokemonDamageCalculator: NextPage = () => {
         );
     }
 
+    function printDamageNumbers(damageResult: DamageResult): ReactNode {
+        // multi-hit moves
+        if (damageResult.minTotal && damageResult.minPercentage) {
+            if (damageResult.maxTotal === damageResult.minTotal) {
+                return (
+                    <>
+                        <p className="text-3xl font-bold text-green-400">{damageResult.minTotal}</p>
+                        <p className="text-gray-300">({damageResult.damage} per hit)</p>
+                        <p className="text-gray-300">
+                            {(damageResult.minPercentage * 100).toFixed(2)}% of opponent&apos;s HP
+                        </p>
+                    </>
+                );
+            }
+            if (damageResult.maxTotal && damageResult.maxPercentage) {
+                return (
+                    <>
+                        <p className="text-3xl font-bold text-green-400">
+                            {damageResult.minTotal}-{damageResult.maxTotal}
+                        </p>
+                        <p className="text-gray-300">({damageResult.damage} per hit)</p>
+                        <p className="text-gray-300">
+                            {(damageResult.minPercentage * 100).toFixed(2)}%-
+                            {(damageResult.maxPercentage * 100).toFixed(2)}% of opponent&apos;s HP
+                        </p>
+                    </>
+                );
+            }
+        }
+        return (
+            <>
+                <p className="text-3xl font-bold text-green-400">{damageResult.damage}</p>
+                <p className="text-gray-300">{(damageResult.percentage * 100).toFixed(2)}% of opponent&apos;s HP</p>
+            </>
+        );
+    }
+
     return (
         <div className="min-h-screen bg-gray-900 py-8">
             <div className="max-w-7xl mx-auto px-4">
@@ -352,13 +389,7 @@ const PokemonDamageCalculator: NextPage = () => {
                                                     Damage Calculation
                                                 </h3>
                                                 <div className="space-y-4">
-                                                    <p className="text-3xl font-bold text-green-400">
-                                                        {damageResult.damage}
-                                                    </p>
-                                                    <p className="text-gray-300">
-                                                        {(damageResult.percentage * 100).toFixed(2)}% of opponent&apos;s
-                                                        HP
-                                                    </p>
+                                                    {printDamageNumbers(damageResult)}
                                                     <p className="text-gray-300">{damageResult.hits} hits to KO</p>
                                                     {/* Effectiveness message */}
                                                     {damageResult.typeEffectMult === 4 && (

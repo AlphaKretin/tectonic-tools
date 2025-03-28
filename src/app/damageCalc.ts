@@ -15,6 +15,8 @@ export interface DamageResult {
     typeEffectMult: number;
     minTotal?: number;
     maxTotal?: number;
+    minPercentage?: number;
+    maxPercentage?: number;
 }
 
 export function calculateDamage(
@@ -46,13 +48,17 @@ export function calculateDamage(
     const percentage = damage / target.stats.hp;
     const hits = Math.ceil(1 / percentage);
     if (move instanceof MultiHitMove) {
+        const minTotal = damage * move.minHits;
+        const maxTotal = damage * move.maxHits;
         return {
             damage,
             percentage,
             hits,
             typeEffectMult,
-            minTotal: damage * move.minHits,
-            maxTotal: damage * move.maxHits,
+            minTotal,
+            maxTotal,
+            minPercentage: minTotal / target.stats.hp,
+            maxPercentage: maxTotal / target.stats.hp,
         };
     }
     return { damage, percentage, hits, typeEffectMult };
