@@ -109,7 +109,9 @@
         "type": "Normal",
         "bp": 35,
         "category": "Physical",
-        "target": "NearOther"
+        "target": "NearOther",
+        "minHits": 2,
+        "maxHits": 2
     },
     "ECHOEDVOICE": {
         "id": "ECHOEDVOICE",
