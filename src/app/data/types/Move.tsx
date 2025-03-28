@@ -11,6 +11,7 @@ export interface LoadedMove {
     target: string;
     minHits?: number;
     maxHits?: number;
+    flag?: string;
 }
 
 export type MoveTarget =

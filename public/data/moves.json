@@ -119,7 +119,8 @@
         "type": "Normal",
         "bp": 40,
         "category": "Special",
-        "target": "NearOther"
+        "target": "NearOther",
+        "flag": "Stacking"
     },
     "ENCORE": {
         "id": "ENCORE",

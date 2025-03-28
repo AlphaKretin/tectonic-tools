@@ -1,10 +1,14 @@
 import loadedMoves from "public/data/moves.json";
 import { isMultiHit, MultiHitMove } from "./moves/MultiHitMove";
+import { StackingMove } from "./moves/StackingMove";
 import { LoadedMove, Move } from "./types/Move";
 
 function loadMove(move: LoadedMove): Move {
     if (isMultiHit(move)) {
         return new MultiHitMove(move);
+    }
+    if (move.flag === "Stacking") {
+        return new StackingMove(move);
     }
     return new Move(move);
 }
