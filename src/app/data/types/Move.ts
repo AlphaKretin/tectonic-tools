@@ -8,6 +8,8 @@ export interface LoadedMove {
     bp: number;
     category: string;
     target: string;
+    minHits?: number;
+    maxHits?: number;
 }
 
 export type MoveTarget =
