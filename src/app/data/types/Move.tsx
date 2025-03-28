@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 import { MoveCategory, PokemonType } from "./BasicData";
 import { Pokemon } from "./Pokemon";
 
@@ -63,7 +63,8 @@ export class Move {
     }
 
     // to be extended by subclasses
-    public getInput(): ReactNode {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    public getInput(_: number, __: Dispatch<SetStateAction<number>>): ReactNode {
         return <></>;
     }
 }

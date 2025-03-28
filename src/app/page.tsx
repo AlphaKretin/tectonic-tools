@@ -25,6 +25,7 @@ function safeKeys<T extends object>(o: T): Array<keyof T> {
 const PokemonDamageCalculator: NextPage = () => {
     const [playerPokemon, setPlayerPokemon] = useState<Pokemon>(nullPokemon);
     const [playerMove, setPlayerMove] = useState<Move>(nullMove);
+    const [customMoveVar, setCustomMoveVar] = useState<number>(0);
     const [playerLevel, setPlayerLevel] = useState<number>(70);
     const [playerStylePoints, setPlayerStylePoints] = useState<StylePoints>(defaultStylePoints);
     const [playerCalculatedStats, setPlayerCalculatedStats] = useState<Stats>(blankStats);
@@ -377,6 +378,7 @@ const PokemonDamageCalculator: NextPage = () => {
                                         {/* Move details */}
                                         {!isNull(playerMove) && (
                                             <div className="bg-gray-700 p-4 rounded-lg border border-gray-600">
+                                                {playerMove.getInput(customMoveVar, setCustomMoveVar)}
                                                 <h3 className="text-sm font-medium text-gray-300 mb-3 text-center">
                                                     Move Details
                                                 </h3>
