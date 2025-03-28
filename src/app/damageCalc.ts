@@ -1,3 +1,4 @@
+import { MultiHitMove } from "./data/moves/MultiHitMove";
 import { typeChart } from "./data/typeChart";
 import { PokemonType } from "./data/types/BasicData";
 import { Move } from "./data/types/Move";
@@ -12,6 +13,8 @@ export interface DamageResult {
     percentage: number;
     hits: number;
     typeEffectMult: number;
+    minTotal?: number;
+    maxTotal?: number;
 }
 
 export function calculateDamage(
@@ -42,6 +45,16 @@ export function calculateDamage(
     const [damage, typeEffectMult] = calculateDamageForHit(move, user, target, type, baseDmg, multiBattle);
     const percentage = damage / target.stats.hp;
     const hits = Math.ceil(1 / percentage);
+    if (move instanceof MultiHitMove) {
+        return {
+            damage,
+            percentage,
+            hits,
+            typeEffectMult,
+            minTotal: damage * move.minHits,
+            maxTotal: damage * move.maxHits,
+        };
+    }
     return { damage, percentage, hits, typeEffectMult };
 }
 
