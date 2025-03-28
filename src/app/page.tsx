@@ -301,6 +301,24 @@ const PokemonDamageCalculator: NextPage = () => {
         );
     }
 
+    function printHPBar(damageResult: DamageResult): ReactNode {
+        // TODO: support variable range
+        const percentage = damageResult.minPercentage || damageResult.percentage;
+        return (
+            <div className="mt-4 relative">
+                <div className="h-4 bg-gray-600 rounded-full overflow-hidden relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-red-500 via-yellow-500 to-green-500"></div>
+                    <div
+                        className="absolute inset-0 bg-gray-800 rounded-left transition-all duration-300"
+                        style={{
+                            left: `${100 - Math.min(100, percentage * 100)}%`,
+                        }}
+                    ></div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="min-h-screen bg-gray-900 py-8">
             <div className="max-w-7xl mx-auto px-4">
@@ -409,20 +427,7 @@ const PokemonDamageCalculator: NextPage = () => {
                                                         </p>
                                                     )}
                                                     {/* Fixed health bar */}
-                                                    <div className="mt-4 relative">
-                                                        <div className="h-4 bg-gray-600 rounded-full overflow-hidden relative">
-                                                            <div className="absolute inset-0 bg-gradient-to-r from-red-500 via-yellow-500 to-green-500"></div>
-                                                            <div
-                                                                className="absolute inset-0 bg-gray-800 rounded-left transition-all duration-300"
-                                                                style={{
-                                                                    left: `${
-                                                                        100 -
-                                                                        Math.min(100, damageResult.percentage * 100)
-                                                                    }%`,
-                                                                }}
-                                                            ></div>
-                                                        </div>
-                                                    </div>
+                                                    {printHPBar(damageResult)}
                                                 </div>
                                             </div>
                                         </div>
