@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { MoveCategory, PokemonType } from "./BasicData";
 import { Pokemon } from "./Pokemon";
 
@@ -58,5 +59,10 @@ export class Move {
     public getPower(): number {
         // TODO: Implement BP variance for relevant moves
         return this.bp;
+    }
+
+    // to be extended by subclasses
+    public getInput(): ReactNode {
+        return <></>;
     }
 }
