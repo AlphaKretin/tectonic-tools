@@ -1,3 +1,4 @@
+import trainerTypes from "public/data/trainertypes.json";
 import { pokemon } from "../pokemon";
 import { StylePoints } from "./BasicData";
 import { Pokemon } from "./Pokemon";
@@ -44,6 +45,11 @@ export class Trainer {
     }
 
     public displayName(): string {
-        return this.class + " " + this.name + (this.version > 0 ? " " + this.version : "");
+        return (
+            trainerTypes[this.class as keyof typeof trainerTypes] +
+            " " +
+            this.name +
+            (this.version > 0 ? " (" + (this.version + 1) + ")" : "")
+        );
     }
 }
