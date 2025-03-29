@@ -1,6 +1,7 @@
 "use client";
 
 import type { NextPage } from "next";
+import Image from "next/image";
 import { ReactNode, useState } from "react";
 import { CalcPokemon, calculateDamage, DamageResult } from "./damageCalc";
 import { moves, nullMove } from "./data/moves";
@@ -484,6 +485,17 @@ const PokemonDamageCalculator: NextPage = () => {
                                     {/* Added centering container */}
                                     <h2 className="text-xl font-semibold mb-6 text-red-400">Trainer Pokémon</h2>
                                     <div className="w-full max-w-xs space-y-6">
+                                        {!isNull(opposingTrainer) && (
+                                            <div className="flex justify-center mb-4">
+                                                <Image
+                                                    src={"/Trainers/" + opposingTrainer.class + ".png"}
+                                                    alt={opposingTrainer.displayName()}
+                                                    height="160"
+                                                    width="160"
+                                                    className="w-24 h-24"
+                                                />
+                                            </div>
+                                        )}
                                         <div className="text-center">
                                             <label className="block text-sm font-medium text-gray-300 mb-1">
                                                 Trainer
