@@ -518,7 +518,9 @@ const PokemonDamageCalculator: NextPage = () => {
                                                         >
                                                             <div>
                                                                 <p className="text-gray-200 font-medium">
-                                                                    {p.pokemon.name}
+                                                                    {p.nickname
+                                                                        ? p.nickname + " (" + p.pokemon.name + ")"
+                                                                        : p.pokemon.name}
                                                                 </p>
                                                                 <p className="text-gray-400 text-sm">
                                                                     Level: {p.level}

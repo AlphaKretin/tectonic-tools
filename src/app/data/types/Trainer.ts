@@ -7,12 +7,14 @@ export interface TrainerPokemon {
     pokemon: Pokemon;
     sp: StylePoints;
     level: number;
+    nickname?: string;
 }
 
 interface LoadedTrainerPokemon {
     id: string;
     level: number;
     sp: StylePoints;
+    nickname: string | null;
 }
 
 interface LoadedTrainer {
@@ -20,6 +22,7 @@ interface LoadedTrainer {
     name: string;
     hashName: string | null; // for masked villains
     version: number;
+    extends: number | null;
     pokemon: LoadedTrainerPokemon[];
 }
 
@@ -28,15 +31,17 @@ export class Trainer {
     name: string;
     hashName?: string; // for masked villains
     version: number;
+    extends?: number;
     pokemon: TrainerPokemon[];
     constructor(loadedTrainer: LoadedTrainer) {
         const trainerMons = loadedTrainer.pokemon.map((mon) => {
-            return { ...mon, pokemon: pokemon[mon.id] };
+            return { ...mon, pokemon: pokemon[mon.id], nickname: mon.nickname || undefined };
         });
         this.class = loadedTrainer.class;
         this.name = loadedTrainer.name;
         this.hashName = loadedTrainer.hashName || undefined;
         this.version = loadedTrainer.version;
+        this.extends = loadedTrainer.extends === null ? undefined : loadedTrainer.extends;
         this.pokemon = trainerMons;
     }
 
@@ -49,7 +54,8 @@ export class Trainer {
             trainerTypes[this.class as keyof typeof trainerTypes] +
             " " +
             this.name +
-            (this.version > 0 ? " (" + (this.version + 1) + ")" : "")
+            (this.class.includes("MASKEDVILLAIN") && this.hashName ? " (" + this.hashName + ")" : "") +
+            (this.extends !== undefined ? " (Cursed)" : "")
         );
     }
 }
