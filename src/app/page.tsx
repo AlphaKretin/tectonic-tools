@@ -8,9 +8,10 @@ import { nullPokemon, pokemon } from "./data/pokemon";
 import { defaultStylePoints, StylePoints } from "./data/types/BasicData";
 import { Move } from "./data/types/Move";
 import { blankStats, Pokemon, Stats } from "./data/types/Pokemon";
+import { Trainer } from "./data/types/Trainer";
 
-function isNull(o: Pokemon | Pokemon | Move | undefined): boolean {
-    return !o || o.id === "";
+function isNull(o: Pokemon | Pokemon | Move | Trainer | undefined): boolean {
+    return !o || o.name === "";
 }
 
 function isKey<T extends object>(k: string | number | symbol, o: T): k is keyof T {

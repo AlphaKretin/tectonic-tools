@@ -4,6 +4,7 @@ import { Pokemon } from "./Pokemon";
 interface TrainerPokemon {
     pokemon: Pokemon;
     sp: StylePoints;
+    level: number;
 }
 
 export interface Trainer {
