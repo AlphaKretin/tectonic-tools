@@ -199,6 +199,30 @@ const PokemonDamageCalculator: NextPage = () => {
     function pokemonSelect(side: Side) {
         return (
             <>
+                {!isNull(getPokemon[side]) && (
+                    <div className="flex justify-center mb-4">
+                        {
+                            // this is a stupid solution but it iddn't work if i had the ternary in the className
+                            side === "player" ? (
+                                <Image
+                                    src={"/Pokemon/" + getPokemon[side].id + ".png"}
+                                    alt={getPokemon[side].name}
+                                    height="160"
+                                    width="160"
+                                    className="w-24 h-24 scale-x-[-1]"
+                                />
+                            ) : (
+                                <Image
+                                    src={"/Pokemon/" + getPokemon[side].id + ".png"}
+                                    alt={getPokemon[side].name}
+                                    height="160"
+                                    width="160"
+                                    className="w-24 h-24"
+                                />
+                            )
+                        }
+                    </div>
+                )}
                 <div className="text-center">
                     <label className="block text-sm font-medium text-gray-300 mb-1">Pokémon</label>
                 </div>
