@@ -4,7 +4,7 @@ import { Trainer } from "./types/Trainer";
 export const trainers: Record<string, Trainer> = Object.fromEntries(
     loadedTrainers.map((trainer) => {
         const newTrainer = new Trainer(trainer);
-        return [(newTrainer.key(), newTrainer)];
+        return [newTrainer.key(), newTrainer];
     })
 );
 

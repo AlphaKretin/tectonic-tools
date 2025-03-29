@@ -38,7 +38,6 @@ const PokemonDamageCalculator: NextPage = () => {
     const [opponentCalculatedStats, setOpponentCalculatedStats] = useState<Stats>(blankStats);
 
     const [opposingTrainer, setOpposingTrainer] = useState<Trainer>(nullTrainer);
-    const [trainerPokemonIndex, setTrainerPokemonIndex] = useState<number>(-1);
 
     const [multiBattle, setMultiBattle] = useState<boolean>(false);
 
@@ -119,7 +118,6 @@ const PokemonDamageCalculator: NextPage = () => {
         const trainer = trainers[trainer_key] || nullTrainer;
         if (!isNull(trainer)) {
             setOpposingTrainer(trainer);
-            setTrainerPokemonIndex(-1);
         }
     }
 
@@ -512,22 +510,29 @@ const PokemonDamageCalculator: NextPage = () => {
                                                         Trainer Pokémon
                                                     </label>
                                                 </div>
-                                                <select
-                                                    className="w-full px-4 py-2 rounded-md bg-gray-700 border border-gray-600 text-gray-200 focus:ring-blue-500 focus:border-blue-500 text-center"
-                                                    value={trainerPokemonIndex}
-                                                    onChange={(e) =>
-                                                        handleLoadingTrainerPokemon(parseInt(e.target.value))
-                                                    }
-                                                >
-                                                    <option value="" className="bg-gray-800">
-                                                        Select Trainer Pokémon
-                                                    </option>
-                                                    {Object.values(opposingTrainer.pokemon).map((p, i) => (
-                                                        <option key={i} value={i} className="bg-gray-800">
-                                                            {p.pokemon.name}
-                                                        </option>
+                                                <div className="space-y-4">
+                                                    {opposingTrainer.pokemon.map((p, i) => (
+                                                        <div
+                                                            key={i}
+                                                            className="bg-gray-700 p-4 rounded-lg border border-gray-600 flex justify-between items-center"
+                                                        >
+                                                            <div>
+                                                                <p className="text-gray-200 font-medium">
+                                                                    {p.pokemon.name}
+                                                                </p>
+                                                                <p className="text-gray-400 text-sm">
+                                                                    Level: {p.level}
+                                                                </p>
+                                                            </div>
+                                                            <button
+                                                                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500 focus:ring-2 focus:ring-blue-400"
+                                                                onClick={() => handleLoadingTrainerPokemon(i)}
+                                                            >
+                                                                Set Active
+                                                            </button>
+                                                        </div>
                                                     ))}
-                                                </select>
+                                                </div>
                                             </>
                                         )}
                                     </div>
