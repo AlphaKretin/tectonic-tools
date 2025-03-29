@@ -12,6 +12,7 @@ export const nullTrainer = new Trainer({
     class: "",
     name: "",
     hashName: null,
+    extends: null,
     version: 0,
     pokemon: [],
 });
