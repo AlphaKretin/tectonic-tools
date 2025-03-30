@@ -1,11 +1,13 @@
 import { PokemonType } from "./data/basicData";
 import { MultiHitMove } from "./data/moves/MultiHitMove";
+import { StatusEffect } from "./data/statusEffects";
 import { typeChart } from "./data/typeChart";
 import { Move } from "./data/types/Move";
 import { Pokemon, Stats } from "./data/types/Pokemon";
 
 export interface CalcPokemon extends Pokemon {
     level: number;
+    status: StatusEffect;
 }
 
 export interface DamageResult {
@@ -310,92 +312,100 @@ function damageCalcStats(move: Move, user: CalcPokemon, target: CalcPokemon): [n
 //     }
 // }
 
-// function pbCalcStatusesDamageMultipliers(
-//     user: any,
-//     target: any,
-//     multipliers: any,
-//     checkingForAI: boolean = false
-// ): void {
-//     const toil = battle.pbCheckOpposingAbility("TOILANDTROUBLE", user.index);
-//     // Burn
-//     if (
-//         user.burned() &&
-//         physicalMove() &&
-//         damageReducedByBurn() &&
-//         !user.shouldAbilityApply("BURNHEAL", checkingForAI)
-//     ) {
-//         let damageReduction = 1.0 / 3.0;
-//         if (user.boss() && AVATAR_DILUTED_STATUS_CONDITIONS) {
-//             damageReduction = 1.0 / 5.0;
-//         }
-//         if (user.pbOwnedByPlayer() && battle.curseActive("CURSE_STATUS_DOUBLED")) {
-//             damageReduction *= 2;
-//         }
-//         if (toil) {
-//             damageReduction *= 1.5;
-//         }
-//         if (user.hasActiveAbility("CLEANFREAK")) {
-//             damageReduction *= 2;
-//         }
-//         damageReduction = Math.min(damageReduction, 1);
-//         multipliers.final_damage_multiplier *= 1.0 - damageReduction;
-//     }
-//     // Frostbite
-//     if (
-//         user.frostbitten() &&
-//         specialMove() &&
-//         damageReducedByBurn() &&
-//         !user.shouldAbilityApply("FROSTHEAL", checkingForAI)
-//     ) {
-//         let damageReduction = 1.0 / 3.0;
-//         if (user.boss() && AVATAR_DILUTED_STATUS_CONDITIONS) {
-//             damageReduction = 1.0 / 5.0;
-//         }
-//         if (user.pbOwnedByPlayer() && battle.curseActive("CURSE_STATUS_DOUBLED")) {
-//             damageReduction *= 2;
-//         }
-//         if (toil) {
-//             damageReduction *= 1.5;
-//         }
-//         if (user.hasActiveAbility("CLEANFREAK")) {
-//             damageReduction *= 2;
-//         }
-//         damageReduction = Math.min(damageReduction, 1);
-//         multipliers.final_damage_multiplier *= 1.0 - damageReduction;
-//     }
-//     // Numb
-//     if (user.numbed()) {
-//         let damageReduction = 1.0 / 4.0;
-//         if (user.boss() && AVATAR_DILUTED_STATUS_CONDITIONS) {
-//             damageReduction = 3.0 / 20.0;
-//         }
-//         if (user.pbOwnedByPlayer() && battle.curseActive("CURSE_STATUS_DOUBLED")) {
-//             damageReduction *= 2;
-//         }
-//         if (toil) {
-//             damageReduction *= 1.5;
-//         }
-//         if (user.hasActiveAbility("CLEANFREAK")) {
-//             damageReduction *= 2;
-//         }
-//         damageReduction = Math.min(damageReduction, 1);
-//         multipliers.final_damage_multiplier *= 1.0 - damageReduction;
-//     }
-//     // Dizzy
-//     if (target.dizzy() && !target.shouldAbilityApply(["MARVELSKIN", "MARVELSCALE"], checkingForAI)) {
-//         let damageIncrease = 1.0 / 4.0;
-//         if (target.boss() && AVATAR_DILUTED_STATUS_CONDITIONS) {
-//             damageIncrease = 3.0 / 20.0;
-//         }
-//         if (target.pbOwnedByPlayer() && battle.curseActive("CURSE_STATUS_DOUBLED")) {
-//             damageIncrease *= 2;
-//         }
-//         if (target.hasActiveAbility("CLEANFREAK")) {
-//             damageIncrease *= 2;
-//         }
-//         multipliers.final_damage_multiplier *= 1.0 + damageIncrease;
-//     }
-// }
+function pbCalcStatusesDamageMultipliers(
+    move: Move,
+    user: CalcPokemon,
+    target: CalcPokemon,
+    multipliers: DamageMultipliers
+): DamageMultipliers {
+    // TODO: Handle abilities
+    // const toil = battle.pbCheckOpposingAbility("TOILANDTROUBLE", user.index);
+    // Burn
+    if (
+        user.status === "Burn" &&
+        move.category === "Physical" &&
+        !move.ignoreStatus("Burn")
+        //!user.shouldAbilityApply("BURNHEAL", checkingForAI)
+    ) {
+        let damageReduction = 1.0 / 3.0;
+        // TODO: Handle avatars
+        // if (user.boss() && AVATAR_DILUTED_STATUS_CONDITIONS) {
+        //     damageReduction = 1.0 / 5.0;
+        // }
+        // TODO: Handle curses
+        // if (user.pbOwnedByPlayer() && battle.curseActive("CURSE_STATUS_DOUBLED")) {
+        //     damageReduction *= 2;
+        // }
+        // TODO: Handle abilities
+        // if (toil) {
+        //     damageReduction *= 1.5;
+        // }
+        // if (user.hasActiveAbility("CLEANFREAK")) {
+        //     damageReduction *= 2;
+        // }
+        damageReduction = Math.min(damageReduction, 1);
+        multipliers.final_damage_multiplier *= 1.0 - damageReduction;
+    }
+    // Frostbite
+    if (
+        user.status === "Frostbite" &&
+        move.category === "Special" &&
+        !move.ignoreStatus("Frostbite")
+        //!user.shouldAbilityApply("FROSTHEAL", checkingForAI)
+    ) {
+        let damageReduction = 1.0 / 3.0;
+        // if (user.boss() && AVATAR_DILUTED_STATUS_CONDITIONS) {
+        //     damageReduction = 1.0 / 5.0;
+        // }
+        // if (user.pbOwnedByPlayer() && battle.curseActive("CURSE_STATUS_DOUBLED")) {
+        //     damageReduction *= 2;
+        // }
+        // if (toil) {
+        //     damageReduction *= 1.5;
+        // }
+        // if (user.hasActiveAbility("CLEANFREAK")) {
+        //     damageReduction *= 2;
+        // }
+        damageReduction = Math.min(damageReduction, 1);
+        multipliers.final_damage_multiplier *= 1.0 - damageReduction;
+    }
+    // Numb
+    if (user.status === "Numb") {
+        let damageReduction = 1.0 / 4.0;
+        // if (user.boss() && AVATAR_DILUTED_STATUS_CONDITIONS) {
+        //     damageReduction = 3.0 / 20.0;
+        // }
+        // if (user.pbOwnedByPlayer() && battle.curseActive("CURSE_STATUS_DOUBLED")) {
+        //     damageReduction *= 2;
+        // }
+        // if (toil) {
+        //     damageReduction *= 1.5;
+        // }
+        // if (user.hasActiveAbility("CLEANFREAK")) {
+        //     damageReduction *= 2;
+        // }
+        damageReduction = Math.min(damageReduction, 1);
+        multipliers.final_damage_multiplier *= 1.0 - damageReduction;
+    }
+    // Dizzy
+    if (
+        target.status === "Dizzy"
+        //!target.shouldAbilityApply(["MARVELSKIN", "MARVELSCALE"], checkingForAI)
+    ) {
+        const damageIncrease = 1.0 / 4.0;
+        // if (target.boss() && AVATAR_DILUTED_STATUS_CONDITIONS) {
+        //     damageIncrease = 3.0 / 20.0;
+        // }
+        // if (target.pbOwnedByPlayer() && battle.curseActive("CURSE_STATUS_DOUBLED")) {
+        //     damageIncrease *= 2;
+        // }
+        // if (target.hasActiveAbility("CLEANFREAK")) {
+        //     damageIncrease *= 2;
+        // }
+        multipliers.final_damage_multiplier *= 1.0 + damageIncrease;
+    }
+    return multipliers;
+}
 
 // function pbCalcProtectionsDamageMultipliers(
 //     user: any,
@@ -630,8 +640,7 @@ function calcDamageMultipliers(
     // multipliers = pbCalcAbilityDamageMultipliers(user, target, type, baseDmg, multipliers);
     // TODO: Handle weather
     // multipliers = pbCalcWeatherDamageMultipliers(user, target, type, multipliers);
-    // TODO: Handle statuses
-    // multipliers = pbCalcStatusesDamageMultipliers(user, target, multipliers);
+    multipliers = pbCalcStatusesDamageMultipliers(move, user, target, multipliers);
     // TODO: Handle Protect-esque moves
     // multipliers = pbCalcProtectionsDamageMultipliers(user, target, multipliers);
     const typeResult = pbCalcTypeBasedDamageMultipliers(user, target, type, multipliers);

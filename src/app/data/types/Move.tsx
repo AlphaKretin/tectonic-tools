@@ -1,5 +1,6 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
 import { MoveCategory, PokemonType } from "../basicData";
+import { StatusEffect } from "../statusEffects";
 import { Pokemon } from "./Pokemon";
 
 export interface LoadedMove {
@@ -66,5 +67,11 @@ export class Move {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getInput(_: number, __: Dispatch<SetStateAction<number>>): ReactNode {
         return <></>;
+    }
+
+    // to be extended by subclasses
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    public ignoreStatus(_: StatusEffect): boolean {
+        return false;
     }
 }

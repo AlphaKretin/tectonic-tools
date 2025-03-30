@@ -234,11 +234,17 @@ const PokemonDamageCalculator: NextPage = () => {
         setCriticalHit(crit);
     }
 
-    const playerPokemonWithStats: CalcPokemon = { ...playerPokemon, stats: playerCalculatedStats, level: playerLevel };
+    const playerPokemonWithStats: CalcPokemon = {
+        ...playerPokemon,
+        stats: playerCalculatedStats,
+        level: playerLevel,
+        status: playerStatusEffect,
+    };
     const opponentPokemonWithStats: CalcPokemon = {
         ...opponentPokemon,
         stats: opponentCalculatedStats,
         level: opponentLevel,
+        status: opponentStatusEffect,
     };
 
     const battleState = {
