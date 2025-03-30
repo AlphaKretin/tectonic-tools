@@ -27,11 +27,13 @@ function safeKeys<T extends object>(o: T): Array<keyof T> {
 
 const PokemonDamageCalculator: NextPage = () => {
     const [playerPokemon, setPlayerPokemon] = useState<Pokemon>(nullPokemon);
-    const [playerMove, setPlayerMove] = useState<Move>(nullMove);
-    const [customMoveVar, setCustomMoveVar] = useState<number>(0);
     const [playerLevel, setPlayerLevel] = useState<number>(70);
     const [playerStylePoints, setPlayerStylePoints] = useState<StylePoints>(defaultStylePoints);
     const [playerCalculatedStats, setPlayerCalculatedStats] = useState<Stats>(blankStats);
+
+    const [playerMove, setPlayerMove] = useState<Move>(nullMove);
+    const [customMoveVar, setCustomMoveVar] = useState<number>(0);
+    const [criticalHit, setCriticalHit] = useState<boolean>(false);
 
     const [opponentPokemon, setOpponentPokemon] = useState<Pokemon>(nullPokemon);
     const [opponentLevel, setOpponentLevel] = useState<number>(70);
@@ -414,12 +416,19 @@ const PokemonDamageCalculator: NextPage = () => {
                                         {!isNull(playerMove) && (
                                             <div className="bg-gray-700 p-4 rounded-lg border border-gray-600">
                                                 {playerMove.getInput(customMoveVar, setCustomMoveVar)}
+                                                <label className="flex items-center justify-center space-x-3">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={criticalHit}
+                                                        className="form-checkbox h-5 w-5 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
+                                                        onChange={() => setCriticalHit(!criticalHit)}
+                                                    />
+                                                    <span className="text-gray-300">Critical Hit</span>
+                                                </label>
                                                 <h3 className="text-sm font-medium text-gray-300 mb-3 text-center">
                                                     Move Details
                                                 </h3>
                                                 <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-                                                    <div className="text-right text-gray-400">Name:</div>
-                                                    <div className="text-left text-gray-200">{playerMove.name}</div>
                                                     <div className="text-right text-gray-400">Type:</div>
                                                     <div className="text-left text-gray-200">{playerMove.type}</div>
                                                     <div className="text-right text-gray-400">BP:</div>
