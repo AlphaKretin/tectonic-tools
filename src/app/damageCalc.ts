@@ -403,6 +403,28 @@ function pbCalcStatusesDamageMultipliers(
         //     damageIncrease *= 2;
         // }
         multipliers.final_damage_multiplier *= 1.0 + damageIncrease;
+        // Waterlog
+    }
+    if (
+        target.status === "Waterlog"
+        //!target.shouldAbilityApply(["MARVELSKIN", "MARVELSCALE"], checkingForAI)
+    ) {
+        const damageIncrease = 1.0 / 4.0;
+        // if (target.boss() && AVATAR_DILUTED_STATUS_CONDITIONS) {
+        //     damageIncrease = 3.0 / 20.0;
+        // }
+        // if (target.pbOwnedByPlayer() && battle.curseActive("CURSE_STATUS_DOUBLED")) {
+        //     damageIncrease *= 2;
+        // }
+        // if (target.hasActiveAbility("CLEANFREAK")) {
+        //     damageIncrease *= 2;
+        // }
+        multipliers.final_damage_multiplier *= 1.0 + damageIncrease;
+    }
+
+    // Fracture
+    if (user.status === "Fracture") {
+        multipliers.final_damage_multiplier *= 0.66;
     }
     return multipliers;
 }
