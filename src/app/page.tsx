@@ -37,10 +37,6 @@ const PokemonDamageCalculator: NextPage = () => {
     const [customMoveVar, setCustomMoveVar] = useState<number>(0);
     const [criticalHit, setCriticalHit] = useState<boolean>(false);
 
-    const [playerMove, setPlayerMove] = useState<Move>(nullMove);
-    const [customMoveVar, setCustomMoveVar] = useState<number>(0);
-    const [criticalHit, setCriticalHit] = useState<boolean>(false);
-
     const [opponentPokemon, setOpponentPokemon] = useState<Pokemon>(nullPokemon);
     const [opponentLevel, setOpponentLevel] = useState<number>(70);
     const [opponentStylePoints, setOpponentStylePoints] = useState<StylePoints>(defaultStylePoints);
@@ -226,6 +222,16 @@ const PokemonDamageCalculator: NextPage = () => {
         const baseStats = getPokemon[side].stats;
         const level = getLevel[side];
         recalculateStats(baseStats, level, stylePoints, effect, side);
+        if (effect === "Jinx" && side === "player") {
+            setCriticalHit(true);
+        }
+    }
+
+    function handleCriticalHit(crit: boolean) {
+        if (getStatusEffect["opponent"] === "Jinx") {
+            crit = true;
+        }
+        setCriticalHit(crit);
     }
 
     const playerPokemonWithStats: CalcPokemon = { ...playerPokemon, stats: playerCalculatedStats, level: playerLevel };
@@ -484,7 +490,8 @@ const PokemonDamageCalculator: NextPage = () => {
                                                         type="checkbox"
                                                         checked={criticalHit}
                                                         className="form-checkbox h-5 w-5 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
-                                                        onChange={() => setCriticalHit(!criticalHit)}
+                                                        disabled={getStatusEffect["opponent"] === "Jinx"}
+                                                        onChange={() => handleCriticalHit(!criticalHit)}
                                                     />
                                                     <span className="text-gray-300">Critical Hit</span>
                                                 </label>
