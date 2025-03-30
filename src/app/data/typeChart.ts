@@ -1,4 +1,4 @@
-import { PokemonType } from "./types/BasicData";
+import { PokemonType } from "./basicData";
 
 export const typeChart: Record<PokemonType, Record<PokemonType, 2 | 1 | 0.5 | 0>> = {
     Normal: {

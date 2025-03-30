@@ -1,4 +1,4 @@
-import { PokemonType } from "./BasicData";
+import { PokemonType } from "../basicData";
 import { Move } from "./Move";
 
 export interface Stats {

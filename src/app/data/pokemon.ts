@@ -1,6 +1,6 @@
 import loadedPokemon from "public/data/pokemon.json";
+import { PokemonType } from "./basicData";
 import { moves } from "./moves";
-import { PokemonType } from "./types/BasicData";
 import { Pokemon, Stats } from "./types/Pokemon";
 
 interface LoadedPokemon {

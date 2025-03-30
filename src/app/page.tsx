@@ -4,10 +4,11 @@ import type { NextPage } from "next";
 import Image from "next/image";
 import { ReactNode, useState } from "react";
 import { CalcPokemon, calculateDamage, DamageResult } from "./damageCalc";
+import { defaultStylePoints, StylePoints } from "./data/basicData";
 import { moves, nullMove } from "./data/moves";
 import { nullPokemon, pokemon } from "./data/pokemon";
+import { StatusEffect, statusEffects } from "./data/statusEffects";
 import { nullTrainer, trainers } from "./data/trainers";
-import { defaultStylePoints, StylePoints } from "./data/types/BasicData";
 import { Move } from "./data/types/Move";
 import { blankStats, Pokemon, Stats } from "./data/types/Pokemon";
 import { Trainer } from "./data/types/Trainer";
@@ -30,6 +31,11 @@ const PokemonDamageCalculator: NextPage = () => {
     const [playerLevel, setPlayerLevel] = useState<number>(70);
     const [playerStylePoints, setPlayerStylePoints] = useState<StylePoints>(defaultStylePoints);
     const [playerCalculatedStats, setPlayerCalculatedStats] = useState<Stats>(blankStats);
+    const [playerStatusEffect, setPlayerStatusEffect] = useState<StatusEffect>("None");
+
+    const [playerMove, setPlayerMove] = useState<Move>(nullMove);
+    const [customMoveVar, setCustomMoveVar] = useState<number>(0);
+    const [criticalHit, setCriticalHit] = useState<boolean>(false);
 
     const [playerMove, setPlayerMove] = useState<Move>(nullMove);
     const [customMoveVar, setCustomMoveVar] = useState<number>(0);
@@ -39,6 +45,7 @@ const PokemonDamageCalculator: NextPage = () => {
     const [opponentLevel, setOpponentLevel] = useState<number>(70);
     const [opponentStylePoints, setOpponentStylePoints] = useState<StylePoints>(defaultStylePoints);
     const [opponentCalculatedStats, setOpponentCalculatedStats] = useState<Stats>(blankStats);
+    const [opponentStatusEffect, setOpponentStatusEffect] = useState<StatusEffect>("None");
 
     const [opposingTrainer, setOpposingTrainer] = useState<Trainer>(nullTrainer);
 
@@ -86,20 +93,40 @@ const PokemonDamageCalculator: NextPage = () => {
         opponent: setOpponentCalculatedStats,
     };
 
+    const getStatusEffect = {
+        player: playerStatusEffect,
+        opponent: opponentStatusEffect,
+    };
+
+    const setStatusEffect = {
+        player: setPlayerStatusEffect,
+        opponent: setOpponentStatusEffect,
+    };
+
     const MIN_LEVEL = 1;
     const MAX_LEVEL = 70;
     const STYLE_POINT_CAP = 50;
     const MIN_SP = 0;
     const MAX_SP = 20;
 
-    function recalculateStats(baseStats: Stats, level: number, stylePoints: StylePoints, side: Side) {
+    function recalculateStats(
+        baseStats: Stats,
+        level: number,
+        stylePoints: StylePoints,
+        effect: StatusEffect,
+        side: Side
+    ) {
+        let speed = calculateStat(baseStats.speed, level, stylePoints.speed);
+        if (effect === "Numb") {
+            speed = Math.round(speed / 2);
+        }
         const newStats: Stats = {
             hp: calculateHP(baseStats.hp, level, stylePoints.hp),
             attack: calculateStat(baseStats.attack, level, stylePoints.attacks),
             defense: calculateStat(baseStats.defense, level, stylePoints.defense),
             spatk: calculateStat(baseStats.spatk, level, stylePoints.attacks),
             spdef: calculateStat(baseStats.spdef, level, stylePoints.spdef),
-            speed: calculateStat(baseStats.speed, level, stylePoints.speed),
+            speed,
         };
         setCalculatedStats[side](newStats);
     }
@@ -110,7 +137,8 @@ const PokemonDamageCalculator: NextPage = () => {
             const baseStats = pokemon.stats;
             const level = getLevel[side];
             const stylePoints = getStylePoints[side];
-            recalculateStats(baseStats, level, stylePoints, side);
+            const effect = getStatusEffect[side];
+            recalculateStats(baseStats, level, stylePoints, effect, side);
             if (side === "player") {
                 setPlayerMove(nullMove);
             }
@@ -132,7 +160,8 @@ const PokemonDamageCalculator: NextPage = () => {
         setPokemon["opponent"](pokemon.pokemon);
         setLevel["opponent"](pokemon.level);
         setStylePoints["opponent"](pokemon.sp);
-        recalculateStats(pokemon.pokemon.stats, pokemon.level, pokemon.sp, "opponent");
+        setStatusEffect["opponent"]("None");
+        recalculateStats(pokemon.pokemon.stats, pokemon.level, pokemon.sp, "None", "opponent");
     }
 
     function styleValueMult(level: number): number {
@@ -164,7 +193,8 @@ const PokemonDamageCalculator: NextPage = () => {
         setLevel[side](level);
         const baseStats = getPokemon[side].stats;
         const stylePoints = getStylePoints[side];
-        recalculateStats(baseStats, level, stylePoints, side);
+        const effect = getStatusEffect[side];
+        recalculateStats(baseStats, level, stylePoints, effect, side);
     }
 
     function handleStylePoints(styleName: keyof StylePoints, stylePoint: number, side: Side) {
@@ -179,7 +209,8 @@ const PokemonDamageCalculator: NextPage = () => {
         setStylePoints[side](stylePoints);
         const baseStats = getPokemon[side].stats;
         const level = getLevel[side];
-        recalculateStats(baseStats, level, stylePoints, side);
+        const effect = getStatusEffect[side];
+        recalculateStats(baseStats, level, stylePoints, effect, side);
     }
 
     function styleFromStat(stat: keyof Stats): keyof StylePoints {
@@ -187,6 +218,14 @@ const PokemonDamageCalculator: NextPage = () => {
             return "attacks";
         }
         return stat;
+    }
+
+    function handleStatusEffect(effect: StatusEffect, side: Side) {
+        setStatusEffect[side](effect);
+        const stylePoints = getStylePoints[side];
+        const baseStats = getPokemon[side].stats;
+        const level = getLevel[side];
+        recalculateStats(baseStats, level, stylePoints, effect, side);
     }
 
     const playerPokemonWithStats: CalcPokemon = { ...playerPokemon, stats: playerCalculatedStats, level: playerLevel };
@@ -272,6 +311,25 @@ const PokemonDamageCalculator: NextPage = () => {
                         value={getLevel[side]}
                         onChange={(e) => handleLevel(parseInt(e.target.value) || MIN_LEVEL, side)}
                     />
+                </div>
+
+                {/* Status input */}
+                <div className="text-center">
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Status Effect</label>
+                    <select
+                        className="w-full px-4 py-2 rounded-md bg-gray-700 border border-gray-600 text-gray-200 focus:ring-blue-500 focus:border-blue-500 text-center"
+                        value={getStatusEffect[side]}
+                        onChange={(e) => handleStatusEffect(e.target.value as StatusEffect, side)}
+                    >
+                        <option value="None" className="bg-gray-800">
+                            None
+                        </option>
+                        {Object.values(statusEffects).map((s) => (
+                            <option key={s} value={s} className="bg-gray-800">
+                                {s}
+                            </option>
+                        ))}
+                    </select>
                 </div>
 
                 {/* Stats with perfect alignment */}

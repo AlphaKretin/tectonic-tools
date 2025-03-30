@@ -1,5 +1,5 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
-import { MoveCategory, PokemonType } from "./BasicData";
+import { MoveCategory, PokemonType } from "../basicData";
 import { Pokemon } from "./Pokemon";
 
 export interface LoadedMove {

@@ -1,6 +1,6 @@
 import trainerTypes from "public/data/trainertypes.json";
+import { StylePoints } from "../basicData";
 import { pokemon } from "../pokemon";
-import { StylePoints } from "./BasicData";
 import { Pokemon } from "./Pokemon";
 
 export interface TrainerPokemon {

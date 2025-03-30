@@ -1,6 +1,6 @@
+import { PokemonType } from "./data/basicData";
 import { MultiHitMove } from "./data/moves/MultiHitMove";
 import { typeChart } from "./data/typeChart";
-import { PokemonType } from "./data/types/BasicData";
 import { Move } from "./data/types/Move";
 import { Pokemon, Stats } from "./data/types/Pokemon";
 
