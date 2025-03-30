@@ -44,7 +44,7 @@ export function calculateDamage(
     const type = move.type; // TODO: implement moves that can change type
 
     // Calculate base power of move
-    const baseDmg = move.getPower();
+    const baseDmg = move.getPower(user);
 
     // In vanilla Tectonic, critical hit determination happens here
     // However, for calculation, it's determined by the UI

@@ -1,3 +1,4 @@
+import { CalcPokemon } from "@/app/damageCalc";
 import { Dispatch, ReactNode, SetStateAction } from "react";
 import { MoveCategory, PokemonType } from "../basicData";
 import { StatusEffect } from "../statusEffects";
@@ -58,20 +59,21 @@ export class Move {
         return mon.type1 === this.type || mon.type2 === this.type;
     }
 
-    public getPower(): number {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    public getPower(user: CalcPokemon): number {
         // TODO: Implement BP variance for relevant moves
         return this.bp;
     }
 
     // to be extended by subclasses
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getInput(_: number, __: Dispatch<SetStateAction<number>>): ReactNode {
+    public getInput(customMoveVar: number, setCustomMoveVar: Dispatch<SetStateAction<number>>): ReactNode {
         return <></>;
     }
 
     // to be extended by subclasses
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public ignoreStatus(_: StatusEffect): boolean {
+    public ignoreStatus(effect: StatusEffect): boolean {
         return false;
     }
 }
