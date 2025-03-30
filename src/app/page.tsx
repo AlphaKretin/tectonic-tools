@@ -196,7 +196,12 @@ const PokemonDamageCalculator: NextPage = () => {
         level: opponentLevel,
     };
 
-    const damageResult = calculateDamage(playerMove, playerPokemonWithStats, opponentPokemonWithStats, multiBattle);
+    const battleState = {
+        multiBattle,
+        criticalHit,
+    };
+
+    const damageResult = calculateDamage(playerMove, playerPokemonWithStats, opponentPokemonWithStats, battleState);
 
     function pokemonSelect(side: Side) {
         return (

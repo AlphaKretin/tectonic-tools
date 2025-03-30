@@ -19,11 +19,16 @@ export interface DamageResult {
     maxPercentage?: number;
 }
 
+export interface BattleState {
+    multiBattle: boolean;
+    criticalHit: boolean;
+}
+
 export function calculateDamage(
     move: Move,
     user: CalcPokemon,
     target: CalcPokemon,
-    multiBattle: boolean
+    battleState: BattleState
 ): DamageResult {
     if (move.category === "Status") return { damage: 0, percentage: 0, hits: 0, typeEffectMult: 0 };
 
@@ -39,12 +44,11 @@ export function calculateDamage(
     // Calculate base power of move
     const baseDmg = move.getPower();
 
-    // TODO Calculate whether this hit deals critical damage
-    // target.damageState.critical = pbIsCritical(user, target);
-    // target.damageState.forced_critical = target.damageState.critical;
+    // In vanilla Tectonic, critical hit determination happens here
+    // However, for calculation, it's determined by the UI
 
     // Calculate the actual damage dealt, and assign it to the damage state for tracking
-    const [damage, typeEffectMult] = calculateDamageForHit(move, user, target, type, baseDmg, multiBattle);
+    const [damage, typeEffectMult] = calculateDamageForHit(move, user, target, type, baseDmg, battleState);
     const percentage = damage / target.stats.hp;
     const hits = Math.ceil(1 / percentage);
     if (move instanceof MultiHitMove) {
@@ -70,13 +74,13 @@ function calculateDamageForHit(
     target: CalcPokemon,
     type: PokemonType,
     baseDmg: number,
-    multiBattle: boolean
+    battleState: BattleState
 ): [number, number] {
     // Get the relevant attacking and defending stat values (after steps)
     const [attack, defense] = damageCalcStats(move, user, target);
 
     // Calculate all multiplier effects
-    const [multipliers, typeEffectMult] = calcDamageMultipliers(move, user, target, multiBattle, type);
+    const [multipliers, typeEffectMult] = calcDamageMultipliers(move, user, target, battleState, type);
 
     // Main damage calculation
     let finalCalculatedDamage = calcDamageWithMultipliers(baseDmg, attack, defense, user.level, multipliers);
@@ -145,9 +149,7 @@ function damageCalcStats(move: Move, user: CalcPokemon, target: CalcPokemon): [n
     // TODO: implement stat steps
     //let attack_step = attacking_stat_holder.steps[attacking_stat];
 
-    // TODO: implement critical hits
-    // let critical = target.damageState.critical;
-    // critical = false if aiCheck;
+    // TODO: Critical hits ignore negative attack steps
     // attack_step = 0 if critical && attack_step < 0;
     // attack_step = 0 if target.hasActiveAbility("UNAWARE") && !battle.moldBreaker;
     const attack = attacking_stat_holder.stats[attacking_stat];
@@ -615,7 +617,7 @@ function calcDamageMultipliers(
     move: Move,
     user: CalcPokemon,
     target: CalcPokemon,
-    multiBattle: boolean,
+    battleState: BattleState,
     type: PokemonType
 ): [DamageMultipliers, number] {
     let multipliers: DamageMultipliers = {
@@ -683,7 +685,7 @@ function calcDamageMultipliers(
     // }
 
     // Multi-targeting attacks
-    if (move.isSpread() && multiBattle) {
+    if (move.isSpread() && battleState.multiBattle) {
         // TODO: Handle abilities
         // if (user.shouldAbilityApply("RESONANT", aiCheck)) {
         //     multipliers.final_damage_multiplier *= 1.25;
@@ -697,10 +699,11 @@ function calcDamageMultipliers(
     // multipliers.base_damage_multiplier *= user.dmgMult;
     // multipliers.base_damage_multiplier *= Math.max(0, 1.0 - target.dmgResist);
 
-    // TODO: Critical hits
-    // if (target.damageState.critical) {
-    //     multipliers.final_damage_multiplier *= criticalHitMultiplier(user, target);
-    // }
+    // Critical hits
+    if (battleState.criticalHit) {
+        // TODO: Implement moves with increased critical hit damage
+        multipliers.final_damage_multiplier *= 1.5;
+    }
 
     // Random variance (What used to be for that)
     // TODO: handle selfhits
