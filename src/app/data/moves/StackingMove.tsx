@@ -1,6 +1,8 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
 import { LoadedMove, Move } from "../types/Move";
 
+export const stackingMoves = ["ECHOEDVOICE"];
+
 export class StackingMove extends Move {
     turns = 0;
     constructor(move: LoadedMove) {

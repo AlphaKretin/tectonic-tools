@@ -1,12 +1,15 @@
 import { LoadedMove, Move } from "../types/Move";
 
+export const multiHitMoves = {
+    DOUBLEHIT: {
+        minHits: 2,
+        maxHits: 2,
+    },
+};
+
 interface LoadedMultiHitMove extends LoadedMove {
     minHits: number;
     maxHits: number;
-}
-
-export function isMultiHit(move: LoadedMove): move is LoadedMultiHitMove {
-    return !!move.minHits && !!move.maxHits;
 }
 
 export class MultiHitMove extends Move {
