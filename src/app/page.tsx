@@ -234,6 +234,14 @@ const PokemonDamageCalculator: NextPage = () => {
         setCriticalHit(crit);
     }
 
+    function getMoveCategory(move: Move) {
+        if (move.category !== "Adaptive") {
+            return move.category;
+        }
+        const trueCategory = playerCalculatedStats.attack >= playerCalculatedStats.spatk ? "Physical" : "Special";
+        return "Adaptive (" + trueCategory + ")";
+    }
+
     const playerPokemonWithStats: CalcPokemon = {
         ...playerPokemon,
         stats: playerCalculatedStats,
@@ -507,10 +515,14 @@ const PokemonDamageCalculator: NextPage = () => {
                                                 <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
                                                     <div className="text-right text-gray-400">Type:</div>
                                                     <div className="text-left text-gray-200">{playerMove.type}</div>
-                                                    <div className="text-right text-gray-400">BP:</div>
-                                                    <div className="text-left text-gray-200">{playerMove.bp}</div>
+                                                    <div className="text-right text-gray-400">Power:</div>
+                                                    <div className="text-left text-gray-200">
+                                                        {playerMove.getPower(playerPokemonWithStats)}
+                                                    </div>
                                                     <div className="text-right text-gray-400">Category:</div>
-                                                    <div className="text-left text-gray-200">{playerMove.category}</div>
+                                                    <div className="text-left text-gray-200">
+                                                        {getMoveCategory(playerMove)}
+                                                    </div>
                                                 </div>
                                             </div>
                                         )}
