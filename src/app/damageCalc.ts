@@ -138,10 +138,24 @@ function calcBasicDamage(
 }
 
 function damageCalcStats(move: Move, user: CalcPokemon, target: CalcPokemon): [number, number] {
+    let trueCategory: "Physical" | "Special";
+    if (move.category === "Adaptive") {
+        if (user.stats.attack >= user.stats.spatk) {
+            trueCategory = "Physical";
+        } else {
+            trueCategory = "Special";
+        }
+    } else if (move.category === "Status") {
+        // lazy typeguard
+        throw new Error("Status moves shouldn't be selectable!");
+    } else {
+        trueCategory = move.category;
+    }
+    // Calculate category for adaptive moves
     // Calculate user's attack stat
     // TODO: implement moves like foul play or body press
     const attacking_stat_holder = user;
-    const attacking_stat: keyof Stats = move.category === "Physical" ? "attack" : "spatk";
+    const attacking_stat: keyof Stats = trueCategory === "Physical" ? "attack" : "spatk";
 
     // TODO: implement abilities and weather
     // if (user.shouldAbilityApply("MALICIOUSGLOW", aiCheck) && battle.moonGlowing()) {
@@ -158,7 +172,7 @@ function damageCalcStats(move: Move, user: CalcPokemon, target: CalcPokemon): [n
 
     // Calculate target's defense stat
     const defending_stat_holder = target;
-    const defending_stat: keyof Stats = move.category === "Physical" ? "defense" : "spdef";
+    const defending_stat: keyof Stats = trueCategory === "Physical" ? "defense" : "spdef";
     // TODO: implement stat steps
     // let defense_step = defending_stat_holder.steps[defending_stat];
     // if (defense_step > 0 &&

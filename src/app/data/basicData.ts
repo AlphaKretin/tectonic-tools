@@ -22,7 +22,7 @@ export const pokemonTypes = [
 
 export type PokemonType = (typeof pokemonTypes)[number];
 
-export type MoveCategory = "Physical" | "Special" | "Status";
+export type MoveCategory = "Physical" | "Special" | "Status" | "Adaptive";
 
 export interface StylePoints {
     hp: number;
