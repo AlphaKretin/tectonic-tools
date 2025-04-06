@@ -1,17 +1,22 @@
 import { Pokemon } from "@/app/data/types/Pokemon";
+import Image from "next/image";
 import { useEffect, useState } from "react";
-import TypeBadge from "./TypeBadge";
+import TypeBadge from "../../../components/TypeBadge";
+import PokemonTab from "./PokemonTab";
 
 interface PokemonModalProps {
     pokemon: Pokemon | null;
     onClose: () => void;
 }
 
+const tabs = ["Info", "Stats", "Abilities", "Moves"] as const;
+export type Tab = (typeof tabs)[number];
+
 const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon, onClose }) => {
     const [isVisible, setIsVisible] = useState(false);
     const [isRendered, setIsRendered] = useState(false);
     const [currentPokemon, setCurrentPokemon] = useState(pokemon);
-    const [activeTab, setActiveTab] = useState<Tab>("Stats"); // Track active tab
+    const [activeTab, setActiveTab] = useState<Tab>("Info"); // Track active tab
 
     useEffect(() => {
         if (pokemon) {
@@ -36,9 +41,6 @@ const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon, onClose }) => {
         setActiveTab(tab);
     };
 
-    const tabs = ["Stats", "Abilities", "Moves"] as const;
-    type Tab = (typeof tabs)[number];
-
     if (!isRendered || !currentPokemon) return null;
 
     return (
@@ -57,8 +59,15 @@ const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon, onClose }) => {
                 <div className="p-6">
                     <div className="flex justify-between items-start">
                         <div>
+                            <Image
+                                src={"/Pokemon/" + currentPokemon.id + ".png"}
+                                alt={currentPokemon.name}
+                                height="160"
+                                width="160"
+                                className="w-24 h-24"
+                            />
                             <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
-                                #{currentPokemon.dex}: {currentPokemon.name}
+                                {currentPokemon.dex}: {currentPokemon.name}
                             </h2>
                             <TypeBadge type1={currentPokemon.type1} type2={currentPokemon.type2} />
                         </div>
@@ -98,6 +107,21 @@ const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon, onClose }) => {
 
                     {/* Tab Content */}
                     <div className="mt-6">
+                        <PokemonTab tab="Info" activeTab={activeTab}>
+                            <div>
+                                <h3 className="font-semibold text-gray-800 dark:text-gray-100">
+                                    {currentPokemon.kind} Pokémon
+                                </h3>
+                                <h3 className="font-semibold text-gray-800 dark:text-gray-100 mt-4">Tribes</h3>
+                                <ul className="list-disc list-inside text-gray-600 dark:text-gray-300">
+                                    {currentPokemon.tribes.map((tribe, index) => (
+                                        <li key={index}>{tribe}</li>
+                                    ))}
+                                </ul>
+                                <br />
+                                <p className="text-gray-600 dark:text-gray-300">{currentPokemon.pokedex}</p>
+                            </div>
+                        </PokemonTab>
                         {activeTab === "Stats" && (
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                 <div>
@@ -132,7 +156,7 @@ const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon, onClose }) => {
                             <div>
                                 <h3 className="font-semibold text-gray-800 dark:text-gray-100">Moves</h3>
                                 <ul className="list-disc list-inside text-gray-600 dark:text-gray-300">
-                                    {currentPokemon.moves.map((move, index) => (
+                                    {currentPokemon.allMoves().map((move, index) => (
                                         <li key={index}>{move.name}</li>
                                     ))}
                                 </ul>

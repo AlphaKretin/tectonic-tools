@@ -4,10 +4,10 @@ import InternalLink from "@/components/InternalLink";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
-import PokemonModal from "../../components/PokemonModal";
-import PokemonTable from "../../components/PokemonTable";
 import { pokemon } from "../data/pokemon";
 import { Pokemon } from "../data/types/Pokemon";
+import PokemonModal from "./components/PokemonModal";
+import PokemonTable from "./components/PokemonTable";
 
 export interface PokemonTableProps {
     mons: Pokemon[];

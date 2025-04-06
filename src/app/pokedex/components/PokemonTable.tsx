@@ -1,7 +1,7 @@
 import { PokemonTableProps } from "@/app/pokedex/page";
 import Image from "next/image";
-import { getTypeGradient } from "./colours";
-import TypeBadge from "./TypeBadge";
+import { getTypeGradient } from "../../../components/colours";
+import TypeBadge from "../../../components/TypeBadge";
 
 const PokemonTable: React.FC<PokemonTableProps> = ({ mons, onRowClick }) => {
     return (
