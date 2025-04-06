@@ -1,11 +1,11 @@
-import { CalcPokemon } from "@/app/damageCalc";
+import { PokemonStats } from "../../damagecalc/damageCalc";
 import { StatusEffect } from "../statusEffects";
 import { Move } from "../types/Move";
 
 export const facadeMoves = ["FACADE"];
 
 export class FacadeMove extends Move {
-    public getPower(user: CalcPokemon): number {
+    public getPower(user: PokemonStats): number {
         if (user.status !== "None") {
             return this.bp * 2;
         }
