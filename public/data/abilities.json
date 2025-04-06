@@ -1,0 +1,4457 @@
+{
+    "ADAPTED": {
+        "id": "ADAPTED",
+        "name": "Adapted",
+        "description": "Powers up moves of the same type by 33%.",
+        "flags": null
+    },
+    "AERILATE": {
+        "id": "AERILATE",
+        "name": "Aerilate",
+        "description": "Normal-type moves become Flying-type and power up by 30%.",
+        "flags": null
+    },
+    "AIRLOCK": {
+        "id": "AIRLOCK",
+        "name": "Air Lock",
+        "description": "Suppresses the effects of weather.",
+        "flags": null
+    },
+    "ANALYTIC": {
+        "id": "ANALYTIC",
+        "name": "Analytic",
+        "description": "Boosts move power when the Pok\u00e9mon moves last by 30%.",
+        "flags": null
+    },
+    "ARENATRAP": {
+        "id": "ARENATRAP",
+        "name": "Arena Trap",
+        "description": "Prevents the foe from fleeing unless it is airborne.",
+        "flags": null
+    },
+    "ASONEGHOST": {
+        "id": "ASONEGHOST",
+        "name": "As One",
+        "description": "Possesses two Abilities: Unnerve and Grim Neigh.",
+        "flags": [
+            "Immutable"
+        ]
+    },
+    "ASONEICE": {
+        "id": "ASONEICE",
+        "name": "As One",
+        "description": "Possesses two Abilities: Unnerve and Chilling Neigh.",
+        "flags": [
+            "Immutable"
+        ]
+    },
+    "AURABREAK": {
+        "id": "AURABREAK",
+        "name": "Aura Break",
+        "description": "Reverses \"Aura\" Abilities to weaken affected moves.",
+        "flags": null
+    },
+    "BADDREAMS": {
+        "id": "BADDREAMS",
+        "name": "Bad Dreams",
+        "description": "Reduces a sleeping foe's HP by 1/8th at the end of a round.",
+        "flags": null
+    },
+    "BATTERY": {
+        "id": "BATTERY",
+        "name": "Battery",
+        "description": "Powers up ally Pok\u00e9mon's special moves by 30%.",
+        "flags": null
+    },
+    "BERSERK": {
+        "id": "BERSERK",
+        "name": "Berserk",
+        "description": "Raises Attack and Sp. Atk by two steps each when its HP is lowered below half.",
+        "flags": null
+    },
+    "CHEEKPOUCH": {
+        "id": "CHEEKPOUCH",
+        "name": "Cheek Pouch",
+        "description": "When the Pok\u00e9mon eats a Berry, it restores 33% of its max health.",
+        "flags": null
+    },
+    "CHILLINGNEIGH": {
+        "id": "CHILLINGNEIGH",
+        "name": "Chilling Neigh",
+        "description": "Boosts Attack after knocking out any Pok\u00e9mon.",
+        "flags": null
+    },
+    "CHLOROPHYLL": {
+        "id": "CHLOROPHYLL",
+        "name": "Chlorophyll",
+        "description": "Doubles the Pok\u00e9mon's Speed in sunshine.",
+        "flags": [
+            "SunshineSynergy"
+        ]
+    },
+    "CLEARBODY": {
+        "id": "CLEARBODY",
+        "name": "Clear Body",
+        "description": "Prevents stat steps from being lowered (except when self-inflicted).",
+        "flags": [
+            "OtherStatDropImmunity"
+        ]
+    },
+    "COMATOSE": {
+        "id": "COMATOSE",
+        "name": "Comatose",
+        "description": "It's always drowsing, and attacks without waking.",
+        "flags": [
+            "Immutable"
+        ]
+    },
+    "COMPETITIVE": {
+        "id": "COMPETITIVE",
+        "name": "Competitive",
+        "description": "Raises Sp. Atk by four steps when a stat is lowered by a foe.",
+        "flags": null
+    },
+    "CONTRARY": {
+        "id": "CONTRARY",
+        "name": "Contrary",
+        "description": "Makes stat changes have an opposite effect.",
+        "flags": null
+    },
+    "CORROSION": {
+        "id": "CORROSION",
+        "name": "Corrosion",
+        "description": "Can poison the target even if it's a Steel or Poison-type.",
+        "flags": null
+    },
+    "COTTONDOWN": {
+        "id": "COTTONDOWN",
+        "name": "Cotton Down",
+        "description": "Lowers everyone else's Speed by two steps when hit by an attack.",
+        "flags": null
+    },
+    "CUDCHEW": {
+        "id": "CUDCHEW",
+        "name": "Cud Chew",
+        "description": "When the Pok\u00e9mon eats a Berry, it will regurgitate that Berry at the end of the next turn and eat it one more time.",
+        "flags": null
+    },
+    "CURIOUSMEDICINE": {
+        "id": "CURIOUSMEDICINE",
+        "name": "Curious Medicine",
+        "description": "Upon entry, clears the stat changes of other Pok\u00e9mon.",
+        "flags": [
+            "SetupCounterAI"
+        ]
+    },
+    "DANCER": {
+        "id": "DANCER",
+        "name": "Dancer",
+        "description": "Repeats another Pok\u00e9mon's dance move immediately.",
+        "flags": null
+    },
+    "DARKAURA": {
+        "id": "DARKAURA",
+        "name": "Dark Aura",
+        "description": "Powers up each Pok\u00e9mon's Dark-type moves.",
+        "flags": null
+    },
+    "DAUNTLESSSHIELD": {
+        "id": "DAUNTLESSSHIELD",
+        "name": "Dauntless Shield",
+        "description": "Raises Defense when the Pok\u00e9mon enters a battle.",
+        "flags": null
+    },
+    "DEFEATIST": {
+        "id": "DEFEATIST",
+        "name": "Defeatist",
+        "description": "Halves move damage when HP becomes half or less.",
+        "flags": null
+    },
+    "DEFIANT": {
+        "id": "DEFIANT",
+        "name": "Defiant",
+        "description": "Raises Attack by four steps when a stat is lowered by a foe.",
+        "flags": null
+    },
+    "DELTASTREAM": {
+        "id": "DELTASTREAM",
+        "name": "Delta Stream",
+        "description": "Changes the weather to Strong Winds, which remove Flying-type's weaknesses. Lingers for 3 turns after leaving.",
+        "flags": null
+    },
+    "DESOLATELAND": {
+        "id": "DESOLATELAND",
+        "name": "Desolate Land",
+        "description": "Changes the weather to Harsh Sunlight, which nullifies Water-type moves. Lingers for 3 turns after leaving.",
+        "flags": [
+            "SunshineSynergy"
+        ]
+    },
+    "DISGUISE": {
+        "id": "DISGUISE",
+        "name": "Disguise",
+        "description": "Its shroud protects it from an attack just once.",
+        "flags": [
+            "Immutable"
+        ]
+    },
+    "DOWNLOAD": {
+        "id": "DOWNLOAD",
+        "name": "Download",
+        "description": "Boosts one Attacking stat by two steps according to the foe's defenses.",
+        "flags": null
+    },
+    "DRAGONSMAW": {
+        "id": "DRAGONSMAW",
+        "name": "Dragon's Maw",
+        "description": "Powers up Dragon-type moves by 50%.",
+        "flags": null
+    },
+    "DRIZZLE": {
+        "id": "DRIZZLE",
+        "name": "Drizzle",
+        "description": "Summons rainstorm for 4 turns when it enters battle.",
+        "flags": [
+            "RainstormSynergy"
+        ]
+    },
+    "DROUGHT": {
+        "id": "DROUGHT",
+        "name": "Drought",
+        "description": "Turns the weather to sunshine for 4 turns when it enters battle.",
+        "flags": [
+            "SunshineSynergy"
+        ]
+    },
+    "DRYSKIN": {
+        "id": "DRYSKIN",
+        "name": "Dry Skin",
+        "description": "Heals 1/8 HP in rainstorm, 1/4 when hit by Water-type moves. Loses 1/8 in sunshine, takes 25% more from Fire-type moves.",
+        "flags": [
+            "RainstormSynergy"
+        ]
+    },
+    "EMERGENCYEXIT": {
+        "id": "EMERGENCYEXIT",
+        "name": "Emergency Exit",
+        "description": "Switches out if its HP becomes half or less.",
+        "flags": null
+    },
+    "FAIRYAURA": {
+        "id": "FAIRYAURA",
+        "name": "Fairy Aura",
+        "description": "Powers up each Pok\u00e9mon's Fairy-type moves.",
+        "flags": null
+    },
+    "FILTER": {
+        "id": "FILTER",
+        "name": "Filter",
+        "description": "Reduces damage from super-effective attacks by 25%.",
+        "flags": null
+    },
+    "FLAMEBODY": {
+        "id": "FLAMEBODY",
+        "name": "Flame Body",
+        "description": "Physical moves against the Pok\u00e9mon have a 30% chance to burn the attacker.",
+        "flags": null
+    },
+    "FLOWERGIFT": {
+        "id": "FLOWERGIFT",
+        "name": "Flower Gift",
+        "description": "In sunshine boosts its and allies' Attack and Sp. Def by 50%.",
+        "flags": [
+            "SunshineSynergy",
+            "Immutable"
+        ]
+    },
+    "FLOWERVEIL": {
+        "id": "FLOWERVEIL",
+        "name": "Flower Veil",
+        "description": "Protects Grass-type allies from status conditions or stat lowering (except self-inflicted).",
+        "flags": null
+    },
+    "FLUFFY": {
+        "id": "FLUFFY",
+        "name": "Fluffy",
+        "description": "Doubles Defense. The Pok\u00e9mon takes double damage from Fire-type moves.",
+        "flags": null
+    },
+    "FORECAST": {
+        "id": "FORECAST",
+        "name": "Forecast",
+        "description": "Castform transforms with the weather.",
+        "flags": [
+            "Immutable",
+            "AllWeatherSynergy"
+        ]
+    },
+    "FRIENDGUARD": {
+        "id": "FRIENDGUARD",
+        "name": "Friend Guard",
+        "description": "Reduces damage done to allies by 25%.",
+        "flags": null
+    },
+    "FULLMETALBODY": {
+        "id": "FULLMETALBODY",
+        "name": "Full Metal Body",
+        "description": "Prevents stat steps from being lowered (except when self-inflicted).",
+        "flags": [
+            "OtherStatDropImmunity"
+        ]
+    },
+    "FURCOAT": {
+        "id": "FURCOAT",
+        "name": "Fur Coat",
+        "description": "Doubles the Pok\u00e9mon's Defense.",
+        "flags": null
+    },
+    "GALEWINGS": {
+        "id": "GALEWINGS",
+        "name": "Gale Wings",
+        "description": "The user's Speed is doubled while using Flying-type moves.",
+        "flags": null
+    },
+    "GALVANIZE": {
+        "id": "GALVANIZE",
+        "name": "Galvanize",
+        "description": "Normal-type moves become Electric-type and power up by 30%.",
+        "flags": null
+    },
+    "GLUTTONY": {
+        "id": "GLUTTONY",
+        "name": "Gluttony",
+        "description": "Will eat berries normally eaten at 25% HP (in a pinch) at 50% instead.",
+        "flags": null
+    },
+    "GOOEY": {
+        "id": "GOOEY",
+        "name": "Gooey",
+        "description": "Physical moves against it lower the attacker's Speed and Attack.",
+        "flags": null
+    },
+    "GORILLATACTICS": {
+        "id": "GORILLATACTICS",
+        "name": "Gorilla Tactics",
+        "description": "Boosts Attack by 50% but the user is locked into the first move they use.",
+        "flags": [
+            "ChoiceLocking"
+        ]
+    },
+    "GRIMNEIGH": {
+        "id": "GRIMNEIGH",
+        "name": "Grim Neigh",
+        "description": "Boosts Sp. Atk after knocking out any Pok\u00e9mon.",
+        "flags": null
+    },
+    "GULPMISSILE": {
+        "id": "GULPMISSILE",
+        "name": "Gulp Missile",
+        "description": "Attacks with prey caught when using Surf, Dive, or Depth Charge.",
+        "flags": [
+            "Immutable"
+        ]
+    },
+    "HEALER": {
+        "id": "HEALER",
+        "name": "Healer",
+        "description": "Heals ally's status conditions at the end of turn.",
+        "flags": null
+    },
+    "HEAVYMETAL": {
+        "id": "HEAVYMETAL",
+        "name": "Heavy Metal",
+        "description": "Doubles the Pok\u00e9mon's weight.",
+        "flags": null
+    },
+    "HONEYGATHER": {
+        "id": "HONEYGATHER",
+        "name": "Honey Gather",
+        "description": "The Pok\u00e9mon may gather Honey from somewhere.",
+        "flags": null
+    },
+    "HUNGERSWITCH": {
+        "id": "HUNGERSWITCH",
+        "name": "Hunger Switch",
+        "description": "It alternates between an Electric-type Mode and a Dark-type Mode.",
+        "flags": [
+            "Immutable"
+        ]
+    },
+    "HUSTLE": {
+        "id": "HUSTLE",
+        "name": "Hustle",
+        "description": "Boosts move damage by 50%, but lowers Accuracy by 20%.",
+        "flags": null
+    },
+    "HYDRATION": {
+        "id": "HYDRATION",
+        "name": "Hydration",
+        "description": "Heals status problems each turn if in rainstorm.",
+        "flags": [
+            "RainstormSynergy"
+        ]
+    },
+    "ICEBODY": {
+        "id": "ICEBODY",
+        "name": "Ice Body",
+        "description": "Heals 1/8th of its max HP each turn in a hail.",
+        "flags": [
+            "HailSynergy"
+        ]
+    },
+    "ICESCALES": {
+        "id": "ICESCALES",
+        "name": "Ice Scales",
+        "description": "Doubles the Pok\u00e9mon's Sp. Def.",
+        "flags": null
+    },
+    "ILLUSION": {
+        "id": "ILLUSION",
+        "name": "Illusion",
+        "description": "Comes out disguised as the Pok\u00e9mon in back.",
+        "flags": [
+            "Immutable"
+        ]
+    },
+    "IMPOSTER": {
+        "id": "IMPOSTER",
+        "name": "Imposter",
+        "description": "It transforms itself into the Pok\u00e9mon it is facing.",
+        "flags": [
+            "Immutable"
+        ]
+    },
+    "INFILTRATOR": {
+        "id": "INFILTRATOR",
+        "name": "Infiltrator",
+        "description": "Ignores screens and other barriers, Substitute, and boosted defensive stats.",
+        "flags": null
+    },
+    "INNARDSOUT": {
+        "id": "INNARDSOUT",
+        "name": "Innards Out",
+        "description": "Damages an attacker that lands the finishing hit.",
+        "flags": null
+    },
+    "INNERFOCUS": {
+        "id": "INNERFOCUS",
+        "name": "Inner Focus",
+        "description": "The Pok\u00e9mon is protected from flinching, Intimidate, Fascinate, and Frustrate.",
+        "flags": [
+            "FlinchImmunity"
+        ]
+    },
+    "INTIMIDATE": {
+        "id": "INTIMIDATE",
+        "name": "Intimidate",
+        "description": "Upon entry, lowers the foe's Attack stat by two steps.",
+        "flags": null
+    },
+    "INTREPIDSWORD": {
+        "id": "INTREPIDSWORD",
+        "name": "Intrepid Sword",
+        "description": "Raises Attack when the Pok\u00e9mon enters a battle.",
+        "flags": null
+    },
+    "IRONBARBS": {
+        "id": "IRONBARBS",
+        "name": "Iron Barbs",
+        "description": "Physical moves against it inflict 1/8th max HP damage to the foe.",
+        "flags": null
+    },
+    "IRONFIST": {
+        "id": "IRONFIST",
+        "name": "Iron Fist",
+        "description": "Boosts the power of punching moves by 30%.",
+        "flags": null
+    },
+    "LEAFGUARD": {
+        "id": "LEAFGUARD",
+        "name": "Leaf Guard",
+        "description": "Immune to status conditions while in sunshine.",
+        "flags": [
+            "SunshineSynergy"
+        ]
+    },
+    "LEVITATE": {
+        "id": "LEVITATE",
+        "name": "Levitate",
+        "description": "Immune to Ground-type moves. Immune to grounded hazards.",
+        "flags": [
+            "Levitation"
+        ]
+    },
+    "MAGICBOUNCE": {
+        "id": "MAGICBOUNCE",
+        "name": "Magic Bounce",
+        "description": "Reflects enemy status moves that target the Pok\u00e9mon or create hazards around it.",
+        "flags": null
+    },
+    "MAGICGUARD": {
+        "id": "MAGICGUARD",
+        "name": "Magic Guard",
+        "description": "The Pok\u00e9mon only takes damage from attacks.",
+        "flags": null
+    },
+    "MAGICIAN": {
+        "id": "MAGICIAN",
+        "name": "Magician",
+        "description": "Steals the held item of a Pok\u00e9mon it hits.",
+        "flags": null
+    },
+    "MEGALAUNCHER": {
+        "id": "MEGALAUNCHER",
+        "name": "Mega Launcher",
+        "description": "Boosts the power of pulse moves by 50%.",
+        "flags": null
+    },
+    "MERCILESS": {
+        "id": "MERCILESS",
+        "name": "Merciless",
+        "description": "Its attacks are critical against poisoned targets.",
+        "flags": null
+    },
+    "MIRRORARMOR": {
+        "id": "MIRRORARMOR",
+        "name": "Mirror Armor",
+        "description": "Bounces back stat-lowering effects.",
+        "flags": null
+    },
+    "MOODY": {
+        "id": "MOODY",
+        "name": "Moody",
+        "description": "Raises one attacking or defending stat by three steps and lowers another by 1 at the end of each turn.",
+        "flags": null
+    },
+    "MOTORDRIVE": {
+        "id": "MOTORDRIVE",
+        "name": "Motor Drive",
+        "description": "Grants immunity to Electric-type moves and boosts Speed when hit by one.",
+        "flags": null
+    },
+    "MOXIE": {
+        "id": "MOXIE",
+        "name": "Moxie",
+        "description": "Raises Attack after knocking out any Pok\u00e9mon.",
+        "flags": null
+    },
+    "MULTISCALE": {
+        "id": "MULTISCALE",
+        "name": "Multiscale",
+        "description": "Reduces move damage taken by 50% when HP is full.",
+        "flags": null
+    },
+    "MULTITYPE": {
+        "id": "MULTITYPE",
+        "name": "Multitype",
+        "description": "Changes type to match the held Plate.",
+        "flags": [
+            "Immutable"
+        ]
+    },
+    "MUMMY": {
+        "id": "MUMMY",
+        "name": "Mummy",
+        "description": "When the Pok\u00e9mon is hit by an attack, the attacker's ability becomes Mummy.",
+        "flags": null
+    },
+    "NATURALCURE": {
+        "id": "NATURALCURE",
+        "name": "Natural Cure",
+        "description": "All status problems heal when it switches out.",
+        "flags": null
+    },
+    "NEUROFORCE": {
+        "id": "NEUROFORCE",
+        "name": "Neuroforce",
+        "description": "Powers up super-effective moves by 30%.",
+        "flags": null
+    },
+    "NEUTRALIZINGGAS": {
+        "id": "NEUTRALIZINGGAS",
+        "name": "Neutralizing Gas",
+        "description": "Abilities will be nullified or will not be triggered.",
+        "flags": [
+            "Immutable"
+        ]
+    },
+    "NOGUARD": {
+        "id": "NOGUARD",
+        "name": "No Guard",
+        "description": "Attacks by or against the Pok\u00e9mon can't miss.",
+        "flags": null
+    },
+    "NORMALIZE": {
+        "id": "NORMALIZE",
+        "name": "Normalize",
+        "description": "Non-Normal moves become Normal-type and are powered up by 50%.",
+        "flags": null
+    },
+    "PARENTALBOND": {
+        "id": "PARENTALBOND",
+        "name": "Parental Bond",
+        "description": "Child attacks after the parent, for 25% of the previous damage.",
+        "flags": null
+    },
+    "PERISHBODY": {
+        "id": "PERISHBODY",
+        "name": "Perish Body",
+        "description": "When it takes a hit, both Pok\u00e9mon faint after 3 turns.",
+        "flags": [
+            "SetupCounterAI"
+        ]
+    },
+    "POISONPOINT": {
+        "id": "POISONPOINT",
+        "name": "Poison Point",
+        "description": "Physical attacks against the Pok\u00e9mon have a 30% chance to poison the attacker.",
+        "flags": null
+    },
+    "POISONTOUCH": {
+        "id": "POISONTOUCH",
+        "name": "Poison Touch",
+        "description": "Physical moves have a 30% chance to poison targets.",
+        "flags": null
+    },
+    "POWERCONSTRUCT": {
+        "id": "POWERCONSTRUCT",
+        "name": "Power Construct",
+        "description": "Changes with other Cells if HP becomes half or less.",
+        "flags": [
+            "Immutable"
+        ]
+    },
+    "POWEROFALCHEMY": {
+        "id": "POWEROFALCHEMY",
+        "name": "Power of Alchemy",
+        "description": "When an ally faints, the Pok\u00e9mon also gains their ability or abilities.",
+        "flags": [
+            "Uncopyable"
+        ]
+    },
+    "POWERSPOT": {
+        "id": "POWERSPOT",
+        "name": "Power Spot",
+        "description": "Powers up nearby allies moves by 30%.",
+        "flags": null
+    },
+    "PRANKSTER": {
+        "id": "PRANKSTER",
+        "name": "Prankster",
+        "description": "Gives priority to status moves, but makes Dark-types immune to them.",
+        "flags": null
+    },
+    "PRESSURE": {
+        "id": "PRESSURE",
+        "name": "Pressure",
+        "description": "The Pok\u00e9mon raises the foe's PP usage.",
+        "flags": null
+    },
+    "PRIMORDIALSEA": {
+        "id": "PRIMORDIALSEA",
+        "name": "Primordial Sea",
+        "description": "Changes the weather to Heavy Rain, which nullifies Fire-type moves. Lingers for 3 turns after leaving.",
+        "flags": [
+            "RainstormSynergy"
+        ]
+    },
+    "PRISMARMOR": {
+        "id": "PRISMARMOR",
+        "name": "Prism Armor",
+        "description": "Reduces damage from super-effective attacks.",
+        "flags": null
+    },
+    "PROTEAN": {
+        "id": "PROTEAN",
+        "name": "Protean",
+        "description": "It changes type to that of the move it's about to use.",
+        "flags": null
+    },
+    "PUREFORCE": {
+        "id": "PUREFORCE",
+        "name": "Pure Force",
+        "description": "Raises the Pok\u00e9mon's Attack by 50%, including Style Values and other bonuses.",
+        "flags": null
+    },
+    "RAINDISH": {
+        "id": "RAINDISH",
+        "name": "Rain Dish",
+        "description": "Heals 1/8th of its max HP each turn if in rainstorm.",
+        "flags": [
+            "RainstormSynergy"
+        ]
+    },
+    "RECKLESS": {
+        "id": "RECKLESS",
+        "name": "Reckless",
+        "description": "Powers up moves that have recoil damage by 30%.",
+        "flags": null
+    },
+    "REGENERATOR": {
+        "id": "REGENERATOR",
+        "name": "Regenerator",
+        "description": "Restores 25% of max HP when withdrawn from battle.",
+        "flags": null
+    },
+    "RIPEN": {
+        "id": "RIPEN",
+        "name": "Ripen",
+        "description": "Ripens Berries and doubles their effect.",
+        "flags": null
+    },
+    "RKSSYSTEM": {
+        "id": "RKSSYSTEM",
+        "name": "RKS System",
+        "description": "Its type matches the memory disc it holds.",
+        "flags": [
+            "Immutable"
+        ]
+    },
+    "ROCKHEAD": {
+        "id": "ROCKHEAD",
+        "name": "Rock Head",
+        "description": "Protects the Pok\u00e9mon from recoil damage.",
+        "flags": null
+    },
+    "ROUGHSKIN": {
+        "id": "ROUGHSKIN",
+        "name": "Rough Skin",
+        "description": "Physical moves against it inflict 1/8th max HP damage to the foe.",
+        "flags": null
+    },
+    "ROYALMAJESTY": {
+        "id": "ROYALMAJESTY",
+        "name": "Royal Majesty",
+        "description": "Makes foes unable to use priority moves.",
+        "flags": null
+    },
+    "SANDPOWER": {
+        "id": "SANDPOWER",
+        "name": "Sand Power",
+        "description": "Boosts Sp. Atk by 30% in sandstorm.",
+        "flags": [
+            "SandstormSynergy"
+        ]
+    },
+    "SANDRUSH": {
+        "id": "SANDRUSH",
+        "name": "Sand Rush",
+        "description": "Doubles the Pok\u00e9mon's Speed in a sandstorm.",
+        "flags": [
+            "SandstormSynergy"
+        ]
+    },
+    "SANDSHROUD": {
+        "id": "SANDSHROUD",
+        "name": "Sand Shroud",
+        "description": "Takes 25% less damage in a sandstorm.",
+        "flags": [
+            "SandstormSynergy"
+        ]
+    },
+    "SANDSTREAM": {
+        "id": "SANDSTREAM",
+        "name": "Sand Stream",
+        "description": "Summons a sandstorm for 4 turns when it enters battle.",
+        "flags": [
+            "SandstormSynergy"
+        ]
+    },
+    "SAPSIPPER": {
+        "id": "SAPSIPPER",
+        "name": "Sap Sipper",
+        "description": "Immune to Grass-type moves, and raises both attacking stats when hit by one.",
+        "flags": null
+    },
+    "SCHOOLING": {
+        "id": "SCHOOLING",
+        "name": "Schooling",
+        "description": "Forms a powerful school while it has a lot of HP.",
+        "flags": [
+            "Immutable"
+        ]
+    },
+    "SCREENCLEANER": {
+        "id": "SCREENCLEANER",
+        "name": "Screen Cleaner",
+        "description": "Screens are nullified when entering battle.",
+        "flags": null
+    },
+    "SERENEGRACE": {
+        "id": "SERENEGRACE",
+        "name": "Serene Grace",
+        "description": "Doubles the likelihood of the user's random added effects activating.",
+        "flags": null
+    },
+    "SHADOWSHIELD": {
+        "id": "SHADOWSHIELD",
+        "name": "Shadow Shield",
+        "description": "Resists damage while its HP is full.",
+        "flags": null
+    },
+    "SHADOWTAG": {
+        "id": "SHADOWTAG",
+        "name": "Shadow Tag",
+        "description": "Prevents the foe from escaping.",
+        "flags": null
+    },
+    "SHARPNESs": {
+        "id": "SHARPNESs",
+        "name": "Sharpness",
+        "description": "Boosts the power of blade moves by 50%.",
+        "flags": null
+    },
+    "SHEDSKIN": {
+        "id": "SHEDSKIN",
+        "name": "Shed Skin",
+        "description": "At the end of each turn, heals from every non-volatile status (except Sleep).",
+        "flags": null
+    },
+    "SHEERFORCE": {
+        "id": "SHEERFORCE",
+        "name": "Sheer Force",
+        "description": "Removes random added effects of attacks to increase their damage by 30%.",
+        "flags": null
+    },
+    "SHIELDDUST": {
+        "id": "SHIELDDUST",
+        "name": "Shield Dust",
+        "description": "Blocks all random added effects of attacks taken.",
+        "flags": null
+    },
+    "SHIELDSDOWN": {
+        "id": "SHIELDSDOWN",
+        "name": "Shields Down",
+        "description": "Cannot be statused while it has its shell. Below half HP, its shell breaks and it turns aggressive.",
+        "flags": [
+            "Immutable"
+        ]
+    },
+    "SIMPLE": {
+        "id": "SIMPLE",
+        "name": "Simple",
+        "description": "Stat changes in the Pok\u00e9mon are doubled.",
+        "flags": null
+    },
+    "SKILLLINK": {
+        "id": "SKILLLINK",
+        "name": "Skill Link",
+        "description": "Maximizes the frequency of multi-strike moves.",
+        "flags": null
+    },
+    "SLOWSTART": {
+        "id": "SLOWSTART",
+        "name": "Slow Start",
+        "description": "Halves Attack and Speed for 3 turns.",
+        "flags": null
+    },
+    "SLUSHRUSH": {
+        "id": "SLUSHRUSH",
+        "name": "Slush Rush",
+        "description": "Doubles the Pok\u00e9mon's Speed stat in a hail.",
+        "flags": [
+            "HailSynergy"
+        ]
+    },
+    "SNIPER": {
+        "id": "SNIPER",
+        "name": "Sniper",
+        "description": "Doubles critical hit chance. Powers up critical hits by another 50%.",
+        "flags": null
+    },
+    "SNOWWARNING": {
+        "id": "SNOWWARNING",
+        "name": "Snow Warning",
+        "description": "Summons a hail for 4 turns when it enters battle.",
+        "flags": [
+            "HailSynergy"
+        ]
+    },
+    "SOLARPOWER": {
+        "id": "SOLARPOWER",
+        "name": "Solar Power",
+        "description": "In sunshine, Sp. Atk is boosted by 50%, but the Pok\u00e9mon is hurt for 1/10th HP each turn.",
+        "flags": [
+            "SunshineSynergy"
+        ]
+    },
+    "SOLIDROCK": {
+        "id": "SOLIDROCK",
+        "name": "Solid Rock",
+        "description": "Reduces damage from super-effective attacks by 25%.",
+        "flags": null
+    },
+    "SOULHEART": {
+        "id": "SOULHEART",
+        "name": "Soul-Heart",
+        "description": "Boosts Sp. Atk each time a Pok\u00e9mon faints.",
+        "flags": null
+    },
+    "SPEEDBOOST": {
+        "id": "SPEEDBOOST",
+        "name": "Speed Boost",
+        "description": "Speed is raised by two steps at the end of each of its turns.",
+        "flags": null
+    },
+    "STAMINA": {
+        "id": "STAMINA",
+        "name": "Stamina",
+        "description": "Boosts Defense by two steps when hit by an attack.",
+        "flags": null
+    },
+    "STANCECHANGE": {
+        "id": "STANCECHANGE",
+        "name": "Stance Change",
+        "description": "Changes between Blade and Shield Forme with attacks and King's Shield.",
+        "flags": [
+            "Immutable"
+        ]
+    },
+    "STATIC": {
+        "id": "STATIC",
+        "name": "Static",
+        "description": "Physical attacks against the Pok\u00e9mon has a 30% chance to cause numbing.",
+        "flags": null
+    },
+    "STEELWORKER": {
+        "id": "STEELWORKER",
+        "name": "Steelworker",
+        "description": "Powers up Steel-type moves by 50%.",
+        "flags": null
+    },
+    "STEELYSPIRIT": {
+        "id": "STEELYSPIRIT",
+        "name": "Steely Spirit",
+        "description": "Powers up Steel-type moves of itself and its allies by 50%.",
+        "flags": null
+    },
+    "STRONGJAW": {
+        "id": "STRONGJAW",
+        "name": "Strong Jaw",
+        "description": "Boosts the power of biting moves by 50%.",
+        "flags": null
+    },
+    "STURDY": {
+        "id": "STURDY",
+        "name": "Sturdy",
+        "description": "It can't be knocked out with one hit.",
+        "flags": null
+    },
+    "SUPERLUCK": {
+        "id": "SUPERLUCK",
+        "name": "Super Luck",
+        "description": "Four times more likely for moves to be critical.",
+        "flags": null
+    },
+    "SWIFTSWIM": {
+        "id": "SWIFTSWIM",
+        "name": "Swift Swim",
+        "description": "Doubles the Pok\u00e9mon's Speed in rainstorm.",
+        "flags": [
+            "RainstormSynergy"
+        ]
+    },
+    "SYNCHRONIZE": {
+        "id": "SYNCHRONIZE",
+        "name": "Synchronize",
+        "description": "When the Pok\u00e9mon is given a status condition by another Pok\u00e9mon, they also get that condition.",
+        "flags": null
+    },
+    "TANGLINGHAIR": {
+        "id": "TANGLINGHAIR",
+        "name": "Tangling Hair",
+        "description": "Physical moves against it lower the attacker's Speed by three steps.",
+        "flags": null
+    },
+    "TECHNICIAN": {
+        "id": "TECHNICIAN",
+        "name": "Technician",
+        "description": "Moves with base power 60 or less deal 50% more damage.",
+        "flags": null
+    },
+    "TELEPATHY": {
+        "id": "TELEPATHY",
+        "name": "Telepathy",
+        "description": "Anticipates an ally's attack and dodges it.",
+        "flags": null
+    },
+    "THICKFAT": {
+        "id": "THICKFAT",
+        "name": "Thick Fat",
+        "description": "Takes half damage from Fire- and Ice-type moves.",
+        "flags": null
+    },
+    "TINTEDLENS": {
+        "id": "TINTEDLENS",
+        "name": "Tinted Lens",
+        "description": "Doubles the damage of \"not very effective\" moves.",
+        "flags": null
+    },
+    "TOUGHCLAWS": {
+        "id": "TOUGHCLAWS",
+        "name": "Tough Claws",
+        "description": "Increases Attack by 30%.",
+        "flags": null
+    },
+    "TRANSISTOR": {
+        "id": "TRANSISTOR",
+        "name": "Transistor",
+        "description": "Powers up Electric-type moves by 50%.",
+        "flags": null
+    },
+    "TRIAGE": {
+        "id": "TRIAGE",
+        "name": "Triage",
+        "description": "Gives +3 priority to healing and draining moves.",
+        "flags": null
+    },
+    "TRUANT": {
+        "id": "TRUANT",
+        "name": "Truant",
+        "description": "Every other turn, the Pok\u00e9mon can't use any move but Slack Off.",
+        "flags": null
+    },
+    "UNAWARE": {
+        "id": "UNAWARE",
+        "name": "Unaware",
+        "description": "Ignores defensive stat changes in opponents it's hitting, and offensive stat steps in foes hitting it.",
+        "flags": null
+    },
+    "UNBURDEN": {
+        "id": "UNBURDEN",
+        "name": "Unburden",
+        "description": "Doubles the Pok\u00e9mon's Speed if its held item is consumed or lost.",
+        "flags": null
+    },
+    "UNSEENFIST": {
+        "id": "UNSEENFIST",
+        "name": "Unseen Fist",
+        "description": "Physical moves negate all protection effects.",
+        "flags": null
+    },
+    "VICTORYSTAR": {
+        "id": "VICTORYSTAR",
+        "name": "Victory Star",
+        "description": "Doubles the Accuracy, critical hit rate, and chance to activate random added effects for its allies and itself.",
+        "flags": null
+    },
+    "VITALSPIRIT": {
+        "id": "VITALSPIRIT",
+        "name": "Vital Spirit",
+        "description": "Prevents the Pok\u00e9mon from falling asleep.",
+        "flags": null
+    },
+    "VOLTABSORB": {
+        "id": "VOLTABSORB",
+        "name": "Volt Absorb",
+        "description": "Immune to Electric-type moves and restores 25% of max HP when hit by one.",
+        "flags": null
+    },
+    "WANDERINGSPIRIT": {
+        "id": "WANDERINGSPIRIT",
+        "name": "Wandering Spirit",
+        "description": "When the Pok\u00e9mon is hit by an attack, the Pok\u00e9mon and the attacker switch abilities.",
+        "flags": null
+    },
+    "WATERABSORB": {
+        "id": "WATERABSORB",
+        "name": "Water Absorb",
+        "description": "Immune to Water-type moves and restores 25% of max HP when hit by one.",
+        "flags": null
+    },
+    "WATERBUBBLE": {
+        "id": "WATERBUBBLE",
+        "name": "Water Bubble",
+        "description": "Weakens incoming Fire-type moves, and doubles Water-type damage.",
+        "flags": null
+    },
+    "WEAKARMOR": {
+        "id": "WEAKARMOR",
+        "name": "Weak Armor",
+        "description": "Physical attacks against the Pok\u00e9mon raise its Speed by two steps but lower its Defense.",
+        "flags": null
+    },
+    "WHITESMOKE": {
+        "id": "WHITESMOKE",
+        "name": "White Smoke",
+        "description": "Prevents stat steps from being lowered (except when self-inflicted).",
+        "flags": [
+            "OtherStatDropImmunity"
+        ]
+    },
+    "WIMPOUT": {
+        "id": "WIMPOUT",
+        "name": "Wimp Out",
+        "description": "Cowardly switches out if its HP becomes half or less.",
+        "flags": null
+    },
+    "WONDERGUARD": {
+        "id": "WONDERGUARD",
+        "name": "Wonder Guard",
+        "description": "Only super-effective moves will hit.",
+        "flags": [
+            "Immutable"
+        ]
+    },
+    "ABOVEITALL": {
+        "id": "ABOVEITALL",
+        "name": "Above It All",
+        "description": "After being attacked, uses Parting Shot to switch out.",
+        "flags": null
+    },
+    "ACIDRAIN": {
+        "id": "ACIDRAIN",
+        "name": "Acid Rain",
+        "description": "At the end of each turn, if in rainstorm, each Pok\u00e9mon not immune to rainstorm has their defensive stats lowered by 1 step.",
+        "flags": [
+            "RainstormSynergy"
+        ]
+    },
+    "ADAPTIVESKIN": {
+        "id": "ADAPTIVESKIN",
+        "name": "Adaptive Skin",
+        "description": "The user raises the related defensive stat by two steps after each hit taken.",
+        "flags": null
+    },
+    "ADRENALINERUSH": {
+        "id": "ADRENALINERUSH",
+        "name": "Adrenaline Rush",
+        "description": "Raises Speed by four steps when its HP is lowered below half.",
+        "flags": null
+    },
+    "AERODYNAMIC": {
+        "id": "AERODYNAMIC",
+        "name": "Aerodynamic",
+        "description": "Grants immunity to Flying-type moves and raises Speed if hit by one.",
+        "flags": null
+    },
+    "AEROSHELL": {
+        "id": "AEROSHELL",
+        "name": "Aeroshell",
+        "description": "After using a wind move, raises both of the Pok\u00e9mon's defensive stats.",
+        "flags": null
+    },
+    "AFROTECTION": {
+        "id": "AFROTECTION",
+        "name": "Afrotection",
+        "description": "Protects the Pok\u00e9mon from recoil damage. The Pok\u00e9mon doesn't trigger items, abilities, or effects of targets it hits.",
+        "flags": null
+    },
+    "AFTERIMAGE": {
+        "id": "AFTERIMAGE",
+        "name": "Afterimage",
+        "description": "Slips past all types of spikes. Deals 50% more damage to targets that switched in this turn.",
+        "flags": null
+    },
+    "AGGRAVATE": {
+        "id": "AGGRAVATE",
+        "name": "Aggravate",
+        "description": "HP-fraction-based damage effects deal 50% more damage to opponents.",
+        "flags": null
+    },
+    "ALLCONSUMING": {
+        "id": "ALLCONSUMING",
+        "name": "All-Consuming",
+        "description": "When another Pok\u00e9mon faints, consumes their item, ability, and stat steps.",
+        "flags": null
+    },
+    "ALLTHATGLITTERS": {
+        "id": "ALLTHATGLITTERS",
+        "name": "All That Glitters",
+        "description": "Can hold two different items, if both are Gems.",
+        "flags": [
+            "MultipleItems"
+        ]
+    },
+    "ANARCHIC": {
+        "id": "ANARCHIC",
+        "name": "Anarchic",
+        "description": "Doubles Speed in eclipse.",
+        "flags": [
+            "EclipseSynergy"
+        ]
+    },
+    "ANCESTRALDANCE": {
+        "id": "ANCESTRALDANCE",
+        "name": "Ancestral Dance",
+        "description": "Raises both defensive stats whenever any Pok\u00e9mon uses a dance move.",
+        "flags": null
+    },
+    "APPREHENSIVE": {
+        "id": "APPREHENSIVE",
+        "name": "Apprehensive",
+        "description": "Takes 30% less damage in eclipse, except in total eclipse.",
+        "flags": [
+            "EclipseSynergy"
+        ]
+    },
+    "APRICORNARMOR": {
+        "id": "APRICORNARMOR",
+        "name": "Apricorn Armor",
+        "description": "Takes 40% less damage from attacks by Pok\u00e9mon who have a status condition.",
+        "flags": null
+    },
+    "ARCANEFINALE": {
+        "id": "ARCANEFINALE",
+        "name": "Arcane Finale",
+        "description": "Turns to Finale Form when only unfainted on team. Ability becomes Synchronize.",
+        "flags": null
+    },
+    "ARCCONDUCTOR": {
+        "id": "ARCCONDUCTOR",
+        "name": "Arc Conductor",
+        "description": "Inflicts 1/6th max HP damage to the foe when damaged during rainstorm.",
+        "flags": [
+            "RainstormSynergy"
+        ]
+    },
+    "ARCHVILLAIN": {
+        "id": "ARCHVILLAIN",
+        "name": "Archvillain",
+        "description": "Boosts the Pok\u00e9mon's Attack by 50%, but its attacks cannot faint the target.",
+        "flags": null
+    },
+    "ARCTICARIETTE": {
+        "id": "ARCTICARIETTE",
+        "name": "Arctic Ariette",
+        "description": "Sound-based attacks turn Ice-type and are boosted by 30%.",
+        "flags": null
+    },
+    "ARMORPIERCING": {
+        "id": "ARMORPIERCING",
+        "name": "Armor Piercing",
+        "description": "Deals double damage against Pok\u00e9mon that have raised defenses or that are protected by a screen.",
+        "flags": null
+    },
+    "AROMATIC": {
+        "id": "AROMATIC",
+        "name": "Aromatic",
+        "description": "Uses Aromatherapy if an attack lowers its HP to half or below.",
+        "flags": null
+    },
+    "ASSAULTSPINES": {
+        "id": "ASSAULTSPINES",
+        "name": "Assault Spines",
+        "description": "Doubles Sp. Def, but the Pok\u00e9mon can't use status moves.",
+        "flags": null
+    },
+    "ASSISTANT": {
+        "id": "ASSISTANT",
+        "name": "Assistant",
+        "description": "Uses Assist upon entry, using a random move known by a party member.",
+        "flags": null
+    },
+    "ASTRALHARVEST": {
+        "id": "ASTRALHARVEST",
+        "name": "Astral Harvest",
+        "description": "During eclipse, it restores its HP by half the damage it deals with attacks.",
+        "flags": [
+            "EclipseSynergy"
+        ]
+    },
+    "AURORAPRISM": {
+        "id": "AURORAPRISM",
+        "name": "Aurora Prism",
+        "description": "Attacks this Pok\u00e9mon uses that don't share a type with it are boosted by 50%. It can't use attacks of its own types.",
+        "flags": null
+    },
+    "AUTOPILOT": {
+        "id": "AUTOPILOT",
+        "name": "Auto-Pilot",
+        "description": "At the beginning of every 5th turn, the Pok\u00e9mon forcibly switches into battle. It chooses which move it will use that turn.",
+        "flags": null
+    },
+    "AUTOSTRUCTURE": {
+        "id": "AUTOSTRUCTURE",
+        "name": "Auto-Structure",
+        "description": "At the end of every turn, its stats shift position (Attack-> Defense -> Sp. Atk -> Sp. Def -> Speed -> Attack...)",
+        "flags": null
+    },
+    "AUTUMNAL": {
+        "id": "AUTUMNAL",
+        "name": "Autumnal",
+        "description": "Healing on the Pok\u00e9mon is reversed.",
+        "flags": null
+    },
+    "BACKWASH": {
+        "id": "BACKWASH",
+        "name": "Backwash",
+        "description": "Special attacks against the Pok\u00e9mon have a 30% chance to waterlog the attacker.",
+        "flags": null
+    },
+    "BADINFLUENCE": {
+        "id": "BADINFLUENCE",
+        "name": "Bad Influence",
+        "description": "The effect of healing on foes is reversed.",
+        "flags": null
+    },
+    "BADLUCK": {
+        "id": "BADLUCK",
+        "name": "Bad Luck",
+        "description": "When free from status, non-damaging moves by foes are drawn in.",
+        "flags": null
+    },
+    "BADOMEN": {
+        "id": "BADOMEN",
+        "name": "Bad Omen",
+        "description": "Foretold moves hit two turns quicker and deal 30% more damage.",
+        "flags": null
+    },
+    "BALLLIGHTNING": {
+        "id": "BALLLIGHTNING",
+        "name": "Ball Lightning",
+        "description": "Deals more damage to targets the faster it is than them. Up to a 50% bonus at double Speed.",
+        "flags": null
+    },
+    "BALLMIMIC": {
+        "id": "BALLMIMIC",
+        "name": "Ball Mimic",
+        "description": "Your Pok\u00e9 Balls are 50% more effective.",
+        "flags": null
+    },
+    "BARRIERMAKER": {
+        "id": "BARRIERMAKER",
+        "name": "Barrier Maker",
+        "description": "Sets a Reflect for 4 turns upon entering the battle.",
+        "flags": null
+    },
+    "BATTLEHARDENED": {
+        "id": "BATTLEHARDENED",
+        "name": "Battle-Hardened",
+        "description": "Raises Defense and Sp. Def by three steps each when its HP is lowered below half.",
+        "flags": null
+    },
+    "BEGUILING": {
+        "id": "BEGUILING",
+        "name": "Beguiling",
+        "description": "Special attacks against the Pok\u00e9mon have a 30% chance to dizzy the attacker.",
+        "flags": null
+    },
+    "BELLIGERENT": {
+        "id": "BELLIGERENT",
+        "name": "Belligerent",
+        "description": "Boosts both attacking stats by three steps when a stat is lowered by a foe.",
+        "flags": null
+    },
+    "BELLOWER": {
+        "id": "BELLOWER",
+        "name": "Bellower",
+        "description": "After using a sound move, all foes are tormented.",
+        "flags": null
+    },
+    "BERRYBUNCH": {
+        "id": "BERRYBUNCH",
+        "name": "Berry Bunch",
+        "description": "Can hold two different items, if both are Berries.",
+        "flags": [
+            "MultipleItems"
+        ]
+    },
+    "BIGBOSS": {
+        "id": "BIGBOSS",
+        "name": "Big Boss",
+        "description": "Boosts Defense by 25%. The Pok\u00e9mon cannot be flinched.",
+        "flags": [
+            "FlinchImmunity"
+        ]
+    },
+    "BITTER": {
+        "id": "BITTER",
+        "name": "Bitter",
+        "description": "Its attacks are critical against frostbitten targets.",
+        "flags": null
+    },
+    "BITTERCOLD": {
+        "id": "BITTERCOLD",
+        "name": "Bitter Cold",
+        "description": "Causes hail to deal double damage and increase Defense of Ice-types by 2.0x instead of 1.5x.",
+        "flags": [
+            "HailSynergy"
+        ]
+    },
+    "BIZARRE": {
+        "id": "BIZARRE",
+        "name": "Bizarre",
+        "description": "Its special attacks reduce the target's Sp. Def.",
+        "flags": null
+    },
+    "BLADEBRAINED": {
+        "id": "BLADEBRAINED",
+        "name": "Bladebrained",
+        "description": "Boosts the power of blade moves by 30%. Blade moves ignore the target's defensive stat changes.",
+        "flags": null
+    },
+    "BLINDINGLIGHT": {
+        "id": "BLINDINGLIGHT",
+        "name": "Blinding Light",
+        "description": "Move damage that's decreased by sunshine is decreased twice as much.",
+        "flags": [
+            "SunshineSynergy"
+        ]
+    },
+    "BLISS": {
+        "id": "BLISS",
+        "name": "Bliss",
+        "description": "Increase the EXP gained from battles in which it participates by 50%.",
+        "flags": null
+    },
+    "BOULDERNEST": {
+        "id": "BOULDERNEST",
+        "name": "Boulder Nest",
+        "description": "Lays a trap of levitating stones around the opponent when its HP is lowered below half.",
+        "flags": null
+    },
+    "BRAINSCRAMBLE": {
+        "id": "BRAINSCRAMBLE",
+        "name": "Brain Scramble",
+        "description": "Has a 30% chance to dizzy targets when using special moves.",
+        "flags": null
+    },
+    "BREAKINGWAVE": {
+        "id": "BREAKINGWAVE",
+        "name": "Breaking Wave",
+        "description": "Slips past hazards. On the first turn, its attacks are always critical.",
+        "flags": [
+            "HazardImmunity"
+        ]
+    },
+    "BREAKTHROUGH": {
+        "id": "BREAKTHROUGH",
+        "name": "Break Through",
+        "description": "Moves ignore immunities due to typing.",
+        "flags": null
+    },
+    "BRILLIANTFLURRY": {
+        "id": "BRILLIANTFLURRY",
+        "name": "Brilliant Flurry",
+        "description": "If an attack lowers its HP to half or less, lowers all of the attacker's stats.",
+        "flags": null
+    },
+    "BRISK": {
+        "id": "BRISK",
+        "name": "Brisk",
+        "description": "Boosts the power of wind-based moves by 30%.",
+        "flags": null
+    },
+    "BRUTEFORCE": {
+        "id": "BRUTEFORCE",
+        "name": "Brute Force",
+        "description": "Its attacks are always physical attacks.",
+        "flags": null
+    },
+    "BULLY": {
+        "id": "BULLY",
+        "name": "Bully",
+        "description": "Takes 30% less move damage from Pok\u00e9mon that are shorter than it.",
+        "flags": null
+    },
+    "BUNKERDOWN": {
+        "id": "BUNKERDOWN",
+        "name": "Bunker Down",
+        "description": "Self-destructing at full health leaves it at 1 HP.",
+        "flags": null
+    },
+    "BURDENED": {
+        "id": "BURDENED",
+        "name": "Burdened",
+        "description": "Receives 33% less move damage, but the Pok\u00e9mon is hurt for 1/10th HP each turn.",
+        "flags": null
+    },
+    "BURNOUT": {
+        "id": "BURNOUT",
+        "name": "Burn Out",
+        "description": "Has a 30% chance to burn targets when using physical moves.",
+        "flags": null
+    },
+    "BURNSKILL": {
+        "id": "BURNSKILL",
+        "name": "Burn Skill",
+        "description": "Has a 30% chance to burn targets when using special moves.",
+        "flags": null
+    },
+    "CANDYVEIL": {
+        "id": "CANDYVEIL",
+        "name": "Candy Veil",
+        "description": "Prevents itself and allies from being poisoned, leeched, or waterlogged.",
+        "flags": null
+    },
+    "CHALLENGER": {
+        "id": "CHALLENGER",
+        "name": "Challenger",
+        "description": "Immune to Fighting-type moves, and raises both attacking stats if hit by one.",
+        "flags": null
+    },
+    "CHILLEDBODY": {
+        "id": "CHILLEDBODY",
+        "name": "Chilled Body",
+        "description": "Physical moves against the Pok\u00e9mon have a 30% chance to frostbite the attacker.",
+        "flags": null
+    },
+    "CHILLOUT": {
+        "id": "CHILLOUT",
+        "name": "Chill Out",
+        "description": "Has a 30% chance to frostbite targets when using special moves.",
+        "flags": null
+    },
+    "CHOREOGRAPHY": {
+        "id": "CHOREOGRAPHY",
+        "name": "Choreography",
+        "description": "Raises Speed whenever any Pok\u00e9mon uses a dance move.",
+        "flags": null
+    },
+    "CHRONICCOLD": {
+        "id": "CHRONICCOLD",
+        "name": "Chronic Cold",
+        "description": "Physical moves have a 30% chance to frostbite targets.",
+        "flags": null
+    },
+    "CITYRAZER": {
+        "id": "CITYRAZER",
+        "name": "City Razer",
+        "description": "After knocking out any Pok\u00e9mon with Waterfall, transforms into its Rampage form. Ability becomes Mold Breaker.",
+        "flags": [
+            "Immutable"
+        ]
+    },
+    "CLEANFREAK": {
+        "id": "CLEANFREAK",
+        "name": "Clean Freak",
+        "description": "Boosts move damage by 50% while it has a status condition. However, it suffers double effect from status conditions.",
+        "flags": null
+    },
+    "CLINGY": {
+        "id": "CLINGY",
+        "name": "Clingy",
+        "description": "Prevents foes with status conditions from fleeing.",
+        "flags": null
+    },
+    "CLOAKING": {
+        "id": "CLOAKING",
+        "name": "Cloaking",
+        "description": "It changes form to match the move it selected.",
+        "flags": null
+    },
+    "CLOUDBURST": {
+        "id": "CLOUDBURST",
+        "name": "Cloudburst",
+        "description": "Boosts Sp. Atk and Speed by 25% in rainstorm.",
+        "flags": [
+            "RainstormSynergy"
+        ]
+    },
+    "CLOVERSONG": {
+        "id": "CLOVERSONG",
+        "name": "Clover Song",
+        "description": "Sets a Lucky Chant upon entering the battle, protecting from critical hits for 10 turns.",
+        "flags": null
+    },
+    "CLUMSYKINESIS": {
+        "id": "CLUMSYKINESIS",
+        "name": "Clumsy Kinesis",
+        "description": "Can hold two items, but drops one when swapping out.",
+        "flags": [
+            "MultipleItems"
+        ]
+    },
+    "COLDCALCULATION": {
+        "id": "COLDCALCULATION",
+        "name": "Cold Calculation",
+        "description": "Boosts Sp. Attack by 75%, but the Pok\u00e9mon becomes frostbitten after attacking.",
+        "flags": null
+    },
+    "COLDRECEPTION": {
+        "id": "COLDRECEPTION",
+        "name": "Cold Reception",
+        "description": "Immune to Ice-type moves, and raises both attacking stats if hit by one.",
+        "flags": null
+    },
+    "CONSTRICTOR": {
+        "id": "CONSTRICTOR",
+        "name": "Constrictor",
+        "description": "When hit with a physical move, traps and damages the attacker for three turns.",
+        "flags": null
+    },
+    "COREPROVENANCE": {
+        "id": "COREPROVENANCE",
+        "name": "Core Provenance",
+        "description": "Using or being hit by a physical move leaves a rock on the field. Status moves collect them, healing by 1/4th each.",
+        "flags": null
+    },
+    "COSMICCONTACT": {
+        "id": "COSMICCONTACT",
+        "name": "Cosmic Contact",
+        "description": "After using a status move, raises both of the Pok\u00e9mon's defensive stats.",
+        "flags": null
+    },
+    "COSTUMECHANGE": {
+        "id": "COSTUMECHANGE",
+        "name": "Costume Change",
+        "description": "Changes to the form of your choosing after switching out.",
+        "flags": null
+    },
+    "COTTONDECOY": {
+        "id": "COTTONDECOY",
+        "name": "Cotton Decoy",
+        "description": "Upon entry, creates a substitute from 1/4th of its HP.",
+        "flags": null
+    },
+    "COUNTERFLOW": {
+        "id": "COUNTERFLOW",
+        "name": "Counter Flow",
+        "description": "When hit with a special move, hits back instantly with Breach.",
+        "flags": null
+    },
+    "CURSEDTAIL": {
+        "id": "CURSEDTAIL",
+        "name": "Cursed Tail",
+        "description": "When a foe hits the Pok\u00e9mon, they are warned. If they do it again, they become cursed.",
+        "flags": null
+    },
+    "CYNIC": {
+        "id": "CYNIC",
+        "name": "Cynic",
+        "description": "Immune to Dragon-type, Fairy-type and Ghost-type attacks.",
+        "flags": null
+    },
+    "DARING": {
+        "id": "DARING",
+        "name": "Daring",
+        "description": "When this Pok\u00e9mon becomes statused, its Attack is raised by three steps.",
+        "flags": null
+    },
+    "DARKENEDSKIES": {
+        "id": "DARKENEDSKIES",
+        "name": "Darkened Skies",
+        "description": "Powers up Dark-type moves by 50% in sandstorm.",
+        "flags": [
+            "SandstormSynergy"
+        ]
+    },
+    "DARTER": {
+        "id": "DARTER",
+        "name": "Darter",
+        "description": "Takes 30% less move damage if a Tailwind is blowing.",
+        "flags": null
+    },
+    "DAUNTLESS": {
+        "id": "DAUNTLESS",
+        "name": "Dauntless",
+        "description": "Boosts Attack and Sp. Atk after knocking out any Pok\u00e9mon.",
+        "flags": null
+    },
+    "DAWNFALL": {
+        "id": "DAWNFALL",
+        "name": "Dawnfall",
+        "description": "On the first turn, its attacks burn the target.",
+        "flags": null
+    },
+    "DEBRISFIELD": {
+        "id": "DEBRISFIELD",
+        "name": "Debris Field",
+        "description": "Can't be statused due to its hard shell. Boosts Sp. Atk and Speed by 25% in sandstorm.",
+        "flags": [
+            "SandstormSynergy"
+        ]
+    },
+    "DECONTAMINATION": {
+        "id": "DECONTAMINATION",
+        "name": "Decontamination",
+        "description": "Prevents Bug- or Poison-type moves during moonglow.",
+        "flags": [
+            "MoonglowSynergy"
+        ]
+    },
+    "DEEPSTING": {
+        "id": "DEEPSTING",
+        "name": "Deep Sting",
+        "description": "Boosts Attack by 50%, but physical moves deal 25% damage back as recoil.",
+        "flags": null
+    },
+    "DEEPTEETH": {
+        "id": "DEEPTEETH",
+        "name": "Deep Teeth",
+        "description": "Foes aren't released from its trapping moves even when the Pok\u00e9mon leaves the field.",
+        "flags": null
+    },
+    "DELAYEDREACTION": {
+        "id": "DELAYEDREACTION",
+        "name": "Delayed Reaction",
+        "description": "33% of all move damage taken is instead taken at the end of the next turn.",
+        "flags": null
+    },
+    "DESERTARMOR": {
+        "id": "DESERTARMOR",
+        "name": "Desert Armor",
+        "description": "Doubles Defense in a sandstorm.",
+        "flags": [
+            "SandstormSynergy"
+        ]
+    },
+    "DESERTSCAVENGER": {
+        "id": "DESERTSCAVENGER",
+        "name": "Desert Scavenger",
+        "description": "Restores HP based on damage from sandstorm.",
+        "flags": [
+            "SandstormSynergy"
+        ]
+    },
+    "DESERTSPIRIT": {
+        "id": "DESERTSPIRIT",
+        "name": "Desert Spirit",
+        "description": "Immune to Ground-type moves. Takes 20% less damage in sandstorm.",
+        "flags": [
+            "SandstormSynergy",
+            "Levitation"
+        ]
+    },
+    "DESICCATE": {
+        "id": "DESICCATE",
+        "name": "Desiccate",
+        "description": "Prevents Water- or Grass-type moves during sandstorm.",
+        "flags": [
+            "SandstormSynergy"
+        ]
+    },
+    "DETERRENT": {
+        "id": "DETERRENT",
+        "name": "Deterrent",
+        "description": "Enemies which swap in take damage equal to 1/8th their HP.",
+        "flags": null
+    },
+    "DIRECTCURRENT": {
+        "id": "DIRECTCURRENT",
+        "name": "Direct Current",
+        "description": "At the end of each turn, its Sp. Atk is lowered. Then, you choose to raise its Speed or heal it for 1/5th HP.",
+        "flags": null
+    },
+    "DIREDIVERSION": {
+        "id": "DIREDIVERSION",
+        "name": "Dire Diversion",
+        "description": "It can avoid being knocked out by sacrificing its held item.",
+        "flags": null
+    },
+    "DISCONNECTION": {
+        "id": "DISCONNECTION",
+        "name": "Disconnection",
+        "description": "On the first turn, its attacks numb the target.",
+        "flags": null
+    },
+    "DISORIENTING": {
+        "id": "DISORIENTING",
+        "name": "Disorienting",
+        "description": "Physical attacks against the Pok\u00e9mon have a 30% chance to dizzy the attacker.",
+        "flags": null
+    },
+    "DOMINATING": {
+        "id": "DOMINATING",
+        "name": "Dominating",
+        "description": "After knocking out any Pok\u00e9mon, raises its Attack and Defense.",
+        "flags": null
+    },
+    "DOMINEERING": {
+        "id": "DOMINEERING",
+        "name": "Domineering",
+        "description": "Reduces move damage taken by 50% when HP is full. Can't be dizzied.",
+        "flags": null
+    },
+    "DOUBLECHECK": {
+        "id": "DOUBLECHECK",
+        "name": "Double Check",
+        "description": "Deals 50% more damage to targets who have already taken damage this turn.",
+        "flags": null
+    },
+    "DRAGONSBLOOD": {
+        "id": "DRAGONSBLOOD",
+        "name": "Dragon's Blood",
+        "description": "Reduces the damage of each hit against it by an amount equal to its level.",
+        "flags": null
+    },
+    "DRAGONSLAYER": {
+        "id": "DRAGONSLAYER",
+        "name": "Dragon Slayer",
+        "description": "Immune to Dragon-type moves. Deals double damage to Dragon-types.",
+        "flags": null
+    },
+    "DRAMATICLIGHTING": {
+        "id": "DRAMATICLIGHTING",
+        "name": "Dramatic Lighting",
+        "description": "Upon entry during eclipse, lowers foe's Attack and Sp. Atk by two steps each.",
+        "flags": [
+            "EclipseSynergy"
+        ]
+    },
+    "DREAMWEAVER": {
+        "id": "DREAMWEAVER",
+        "name": "Dream Weaver",
+        "description": "Raises Sp. Atk by two steps whenever any battler falls asleep.",
+        "flags": null
+    },
+    "DREAMYHAZE": {
+        "id": "DREAMYHAZE",
+        "name": "Dreamy Haze",
+        "description": "If an attack lowers its HP to half or less, the attacker becomes drowsy.",
+        "flags": null
+    },
+    "DREARYCLOUDS": {
+        "id": "DREARYCLOUDS",
+        "name": "Dreary Clouds",
+        "description": "Move damage that's decreased by rainstorm is decreased twice as much.",
+        "flags": [
+            "RainstormSynergy"
+        ]
+    },
+    "DRIFTINGMIST": {
+        "id": "DRIFTINGMIST",
+        "name": "Drifting Mist",
+        "description": "Creates Grey Mist for three turns when entering the battlefield.",
+        "flags": [
+            "SetupCounterAI"
+        ]
+    },
+    "DYNAMICENTRANCE": {
+        "id": "DYNAMICENTRANCE",
+        "name": "Dynamic Entrance",
+        "description": "Speed is doubled on the first turn.",
+        "flags": null
+    },
+    "DYNAMO": {
+        "id": "DYNAMO",
+        "name": "Dynamo",
+        "description": "Whenever it uses a status move, becomes energy charged, doubling the power of its next Electric-type attack.",
+        "flags": null
+    },
+    "EARSPLITTING": {
+        "id": "EARSPLITTING",
+        "name": "Ear-Splitting",
+        "description": "Boosts power of sound-based moves by 50%.",
+        "flags": null
+    },
+    "EARTHSHAKER": {
+        "id": "EARTHSHAKER",
+        "name": "Earthshaker",
+        "description": "In sandstorm, Attack is boosted by 30%.",
+        "flags": [
+            "SandstormSynergy"
+        ]
+    },
+    "ECCENTRIC": {
+        "id": "ECCENTRIC",
+        "name": "Eccentric",
+        "description": "If its stats would be changed, instead they're changed half as much in the opposite direction (rounded up).",
+        "flags": null
+    },
+    "ECHO": {
+        "id": "ECHO",
+        "name": "Echo",
+        "description": "Repeats another Pok\u00e9mon's sound and pulse moves immediately at 75% power.",
+        "flags": null
+    },
+    "ECTOPARTICLES": {
+        "id": "ECTOPARTICLES",
+        "name": "Ecto-Particles",
+        "description": "Restores HP based on damage from hail.",
+        "flags": [
+            "HailSynergy"
+        ]
+    },
+    "EFFLORESCENT": {
+        "id": "EFFLORESCENT",
+        "name": "Efflorescent",
+        "description": "The Pok\u00e9mon and its allies are protected from flinching, Intimidate, Fascinate, and Frustrate.",
+        "flags": null
+    },
+    "EMERGENCYPOWER": {
+        "id": "EMERGENCYPOWER",
+        "name": "Emergency Power",
+        "description": "Uses Lightning Dance if an attack lowers its HP to half or below.",
+        "flags": null
+    },
+    "EMOTIONAURA": {
+        "id": "EMOTIONAURA",
+        "name": "Emotion Aura",
+        "description": "Upon entry, creates an Emotion Room for five turns, switching Abilities every turn.",
+        "flags": null
+    },
+    "ENERGETIC": {
+        "id": "ENERGETIC",
+        "name": "Energetic",
+        "description": "Can't be numbed, waterlogged, or have its Speed reduced.",
+        "flags": null
+    },
+    "ENVY": {
+        "id": "ENVY",
+        "name": "Envy",
+        "description": "The Pok\u00e9mon's moves have priority against single targets with increased stats.",
+        "flags": null
+    },
+    "EPHEMERATE": {
+        "id": "EPHEMERATE",
+        "name": "Ephemerate",
+        "description": "Eclipse counts down twice as quickly.",
+        "flags": null
+    },
+    "ERUDITE": {
+        "id": "ERUDITE",
+        "name": "Erudite",
+        "description": "Powers up Psychic-type moves by 50%.",
+        "flags": null
+    },
+    "ETERNALWINTER": {
+        "id": "ETERNALWINTER",
+        "name": "Eternal Winter",
+        "description": "Extends hail by two turns after knocking out any Pok\u00e9mon.",
+        "flags": [
+            "HailSynergy"
+        ]
+    },
+    "EXCAVATOR": {
+        "id": "EXCAVATOR",
+        "name": "Excavator",
+        "description": "Dig and Undermine deal 50% more damage.",
+        "flags": null
+    },
+    "EXORCIST": {
+        "id": "EXORCIST",
+        "name": "Exorcist",
+        "description": "Takes half damage from Psychic- and Ghost-type attacks.",
+        "flags": null
+    },
+    "EXOTHERMENGINE": {
+        "id": "EXOTHERMENGINE",
+        "name": "Exotherm Engine",
+        "description": "Boosts Speed by 50% but the user is locked into the first move they use.",
+        "flags": [
+            "ChoiceLocking"
+        ]
+    },
+    "EXPERTISE": {
+        "id": "EXPERTISE",
+        "name": "Expertise",
+        "description": "Powers up super-effective moves by 30%.",
+        "flags": null
+    },
+    "EXTORTER": {
+        "id": "EXTORTER",
+        "name": "Extorter",
+        "description": "At low health, eats other battlers' low-health triggered berries.",
+        "flags": null
+    },
+    "EXTRASCOOP": {
+        "id": "EXTRASCOOP",
+        "name": "Extra Scoop",
+        "description": "Upon entry, the Pok\u00e9mon heals itself for 1/4th max HP. This can overheal.",
+        "flags": null
+    },
+    "EXTREMEPOWER": {
+        "id": "EXTREMEPOWER",
+        "name": "Extreme Power",
+        "description": "Increases Attack by 50%, but the Pok\u00e9mon is hurt for 1/10th HP each turn.",
+        "flags": null
+    },
+    "EXTREMEVOLTAGE": {
+        "id": "EXTREMEVOLTAGE",
+        "name": "Extreme Voltage",
+        "description": "Increases Sp. Atk by 50%, but the Pok\u00e9mon is hurt for 1/10th HP each turn.",
+        "flags": null
+    },
+    "EXTREMOPHILE": {
+        "id": "EXTREMOPHILE",
+        "name": "Extremophile",
+        "description": "Heals by 1/8th of its max HP each turn if in eclipse.",
+        "flags": [
+            "EclipseSynergy"
+        ]
+    },
+    "FAEVEIL": {
+        "id": "FAEVEIL",
+        "name": "Fae Veil",
+        "description": "Prevents itself and allies from being burned, frostbitten, or numbed.",
+        "flags": null
+    },
+    "FASCINATE": {
+        "id": "FASCINATE",
+        "name": "Fascinate",
+        "description": "Upon entry, lowers the foe's Sp. Atk stat by two steps.",
+        "flags": null
+    },
+    "FASHIONABLE": {
+        "id": "FASHIONABLE",
+        "name": "Fashionable",
+        "description": "Can hold two different items, if one is clothing and the other is not.",
+        "flags": [
+            "MultipleItems"
+        ]
+    },
+    "FATCHANCE": {
+        "id": "FATCHANCE",
+        "name": "Fat Chance",
+        "description": "Raises all of its stats whenever it knocks out a Pok\u00e9mon with a critical hit.",
+        "flags": null
+    },
+    "FATIGUED": {
+        "id": "FATIGUED",
+        "name": "Fatigued",
+        "description": "After attacking any foe, the Pok\u00e9mon immediately uses Rest.",
+        "flags": null
+    },
+    "FEATHERCOAT": {
+        "id": "FEATHERCOAT",
+        "name": "Feather Coat",
+        "description": "Takes half damage from Ice- and Flying-type attacks.",
+        "flags": null
+    },
+    "FEEDBACK": {
+        "id": "FEEDBACK",
+        "name": "Feedback",
+        "description": "When attacked with a special move, inflicts 1/8th max HP damage on the attacker.",
+        "flags": null
+    },
+    "FEELTHEBURN": {
+        "id": "FEELTHEBURN",
+        "name": "Feel the Burn",
+        "description": "Boosts Attack by 75%, but the Pok\u00e9mon becomes burned after attacking.",
+        "flags": null
+    },
+    "FELLOMEN": {
+        "id": "FELLOMEN",
+        "name": "Fell Omen",
+        "description": "During eclipse, gets a 30% boost to Sp. Atk.",
+        "flags": [
+            "EclipseSynergy"
+        ]
+    },
+    "FEROCIOUS": {
+        "id": "FEROCIOUS",
+        "name": "Ferocious",
+        "description": "Double the Pok\u00e9mon's Speed if any enemy is below half health.",
+        "flags": null
+    },
+    "FERROFLUID": {
+        "id": "FERROFLUID",
+        "name": "Ferrofluid",
+        "description": "Takes 25% less damage in a rainstorm.",
+        "flags": [
+            "RainstormSynergy"
+        ]
+    },
+    "FIERYSPIRIT": {
+        "id": "FIERYSPIRIT",
+        "name": "Fiery Spirit",
+        "description": "Special moves against the Pok\u00e9mon have a 30% chance to burn the attacker.",
+        "flags": null
+    },
+    "FIESTA": {
+        "id": "FIESTA",
+        "name": "Fiesta",
+        "description": "Heals by 1/8th HP whenever any Pok\u00e9mon uses a dance or sound move.",
+        "flags": null
+    },
+    "FIGHTINGVIGOR": {
+        "id": "FIGHTINGVIGOR",
+        "name": "Fighting Vigor",
+        "description": "Heals 1/16th HP every turn. Protected from being numbed or waterlogged.",
+        "flags": null
+    },
+    "FILTHY": {
+        "id": "FILTHY",
+        "name": "Filthy",
+        "description": "Immune to Poison-type moves, and boosts both defensive stats when hit by one.",
+        "flags": null
+    },
+    "FINESUGAR": {
+        "id": "FINESUGAR",
+        "name": "Fine Sugar",
+        "description": "Restores 1/8 HP in sunshine, 1/4 when hit by Fire-type moves. Loses 1/8 in rainstorm, takes 25% more from Water-type moves.",
+        "flags": [
+            "SunshineSynergy"
+        ]
+    },
+    "FIREFESTIVAL": {
+        "id": "FIREFESTIVAL",
+        "name": "Fire Festival",
+        "description": "At the end of every turn, each Pok\u00e9mon takes 1/8th HP damage. This is treated as Fire-type.",
+        "flags": null
+    },
+    "FIREFIGHTER": {
+        "id": "FIREFIGHTER",
+        "name": "Firefighter",
+        "description": "Immune to Fire-type moves, and raises both attacking stats if hit by one.",
+        "flags": null
+    },
+    "FIRSTSTRIKE": {
+        "id": "FIRSTSTRIKE",
+        "name": "First Strike",
+        "description": "Powers up priority moves by 30%.",
+        "flags": null
+    },
+    "FITTOSURVIVE": {
+        "id": "FITTOSURVIVE",
+        "name": "Fit to Survive",
+        "description": "Upon entry, summons Natural Protection for 4 turns.",
+        "flags": null
+    },
+    "FLAMEWINGS": {
+        "id": "FLAMEWINGS",
+        "name": "Flame Wings",
+        "description": "Flying-type attacks have a 40% chance to burn.",
+        "flags": null
+    },
+    "FLASHFREEZE": {
+        "id": "FLASHFREEZE",
+        "name": "Flash Freeze",
+        "description": "On the first turn, its attacks frostbite the target.",
+        "flags": null
+    },
+    "FLEXIBLE": {
+        "id": "FLEXIBLE",
+        "name": "Flexible",
+        "description": "Attacks this Pok\u00e9mon uses that don't share a type with it are boosted by 30%.",
+        "flags": null
+    },
+    "FLOURISHING": {
+        "id": "FLOURISHING",
+        "name": "Flourishing",
+        "description": "Grows at the end of each turn, slowing down but improving other stats.",
+        "flags": [
+            "Immutable"
+        ]
+    },
+    "FLUSTERFLOCK": {
+        "id": "FLUSTERFLOCK",
+        "name": "Fluster Flock",
+        "description": "Doubles Attack, but the Pok\u00e9mon becomes dizzy after attacking.",
+        "flags": null
+    },
+    "FLUTTERTOTEM": {
+        "id": "FLUTTERTOTEM",
+        "name": "Flutter Totem",
+        "description": "Upon entry, summons a Cruel Cocoon on the Pok\u00e9mon's side for 6 turns.",
+        "flags": null
+    },
+    "FLYBY": {
+        "id": "FLYBY",
+        "name": "Fly By",
+        "description": "Hits opponent with Gust when withdrawn from battle.",
+        "flags": null
+    },
+    "FLYTRAP": {
+        "id": "FLYTRAP",
+        "name": "Flytrap",
+        "description": "Grants immunity to Bug-type moves, and raises both attacking stats when hit by one.",
+        "flags": null
+    },
+    "FOGTOTEM": {
+        "id": "FOGTOTEM",
+        "name": "Fog Totem",
+        "description": "Upon entry, summons a Misdirecting Fog on the Pok\u00e9mon's side for 6 turns.",
+        "flags": null
+    },
+    "FOLLOWTHROUGH": {
+        "id": "FOLLOWTHROUGH",
+        "name": "Follow Through",
+        "description": "Raises Speed by two steps after knocking out any Pok\u00e9mon.",
+        "flags": null
+    },
+    "FOOLHARDY": {
+        "id": "FOOLHARDY",
+        "name": "Foolhardy",
+        "description": "Immune to Psychic-type moves, and raises both attacking stats if hit by one.",
+        "flags": null
+    },
+    "FORCEREVERSAL": {
+        "id": "FORCEREVERSAL",
+        "name": "Force Reversal",
+        "description": "Raises both attacking stats by two steps when hit by a not-very-effective move.",
+        "flags": null
+    },
+    "FORTIFIED": {
+        "id": "FORTIFIED",
+        "name": "Fortified",
+        "description": "Take 30% less damage from attacks on turns when it hasn't moved yet.",
+        "flags": null
+    },
+    "FORTUNE": {
+        "id": "FORTUNE",
+        "name": "Fortune",
+        "description": "Doubles the money gained from battles in which it participates.",
+        "flags": null
+    },
+    "FREERIDE": {
+        "id": "FREERIDE",
+        "name": "Free Ride",
+        "description": "Raises other allies' Speed by two steps upon entering the battle.",
+        "flags": null
+    },
+    "FREESTYLE": {
+        "id": "FREESTYLE",
+        "name": "Freestyle",
+        "description": "The Pok\u00e9mon changes type to that of the move it's about to use. However, it's 20% less accurate.",
+        "flags": null
+    },
+    "FRIENDTOALL": {
+        "id": "FRIENDTOALL",
+        "name": "Friend to All",
+        "description": "Counts as every tribe.",
+        "flags": [
+            "Immutable"
+        ]
+    },
+    "FRIGIDREFLECTION": {
+        "id": "FRIGIDREFLECTION",
+        "name": "Frigid Reflection",
+        "description": "When hit with a special move, hits back instantly with that same move.",
+        "flags": null
+    },
+    "FROSTFANGED": {
+        "id": "FROSTFANGED",
+        "name": "Frostfanged",
+        "description": "Boosts Attack and Speed by 25% in hail.",
+        "flags": [
+            "HailSynergy"
+        ]
+    },
+    "FROSTPITALITY": {
+        "id": "FROSTPITALITY",
+        "name": "Frostpitality",
+        "description": "Prevents the foe from escaping during hail.",
+        "flags": null
+    },
+    "FROSTSCATTER": {
+        "id": "FROSTSCATTER",
+        "name": "Frost Scatter",
+        "description": "Summons a hail for four turns when hit by an attack.",
+        "flags": [
+            "HailSynergy"
+        ]
+    },
+    "FROSTWINGS": {
+        "id": "FROSTWINGS",
+        "name": "Frost Wings",
+        "description": "Flying-type attacks have a 40% chance to frostbite.",
+        "flags": null
+    },
+    "FRUSTRATE": {
+        "id": "FRUSTRATE",
+        "name": "Frustrate",
+        "description": "Upon entry, lowers the foe's Speed stat by two steps.",
+        "flags": null
+    },
+    "FUELHUNGRY": {
+        "id": "FUELHUNGRY",
+        "name": "Fuel Hungry",
+        "description": "Boosts Attack by 30%, but lowers Attack after using a physical move.",
+        "flags": null
+    },
+    "FULLBLUBBER": {
+        "id": "FULLBLUBBER",
+        "name": "Full Blubber",
+        "description": "Immune to Fire-type and Ice-type moves.",
+        "flags": null
+    },
+    "FULLMOONBLADE": {
+        "id": "FULLMOONBLADE",
+        "name": "Full Moon Blade",
+        "description": "Doubled Attack during the turn of a Full Moon.",
+        "flags": [
+            "MoonglowSynergy"
+        ]
+    },
+    "FUMIGATE": {
+        "id": "FUMIGATE",
+        "name": "Fumigate",
+        "description": "Random added effects of wind-based moves are +50% more likely likely to occur.",
+        "flags": null
+    },
+    "GALEFORCE": {
+        "id": "GALEFORCE",
+        "name": "Gale Force",
+        "description": "Boosts the power of wind-based moves by 50%.",
+        "flags": null
+    },
+    "GARGANTUAN": {
+        "id": "GARGANTUAN",
+        "name": "Gargantuan",
+        "description": "Completely protects allies from foes' multi-target moves.",
+        "flags": null
+    },
+    "GAUSSAFTERSHOCK": {
+        "id": "GAUSSAFTERSHOCK",
+        "name": "Gauss Aftershock",
+        "description": "Pok\u00e9mon that swap in for this have their Speed raised and their PP fully restored.",
+        "flags": null
+    },
+    "GILD": {
+        "id": "GILD",
+        "name": "Gild",
+        "description": "Turns the held item of a Pok\u00e9mon it hits into gold coins for you to take.",
+        "flags": null
+    },
+    "GLASSFIRING": {
+        "id": "GLASSFIRING",
+        "name": "Glass Firing",
+        "description": "Immune to Fire-type moves and raises both defensive stats if hit by one.",
+        "flags": null
+    },
+    "GNAWING": {
+        "id": "GNAWING",
+        "name": "Gnawing",
+        "description": "Random added effects of bite attacks are +50% more likely likely to occur.",
+        "flags": null
+    },
+    "GORGING": {
+        "id": "GORGING",
+        "name": "Gorging",
+        "description": "Draining moves deal 30% more damage. Can overheal when draining.",
+        "flags": null
+    },
+    "GOURMAND": {
+        "id": "GOURMAND",
+        "name": "Gourmand",
+        "description": "Eats pinch berries earlier than normal. Gets a random pinch berry at the end of each turn if it has no item.",
+        "flags": null
+    },
+    "GRAVITAS": {
+        "id": "GRAVITAS",
+        "name": "Gravitas",
+        "description": "Upon entry, intensifies gravity for five turns.",
+        "flags": null
+    },
+    "GRIPSTRENGTH": {
+        "id": "GRIPSTRENGTH",
+        "name": "Grip Strength",
+        "description": "Moves that bind the opponent deal 50% more damage (on the initial hit).",
+        "flags": null
+    },
+    "GRIT": {
+        "id": "GRIT",
+        "name": "Grit",
+        "description": "Boosts Sp. Def by two steps when hit by an attack.",
+        "flags": null
+    },
+    "GROOVY": {
+        "id": "GROOVY",
+        "name": "Groovy",
+        "description": "Raises Attack whenever any Pok\u00e9mon uses a dance move.",
+        "flags": null
+    },
+    "GROTESQUEVITALS": {
+        "id": "GROTESQUEVITALS",
+        "name": "Grotesque Vitals",
+        "description": "Heals 1/16th HP every turn. Protected from being poisoned.",
+        "flags": null
+    },
+    "GYRESPINNER": {
+        "id": "GYRESPINNER",
+        "name": "Gyre Spinner",
+        "description": "Upon entry, traps each opponent in a whirlpool for two turns.",
+        "flags": null
+    },
+    "HARBINGER": {
+        "id": "HARBINGER",
+        "name": "Harbinger",
+        "description": "Summons eclipse for four turns when it enters battle.",
+        "flags": [
+            "EclipseSynergy"
+        ]
+    },
+    "HARDAS": {
+        "id": "HARDAS",
+        "name": "Hard As",
+        "description": "If an attack lowers the Pok\u00e9mon's HP to half or less, the attacker becomes fractured.",
+        "flags": null
+    },
+    "HARDFALL": {
+        "id": "HARDFALL",
+        "name": "Hard Fall",
+        "description": "Deals 30% more move damage to Pok\u00e9mon that are taller than it.",
+        "flags": null
+    },
+    "HARSH": {
+        "id": "HARSH",
+        "name": "Harsh",
+        "description": "Its attacks are critical against burned targets.",
+        "flags": null
+    },
+    "HASTY": {
+        "id": "HASTY",
+        "name": "Hasty",
+        "description": "When this Pok\u00e9mon becomes statused, its Speed is raised by three steps.",
+        "flags": null
+    },
+    "HAUNTED": {
+        "id": "HAUNTED",
+        "name": "Haunted",
+        "description": "The Pok\u00e9mon is also Ghost-type.",
+        "flags": null
+    },
+    "HEADACHE": {
+        "id": "HEADACHE",
+        "name": "Headache",
+        "description": "Doubles Sp. Atk, but the Pok\u00e9mon becomes dizzy after attacking.",
+        "flags": null
+    },
+    "HEARTLESS": {
+        "id": "HEARTLESS",
+        "name": "Heartless",
+        "description": "Immune to Fairy-type moves and restores 25% of max HP if hit by one. This can overheal.",
+        "flags": null
+    },
+    "HEARTOFJUSTICE": {
+        "id": "HEARTOFJUSTICE",
+        "name": "Heart of Justice",
+        "description": "Immune to Dark-type moves, and boosts both attacking stats when hit by one.",
+        "flags": null
+    },
+    "HEATSAVOR": {
+        "id": "HEATSAVOR",
+        "name": "Heat Savor",
+        "description": "Heals by 1/8th of its max HP each turn if in sunshine.",
+        "flags": [
+            "SunshineSynergy"
+        ]
+    },
+    "HEATVEIL": {
+        "id": "HEATVEIL",
+        "name": "Heat Veil",
+        "description": "Doubles Sp. Def in sunshine.",
+        "flags": [
+            "SunshineSynergy"
+        ]
+    },
+    "HEAVYDUTYHOOVES": {
+        "id": "HEAVYDUTYHOOVES",
+        "name": "Heavy Duty Hooves",
+        "description": "Boosts the power of kicking moves by 30%. Immune to hazards.",
+        "flags": [
+            "HazardImmunity"
+        ]
+    },
+    "HELIOCENTRISM": {
+        "id": "HELIOCENTRISM",
+        "name": "Heliocentrism",
+        "description": "Prevents the foe from escaping during gravity.",
+        "flags": null
+    },
+    "HERBALIST": {
+        "id": "HERBALIST",
+        "name": "Herbalist",
+        "description": "Can hold two different items, if both are Herbs.",
+        "flags": [
+            "MultipleItems"
+        ]
+    },
+    "HERDING": {
+        "id": "HERDING",
+        "name": "Herding",
+        "description": "Wild Pok\u00e9mon are more likely to appear in pairs and to be species you've never caught before.",
+        "flags": null
+    },
+    "HEROICFINALE": {
+        "id": "HEROICFINALE",
+        "name": "Heroic Finale",
+        "description": "Turns to Finale Form when only unfainted on team. Ability becomes Inner Focus.",
+        "flags": null
+    },
+    "HIGHRISE": {
+        "id": "HIGHRISE",
+        "name": "High-rise",
+        "description": "The Pok\u00e9mon and its allies are immune to weather downsides.",
+        "flags": [
+            "AllWeatherSynergy"
+        ]
+    },
+    "HOLIDAYCHEER": {
+        "id": "HOLIDAYCHEER",
+        "name": "Holiday Cheer",
+        "description": "When entering battle, heals self and allies for 25% of their max health.",
+        "flags": null
+    },
+    "HONORABLE": {
+        "id": "HONORABLE",
+        "name": "Honorable",
+        "description": "Lowers priority of status moves used by any Pok\u00e9mon.",
+        "flags": null
+    },
+    "HOOLIGAN": {
+        "id": "HOOLIGAN",
+        "name": "Hooligan",
+        "description": "Powers up recoil and sound moves by 30%.",
+        "flags": null
+    },
+    "HUBRIS": {
+        "id": "HUBRIS",
+        "name": "Hubris",
+        "description": "Raises Sp. Atk after knocking out any Pok\u00e9mon.",
+        "flags": null
+    },
+    "HUGGABLE": {
+        "id": "HUGGABLE",
+        "name": "Huggable",
+        "description": "When hit by a move with 95 or more base power, hits back instantly with Nuzzle.",
+        "flags": null
+    },
+    "HYBRIDFIGHTER": {
+        "id": "HYBRIDFIGHTER",
+        "name": "Hybrid Fighter",
+        "description": "Punches, Kicks, and Bites combo together to create special effects.",
+        "flags": null
+    },
+    "HYPERSPEED": {
+        "id": "HYPERSPEED",
+        "name": "Hyper Speed",
+        "description": "Doubles Speed. Dashes to avoid hazards when entering.",
+        "flags": [
+            "HazardImmunity"
+        ]
+    },
+    "ICEBLOCK": {
+        "id": "ICEBLOCK",
+        "name": "Ice Block",
+        "description": "It can avoid being knocked out by using its face. The face then melts.",
+        "flags": [
+            "Immutable"
+        ]
+    },
+    "ICEMIRROR": {
+        "id": "ICEMIRROR",
+        "name": "Ice Mirror",
+        "description": "Doubles Sp. Def in hail.",
+        "flags": [
+            "HailSynergy"
+        ]
+    },
+    "ICEQUEEN": {
+        "id": "ICEQUEEN",
+        "name": "Ice Queen",
+        "description": "During hail, it restores its HP by half the damage it deals with attacks.",
+        "flags": [
+            "HailSynergy"
+        ]
+    },
+    "IGNITIONCYCLE": {
+        "id": "IGNITIONCYCLE",
+        "name": "Ignition Cycle",
+        "description": "Each turn, raises Speed by three steps and loses HP. If Speed was maxed, instead Speed and HP are reset.",
+        "flags": null
+    },
+    "ILLUMINANCE": {
+        "id": "ILLUMINANCE",
+        "name": "Illuminance",
+        "description": "Boosts Sp. Atk by 30% in moonglow.",
+        "flags": [
+            "MoonglowSynergy"
+        ]
+    },
+    "IMPERIOUS": {
+        "id": "IMPERIOUS",
+        "name": "Imperious",
+        "description": "Raises Speed by four steps when a stat is lowered by a foe.",
+        "flags": null
+    },
+    "IMPERVIOUS": {
+        "id": "IMPERVIOUS",
+        "name": "Impervious",
+        "description": "Prevents stat steps from being lowered (except when self-inflicted). Protects from critical hits.",
+        "flags": [
+            "CritImmunity",
+            "OtherStatDropImmunity"
+        ]
+    },
+    "IMPETUOUS": {
+        "id": "IMPETUOUS",
+        "name": "Impetuous",
+        "description": "Special attacks against the Pok\u00e9mon raise its Speed by two steps but lower its Sp. Def.",
+        "flags": null
+    },
+    "IMPRESSIONABLE": {
+        "id": "IMPRESSIONABLE",
+        "name": "Impressionable",
+        "description": "Its same-type attack bonus is based on its party members rather than itself.",
+        "flags": null
+    },
+    "IMPULSIVE": {
+        "id": "IMPULSIVE",
+        "name": "Impulsive",
+        "description": "When this Pok\u00e9mon becomes statused, its Sp. Atk is raised by three steps.",
+        "flags": null
+    },
+    "INDESTRUCTIBLE": {
+        "id": "INDESTRUCTIBLE",
+        "name": "Indestructible",
+        "description": "After being attacked, gains immunity to that move's type but loses other morphed immunities.",
+        "flags": null
+    },
+    "INDUSTRIALIZE": {
+        "id": "INDUSTRIALIZE",
+        "name": "Industrialize",
+        "description": "Immune to Steel-type moves and raises Speed if hit by one.",
+        "flags": null
+    },
+    "INEXORABLE": {
+        "id": "INEXORABLE",
+        "name": "Inexorable",
+        "description": "Pok\u00e9mon take damage from status conditions even while switched out.",
+        "flags": null
+    },
+    "INFECTED": {
+        "id": "INFECTED",
+        "name": "Infected",
+        "description": "The Pok\u00e9mon is also Grass-type. When hit by an attack, the attacker's ability becomes Infected.",
+        "flags": null
+    },
+    "INNERLIGHT": {
+        "id": "INNERLIGHT",
+        "name": "Inner Light",
+        "description": "Summons sunshine for four turns when hit by an attack.",
+        "flags": [
+            "SunshineSynergy"
+        ]
+    },
+    "INSIGHTAURA": {
+        "id": "INSIGHTAURA",
+        "name": "Insight Aura",
+        "description": "Upon entry, creates an Insight Room for five turns, giving everyone a fifth move.",
+        "flags": null
+    },
+    "INTOXICATE": {
+        "id": "INTOXICATE",
+        "name": "Intoxicate",
+        "description": "Special moves have a 30% chance to poison targets.",
+        "flags": null
+    },
+    "INTROVERT": {
+        "id": "INTROVERT",
+        "name": "Introvert",
+        "description": "Takes 30% less damage until it uses an attack.",
+        "flags": null
+    },
+    "INVESTIGATOR": {
+        "id": "INVESTIGATOR",
+        "name": "Investigator",
+        "description": "At the beginning of each turn, gives clues about a foe's plan.",
+        "flags": null
+    },
+    "IRONHEEL": {
+        "id": "IRONHEEL",
+        "name": "Iron Heel",
+        "description": "Boosts the power of kicking moves by 30%.",
+        "flags": null
+    },
+    "IRONSTORM": {
+        "id": "IRONSTORM",
+        "name": "Iron Storm",
+        "description": "Causes sandstorm to deal double damage and increase Sp. Def of Rock-types by 2.0x instead of 1.5x.",
+        "flags": [
+            "SandstormSynergy"
+        ]
+    },
+    "IRREFUTABLE": {
+        "id": "IRREFUTABLE",
+        "name": "Irrefutable",
+        "description": "Raises Attack by two steps after dealing not-very-effective or barely-effective damage.",
+        "flags": null
+    },
+    "JOYOUSSORROW": {
+        "id": "JOYOUSSORROW",
+        "name": "Joyous Sorrow",
+        "description": "Uses Wish after knocking out any Pok\u00e9mon.",
+        "flags": null
+    },
+    "JUGGERNAUT": {
+        "id": "JUGGERNAUT",
+        "name": "Juggernaut",
+        "description": "Ignores Abilities that would affect its moves or activate after hitting the target.",
+        "flags": [
+            "MoldBreaking"
+        ]
+    },
+    "KARMA": {
+        "id": "KARMA",
+        "name": "Karma",
+        "description": "If an attack lowers the Pok\u00e9mon's HP to half or less, the attacker becomes jinxed.",
+        "flags": null
+    },
+    "KELPLINK": {
+        "id": "KELPLINK",
+        "name": "Kelp Link",
+        "description": "Physical moves against the Pok\u00e9mon have a 30% chance to leech the attacker.",
+        "flags": null
+    },
+    "KICKBACK": {
+        "id": "KICKBACK",
+        "name": "Kickback",
+        "description": "Rather than take recoil damage, it swaps out, and its replacement takes that damage.",
+        "flags": null
+    },
+    "KILLJOY": {
+        "id": "KILLJOY",
+        "name": "Killjoy",
+        "description": "Pok\u00e9mon can't dance or use sound-based moves.",
+        "flags": null
+    },
+    "KLEPTOMANIAC": {
+        "id": "KLEPTOMANIAC",
+        "name": "Kleptomaniac",
+        "description": "Uses Snatch upon entry, stealing self-targeting status moves.",
+        "flags": null
+    },
+    "KNUCKLEDUSTER": {
+        "id": "KNUCKLEDUSTER",
+        "name": "Knuckleduster",
+        "description": "Boosts the power of punching moves by 50%.",
+        "flags": null
+    },
+    "LARDER": {
+        "id": "LARDER",
+        "name": "Larder",
+        "description": "At end of turn, regenerates its previously-used berry.",
+        "flags": null
+    },
+    "LASTGASP": {
+        "id": "LASTGASP",
+        "name": "Last Gasp",
+        "description": "Cannot take damage or be switched out. Hears Perish Song upon entering, ensuring its demise.",
+        "flags": [
+            "Immutable"
+        ]
+    },
+    "LATEBLOOMER": {
+        "id": "LATEBLOOMER",
+        "name": "Late Bloomer",
+        "description": "Deals 30% more damage when it's slower than the target.",
+        "flags": null
+    },
+    "LEVIATHAN": {
+        "id": "LEVIATHAN",
+        "name": "Leviathan",
+        "description": "Protected from critical hits. Can't be burned or frostbitten.",
+        "flags": [
+            "CritImmunity"
+        ]
+    },
+    "LIFELINE": {
+        "id": "LIFELINE",
+        "name": "Lifeline",
+        "description": "At the end of each turn, heals self by 1/20 and a party member by the amount the Pok\u00e9mon was healed.",
+        "flags": null
+    },
+    "LIGHTTRICK": {
+        "id": "LIGHTTRICK",
+        "name": "Light Trick",
+        "description": "Doubled Speed if any enemy has a status condition.",
+        "flags": null
+    },
+    "LIMINAL": {
+        "id": "LIMINAL",
+        "name": "Liminal",
+        "description": "Deals 50% more damage to targets that switched in this turn. Takes 50% less damage if it switched in this turn.",
+        "flags": null
+    },
+    "LINEBACKER": {
+        "id": "LINEBACKER",
+        "name": "Linebacker",
+        "description": "Doubles the damage and recoil of recoil moves.",
+        "flags": null
+    },
+    "LIVEFAST": {
+        "id": "LIVEFAST",
+        "name": "Live Fast",
+        "description": "Boosts Speed by 50%, but the Pok\u00e9mon is hurt for 1/10th HP each turn.",
+        "flags": null
+    },
+    "LIVINGARMOR": {
+        "id": "LIVINGARMOR",
+        "name": "Living Armor",
+        "description": "Heals 1/16th HP every turn. Protected against critical hits.",
+        "flags": [
+            "CritImmunity"
+        ]
+    },
+    "LONGODDS": {
+        "id": "LONGODDS",
+        "name": "Long Odds",
+        "description": "Multi-hit moves can hit up to twice as many times.",
+        "flags": null
+    },
+    "LONGRECEIVER": {
+        "id": "LONGRECEIVER",
+        "name": "Long Receiver",
+        "description": "Copies the Ability of the Pok\u00e9mon it switches in to replace.",
+        "flags": null
+    },
+    "LOUD": {
+        "id": "LOUD",
+        "name": "Loud",
+        "description": "Boosts power of sound-based moves by 30%.",
+        "flags": null
+    },
+    "LOUDSLEEPER": {
+        "id": "LOUDSLEEPER",
+        "name": "Loud Sleeper",
+        "description": "When hit while asleep, hits back instantly with Snore.",
+        "flags": null
+    },
+    "LUNARIOT": {
+        "id": "LUNARIOT",
+        "name": "Luna Riot",
+        "description": "Summons moonglow for four turns when hit by an attack.",
+        "flags": [
+            "MoonglowSynergy"
+        ]
+    },
+    "LUNATIC": {
+        "id": "LUNATIC",
+        "name": "Lunatic",
+        "description": "Boosts Attack by 30% in moonglow.",
+        "flags": [
+            "MoonglowSynergy"
+        ]
+    },
+    "LUXURYTASTE": {
+        "id": "LUXURYTASTE",
+        "name": "Luxury Taste",
+        "description": "At end of turn, heals 1/12th HP if holding a clothing item.",
+        "flags": null
+    },
+    "LYCANTHROPE": {
+        "id": "LYCANTHROPE",
+        "name": "Lycanthrope",
+        "description": "Transforms into Midnight Form at the Full Moon. Ability becomes No Guard.",
+        "flags": [
+            "MoonglowSynergy"
+        ]
+    },
+    "MAESTRO": {
+        "id": "MAESTRO",
+        "name": "Maestro",
+        "description": "The user's Speed is doubled while using Sound-based moves.",
+        "flags": null
+    },
+    "MAGICSHIELD": {
+        "id": "MAGICSHIELD",
+        "name": "Magic Shield",
+        "description": "Negates enemy status moves that target the Pok\u00e9mon or create hazards around it.",
+        "flags": null
+    },
+    "MAGNETTRAP": {
+        "id": "MAGNETTRAP",
+        "name": "Magnet Trap",
+        "description": "Prevents foes whose Sp. Atk is less than its from fleeing.",
+        "flags": null
+    },
+    "MALICE": {
+        "id": "MALICE",
+        "name": "Malice",
+        "description": "If an attack lowers the Pok\u00e9mon's HP to half or less, the attacker becomes cursed.",
+        "flags": null
+    },
+    "MALICIOUSGLOW": {
+        "id": "MALICIOUSGLOW",
+        "name": "Malicious Glow",
+        "description": "When attacking during moonglow, uses the target's attacking stats instead of its own.",
+        "flags": [
+            "MoonglowSynergy"
+        ]
+    },
+    "MARINE": {
+        "id": "MARINE",
+        "name": "Marine",
+        "description": "Physical moves have a 30% chance to waterlog targets.",
+        "flags": null
+    },
+    "MARINEMENACE": {
+        "id": "MARINEMENACE",
+        "name": "Marine Menace",
+        "description": "Dive and Depth Charge deal 50% more damage.",
+        "flags": null
+    },
+    "MARTIALDISCIPLINE": {
+        "id": "MARTIALDISCIPLINE",
+        "name": "Martial Discipline",
+        "description": "Repeats another Pok\u00e9mon's punch and kick moves immediately at 75% power.",
+        "flags": null
+    },
+    "MASSATTACK": {
+        "id": "MASSATTACK",
+        "name": "Mass Attack",
+        "description": "All Pok\u00e9mon's damage is decreased proportional to their health remaining.",
+        "flags": null
+    },
+    "MENTALBLOCK": {
+        "id": "MENTALBLOCK",
+        "name": "Mental Block",
+        "description": "The Pok\u00e9mon can't be Taunted, Encored, Tormented, Heal Blocked, Disabled, Barred, Dizzied, or Flinched.",
+        "flags": [
+            "FlinchImmunity"
+        ]
+    },
+    "MENTALDAMAGE": {
+        "id": "MENTALDAMAGE",
+        "name": "Mental Damage",
+        "description": "Disables the opponent's most recently-used move for two turns upon hitting it.",
+        "flags": null
+    },
+    "METEORIC": {
+        "id": "METEORIC",
+        "name": "Meteoric",
+        "description": "Boosts Speed by 50% in sandstorm or hail.",
+        "flags": [
+            "SandstormSynergy",
+            "HailSynergy"
+        ]
+    },
+    "MIDDLEWAY": {
+        "id": "MIDDLEWAY",
+        "name": "Middle Way",
+        "description": "Boosts Attack by 50% if it used a special move last turn, or boosts Sp. Atk if physical.",
+        "flags": null
+    },
+    "MIDNIGHTOIL": {
+        "id": "MIDNIGHTOIL",
+        "name": "Midnight Oil",
+        "description": "Using a status move in moonglow extends the weather by a turn.",
+        "flags": null
+    },
+    "MIDNIGHTSUN": {
+        "id": "MIDNIGHTSUN",
+        "name": "Midnight Sun",
+        "description": "Powers up Dark-type moves by 50% in sunshine.",
+        "flags": [
+            "SunshineSynergy"
+        ]
+    },
+    "MOISTSKIN": {
+        "id": "MOISTSKIN",
+        "name": "Moist Skin",
+        "description": "If an attack lowers its HP to half or less, waterlogs the attacker.",
+        "flags": null
+    },
+    "MONKEYMISCHIEF": {
+        "id": "MONKEYMISCHIEF",
+        "name": "Monkey Mischief",
+        "description": "When hit by another Pok\u00e9mon, destroys one of the their items.",
+        "flags": null
+    },
+    "MOONBASKING": {
+        "id": "MOONBASKING",
+        "name": "Moon Basking",
+        "description": "Heals 1/8th of its max HP each turn if in moonglow.",
+        "flags": [
+            "MoonglowSynergy"
+        ]
+    },
+    "MOONBLANKET": {
+        "id": "MOONBLANKET",
+        "name": "Moon Blanket",
+        "description": "User and allies take 25% less move damage during moonglow.",
+        "flags": null
+    },
+    "MOONGAZE": {
+        "id": "MOONGAZE",
+        "name": "Moon Gaze",
+        "description": "Summons moonglow for four turns when it enters battle.",
+        "flags": [
+            "MoonglowSynergy"
+        ]
+    },
+    "MOONLIGHTER": {
+        "id": "MOONLIGHTER",
+        "name": "Moonlighter",
+        "description": "When hit in moonglow, steals the attacker's item, or knocks it away.",
+        "flags": [
+            "MoonglowSynergy"
+        ]
+    },
+    "MOTHBURGLAR": {
+        "id": "MOTHBURGLAR",
+        "name": "Moth Burglar",
+        "description": "Hits opponent with Thief when withdrawn from battle.",
+        "flags": null
+    },
+    "MUPROTOCOL": {
+        "id": "MUPROTOCOL",
+        "name": "MU Protocol",
+        "description": "Immune to the type of the memory disc it holds.",
+        "flags": null
+    },
+    "MUTABLE": {
+        "id": "MUTABLE",
+        "name": "Mutable",
+        "description": "It changes type to that of the move it's about to use. This works only once each time the Pok\u00e9mon enters battle.",
+        "flags": null
+    },
+    "MYSTICFIST": {
+        "id": "MYSTICFIST",
+        "name": "Mystic Fist",
+        "description": "Boosts the power of punching moves by 30%, and makes them special when that would be more effective.",
+        "flags": null
+    },
+    "MYSTICTAP": {
+        "id": "MYSTICTAP",
+        "name": "Mystic Tap",
+        "description": "Gets double healing from all sources during moonglow.",
+        "flags": [
+            "MoonglowSynergy"
+        ]
+    },
+    "NEEDLEFUR": {
+        "id": "NEEDLEFUR",
+        "name": "Needle Fur",
+        "description": "Attackers lose 1/10th of their HP. If the Pok\u00e9mon is below half health, attackers lose 1/5th instead.",
+        "flags": null
+    },
+    "NEGATIVEOUTLOOK": {
+        "id": "NEGATIVEOUTLOOK",
+        "name": "Negative Outlook",
+        "description": "Raises Electric-type allies' Sp. Def by 50%.",
+        "flags": null
+    },
+    "NERVENUMBER": {
+        "id": "NERVENUMBER",
+        "name": "Nerve Number",
+        "description": "Special moves have a 30% chance to numb targets.",
+        "flags": null
+    },
+    "NESTING": {
+        "id": "NESTING",
+        "name": "Nesting",
+        "description": "Heals 1/12th HP per turn if there's a weather. Immune to weather downsides.",
+        "flags": [
+            "AllWeatherSynergy"
+        ]
+    },
+    "NEUROTOXIN": {
+        "id": "NEUROTOXIN",
+        "name": "Neurotoxin",
+        "description": "While the Pok\u00e9mon is unfainted (in battle or switched out), poisoned foes also suffer from dizzy.",
+        "flags": null
+    },
+    "NIGHTLIFE": {
+        "id": "NIGHTLIFE",
+        "name": "Night Life",
+        "description": "Doubles Speed in moonglow.",
+        "flags": [
+            "MoonglowSynergy"
+        ]
+    },
+    "NIGHTOWL": {
+        "id": "NIGHTOWL",
+        "name": "Night Owl",
+        "description": "Boosts Speed by 50% in moonglow. Can't miss during moonglow.",
+        "flags": [
+            "MoonglowSynergy"
+        ]
+    },
+    "NIGHTSTALKER": {
+        "id": "NIGHTSTALKER",
+        "name": "Night Stalker",
+        "description": "In moonglow, Attack is boosted by 50%, but the Pok\u00e9mon is hurt for 1/10th HP each turn.",
+        "flags": [
+            "MoonglowSynergy"
+        ]
+    },
+    "NIGHTVISION": {
+        "id": "NIGHTVISION",
+        "name": "Night Vision",
+        "description": "During moonglow, Speed is boosted by 50% and twice as likely to crit.",
+        "flags": [
+            "MoonglowSynergy"
+        ]
+    },
+    "NOBLEBLADE": {
+        "id": "NOBLEBLADE",
+        "name": "Noble Blade",
+        "description": "Deals no damage to a target while they are using a status move.",
+        "flags": null
+    },
+    "NOHOPE": {
+        "id": "NOHOPE",
+        "name": "No Hope",
+        "description": "Prevents foes whose Attack is less than its from fleeing.",
+        "flags": null
+    },
+    "NOXIOUS": {
+        "id": "NOXIOUS",
+        "name": "Noxious",
+        "description": "Reduces each other Pok\u00e9mon's HP by 1/12th at the end of each turn.",
+        "flags": null
+    },
+    "NUMBINGTOUCH": {
+        "id": "NUMBINGTOUCH",
+        "name": "Numbing Touch",
+        "description": "Physical moves have a 30% chance to numb targets.",
+        "flags": null
+    },
+    "OCULAR": {
+        "id": "OCULAR",
+        "name": "Ocular",
+        "description": "Boosts the Accuracy of its allies and itself by 50%.",
+        "flags": null
+    },
+    "ODDITY": {
+        "id": "ODDITY",
+        "name": "Oddity",
+        "description": "Upon entry, creates an Odd Room for five turns, swapping offensive and defensive stats.",
+        "flags": null
+    },
+    "OFFENSIVE": {
+        "id": "OFFENSIVE",
+        "name": "Offensive",
+        "description": "On the first turn, its attacks cause the target to flinch.",
+        "flags": null
+    },
+    "ONTHEWIND": {
+        "id": "ONTHEWIND",
+        "name": "On the Wind",
+        "description": "Sets a Tailwind for four turns upon entering the battle, increasing Speed.",
+        "flags": null
+    },
+    "OPTIMIZEDALLOY": {
+        "id": "OPTIMIZEDALLOY",
+        "name": "Optimized Alloy",
+        "description": "Prevents stat steps from being lowered (except when self-inflicted). The Pok\u00e9mon's weight is doubled.",
+        "flags": [
+            "OtherStatDropImmunity"
+        ]
+    },
+    "OUTRIDER": {
+        "id": "OUTRIDER",
+        "name": "Outrider",
+        "description": "After knocking out any Pok\u00e9mon, raises its Attack and Speed.",
+        "flags": null
+    },
+    "OVERCHARGE": {
+        "id": "OVERCHARGE",
+        "name": "Overcharge",
+        "description": "After knocking out any Pok\u00e9mon, raises its Sp. Atk and Speed.",
+        "flags": null
+    },
+    "OVERFLOWINGHEART": {
+        "id": "OVERFLOWINGHEART",
+        "name": "Overflowing Heart",
+        "description": "Copies the base stats of the Pok\u00e9mon it switches in to replace.",
+        "flags": null
+    },
+    "OVERTHINKING": {
+        "id": "OVERTHINKING",
+        "name": "Overthinking",
+        "description": "Boosts Sp. Atk by 30%, but lowers Sp. Atk after using a special move.",
+        "flags": null
+    },
+    "OVERWHELM": {
+        "id": "OVERWHELM",
+        "name": "Overwhelm",
+        "description": "Boosts Sp. Atk by 30% in rainstorm.",
+        "flags": [
+            "RainstormSynergy"
+        ]
+    },
+    "OXYGENATION": {
+        "id": "OXYGENATION",
+        "name": "Oxygenation",
+        "description": "Heals status problems each turn if in sunshine.",
+        "flags": [
+            "SunshineSynergy"
+        ]
+    },
+    "PALACEGUARD": {
+        "id": "PALACEGUARD",
+        "name": "Palace Guard",
+        "description": "Receives 33% less move damage if there is an active Room.",
+        "flags": null
+    },
+    "PALEOLITHIC": {
+        "id": "PALEOLITHIC",
+        "name": "Paleolithic",
+        "description": "Powers up Rock-type moves by 50%.",
+        "flags": null
+    },
+    "PARANOID": {
+        "id": "PARANOID",
+        "name": "Paranoid",
+        "description": "Doubles Sp. Def. The Pok\u00e9mon takes double damage from Psychic-type moves.",
+        "flags": null
+    },
+    "PECKINGORDER": {
+        "id": "PECKINGORDER",
+        "name": "Pecking Order",
+        "description": "Immune to Flying-type moves and deals 50% more damage with them.",
+        "flags": null
+    },
+    "PERENNIALPAYLOAD": {
+        "id": "PERENNIALPAYLOAD",
+        "name": "Perennial Payload",
+        "description": "After fainting from exploding, revives after six turns.",
+        "flags": null
+    },
+    "PERFECTIONIST": {
+        "id": "PERFECTIONIST",
+        "name": "Perfectionist",
+        "description": "The Pok\u00e9mon's hits deal half damage unless they are critical.",
+        "flags": null
+    },
+    "PERFECTLUCK": {
+        "id": "PERFECTLUCK",
+        "name": "Perfect Luck",
+        "description": "Maximizes the frequency of multi-strike moves. Always deals critical hits.",
+        "flags": null
+    },
+    "PERSISTENTGROWTH": {
+        "id": "PERSISTENTGROWTH",
+        "name": "Persistent Growth",
+        "description": "At the end of each of its turns, Speed is lowered but every other stat is raised.",
+        "flags": null
+    },
+    "PESTILENT": {
+        "id": "PESTILENT",
+        "name": "Pestilent",
+        "description": "While the Pok\u00e9mon is below half health, its attacks leech those hit.",
+        "flags": null
+    },
+    "PETRIFYING": {
+        "id": "PETRIFYING",
+        "name": "Petrifying",
+        "description": "Special attacks against the Pok\u00e9mon have a 30% chance to cause numbing.",
+        "flags": null
+    },
+    "PETTY": {
+        "id": "PETTY",
+        "name": "Petty",
+        "description": "Whenever a foe raises their stats, the Pok\u00e9mon follows suit.",
+        "flags": null
+    },
+    "PHASESHIFT": {
+        "id": "PHASESHIFT",
+        "name": "Phase Shift",
+        "description": "The Pok\u00e9mon's moves deal 50% more damage if they're a different type than last.",
+        "flags": null
+    },
+    "PLACIDITY": {
+        "id": "PLACIDITY",
+        "name": "Placidity",
+        "description": "Takes no damage from status ailments.",
+        "flags": null
+    },
+    "PLANARVEIL": {
+        "id": "PLANARVEIL",
+        "name": "Planar Veil",
+        "description": "Sets screens for two more turns.",
+        "flags": null
+    },
+    "PLASMAGLOBE": {
+        "id": "PLASMAGLOBE",
+        "name": "Plasma Globe",
+        "description": "Attacks against the Pok\u00e9mon deal 50% more damage, but the attacker takes 100% recoil.",
+        "flags": null
+    },
+    "PLOTARMOR": {
+        "id": "PLOTARMOR",
+        "name": "Plot Armor",
+        "description": "During eclipse, immune to status conditions and having its stats lowered.",
+        "flags": null
+    },
+    "PLURIPOTENCE": {
+        "id": "PLURIPOTENCE",
+        "name": "Pluripotence",
+        "description": "At the first chance, copies an opponent's species' legal Abilities.",
+        "flags": [
+            "Uncopyable"
+        ]
+    },
+    "POISONABSORB": {
+        "id": "POISONABSORB",
+        "name": "Poison Absorb",
+        "description": "Immune to Poison-type moves and restores 25% of max HP if hit by one.",
+        "flags": null
+    },
+    "POISONPUNISH": {
+        "id": "POISONPUNISH",
+        "name": "Poison Punish",
+        "description": "Special attacks against the Pok\u00e9mon have a 30% chance to poison the attacker.",
+        "flags": null
+    },
+    "POLARIZING": {
+        "id": "POLARIZING",
+        "name": "Polarizing",
+        "description": "Upon entry, creates a Polarized Room for five turns, exaggerating type matchups.",
+        "flags": null
+    },
+    "POORCONDUCT": {
+        "id": "POORCONDUCT",
+        "name": "Poor Conduct",
+        "description": "Upon switch out, lowers the foe's Attack and Sp. Atk stat by insulting them.",
+        "flags": null
+    },
+    "POSITIVEOUTLOOK": {
+        "id": "POSITIVEOUTLOOK",
+        "name": "Positive Outlook",
+        "description": "Raises Electric-type allies' Sp. Atk by 50%.",
+        "flags": null
+    },
+    "POWERLIFTER": {
+        "id": "POWERLIFTER",
+        "name": "Power Lifter",
+        "description": "Its physical attacks go last but force the target to switch out after use.",
+        "flags": null
+    },
+    "PREDATION": {
+        "id": "PREDATION",
+        "name": "Predation",
+        "description": "Has a 30% chance to leech targets when using physical moves.",
+        "flags": null
+    },
+    "PRESSUREVALVE": {
+        "id": "PRESSUREVALVE",
+        "name": "Pressure Valve",
+        "description": "Right before the Pok\u00e9mon is attacked, the attacker's stat changes are reset.",
+        "flags": [
+            "SetupCounterAI"
+        ]
+    },
+    "PUFFUP": {
+        "id": "PUFFUP",
+        "name": "Puff Up",
+        "description": "Deals 25% more damage per stockpile.",
+        "flags": null
+    },
+    "PUNISHER": {
+        "id": "PUNISHER",
+        "name": "Punisher",
+        "description": "Special moves against the Pok\u00e9mon have a 30% chance to leech the attacker.",
+        "flags": null
+    },
+    "PUREENERGY": {
+        "id": "PUREENERGY",
+        "name": "Pure Energy",
+        "description": "Raises the Pok\u00e9mon's Sp. Atk by 50%, including Style Values and other bonuses.",
+        "flags": null
+    },
+    "PURERAGE": {
+        "id": "PURERAGE",
+        "name": "Pure Rage",
+        "description": "The Pok\u00e9mon's Dragon-type hits deal additional damage equal to half the Pok\u00e9mon's level.",
+        "flags": null
+    },
+    "PUZZLING": {
+        "id": "PUZZLING",
+        "name": "Puzzling",
+        "description": "Upon entry, creates a Puzzle Room for five turns, swapping base Attack and Sp. Atk.",
+        "flags": null
+    },
+    "QUARRELSOME": {
+        "id": "QUARRELSOME",
+        "name": "Quarrelsome",
+        "description": "Both deals and takes double damage on its first full turn out in battle.",
+        "flags": null
+    },
+    "QUICKBUILD": {
+        "id": "QUICKBUILD",
+        "name": "Quick Build",
+        "description": "Room-creating moves have priority.",
+        "flags": null
+    },
+    "QUILLERINSTINCT": {
+        "id": "QUILLERINSTINCT",
+        "name": "Quiller Instinct",
+        "description": "Releases a layer of Spikes when hit by an attack.",
+        "flags": null
+    },
+    "RADIATE": {
+        "id": "RADIATE",
+        "name": "Radiate",
+        "description": "Increases Sp. Atk by 30%.",
+        "flags": null
+    },
+    "RAINPRISM": {
+        "id": "RAINPRISM",
+        "name": "Rain Prism",
+        "description": "Powers up Fairy-type moves by 50% in rainstorm.",
+        "flags": [
+            "RainstormSynergy"
+        ]
+    },
+    "RAMPROW": {
+        "id": "RAMPROW",
+        "name": "Ram Prow",
+        "description": "Ignores screens, Substitute, and Abilities that would affect its moves.",
+        "flags": [
+            "MoldBreaking"
+        ]
+    },
+    "RATTLEEM": {
+        "id": "RATTLEEM",
+        "name": "Rattle 'Em",
+        "description": "Moves that can flinch are 50% more likely. Deals 50% more damage to Pok\u00e9mon with flinch immunity.",
+        "flags": null
+    },
+    "RAZORSEDGE": {
+        "id": "RAZORSEDGE",
+        "name": "Razor's Edge",
+        "description": "Boosts the power of blade moves by 30%. They're twice as likely to crit.",
+        "flags": null
+    },
+    "REALIST": {
+        "id": "REALIST",
+        "name": "Realist",
+        "description": "Takes half damage from Dragon-, Fairy-, and Ghost-type attacks.",
+        "flags": null
+    },
+    "REAPWHATYOUSOW": {
+        "id": "REAPWHATYOUSOW",
+        "name": "Reap What You Sow",
+        "description": "If the Pok\u00e9mon faints from Perish Song, it is revived in a new form.",
+        "flags": [
+            "Immutable"
+        ]
+    },
+    "REAWAKENEDPOWER": {
+        "id": "REAWAKENEDPOWER",
+        "name": "Reawakened Power",
+        "description": "Maximizes Sp. Atk when its HP is lowered below half.",
+        "flags": null
+    },
+    "RECON": {
+        "id": "RECON",
+        "name": "Recon",
+        "description": "Before using a status move against a single foe, lowers their Sp. Def by two steps.",
+        "flags": null
+    },
+    "REFRESHMENTS": {
+        "id": "REFRESHMENTS",
+        "name": "Refreshments",
+        "description": "Upon entry during sunshine, heals the lowest HP ally or self by 50%.",
+        "flags": [
+            "SunshineSynergy"
+        ]
+    },
+    "REFUGE": {
+        "id": "REFUGE",
+        "name": "Refuge",
+        "description": "Pok\u00e9mon that swap in for this have their status effects healed, and take 30% less damage that turn.",
+        "flags": null
+    },
+    "RELUCTANTBLADE": {
+        "id": "RELUCTANTBLADE",
+        "name": "Reluctant Blade",
+        "description": "When hit with a physical move, hits back instantly with Leafage.",
+        "flags": null
+    },
+    "RENDINGCLAWS": {
+        "id": "RENDINGCLAWS",
+        "name": "Rending Claws",
+        "description": "Critical hits lower all of the victim's stats.",
+        "flags": null
+    },
+    "RESOLUTE": {
+        "id": "RESOLUTE",
+        "name": "Resolute",
+        "description": "Immune to Dark-type and Bug-type moves.",
+        "flags": null
+    },
+    "RESONANT": {
+        "id": "RESONANT",
+        "name": "Resonant",
+        "description": "Moves that hit multiple targets deal 25% more damage instead of 25% less.",
+        "flags": null
+    },
+    "ROAST": {
+        "id": "ROAST",
+        "name": "Roast",
+        "description": "When the Pok\u00e9mon eats a Berry, it raises its attacking stats by two steps each.",
+        "flags": null
+    },
+    "ROCKBODY": {
+        "id": "ROCKBODY",
+        "name": "Rock Body",
+        "description": "Heals 1/8th of its max HP each turn during sandstorm.",
+        "flags": null
+    },
+    "ROCKCLIMBER": {
+        "id": "ROCKCLIMBER",
+        "name": "Rock Climber",
+        "description": "Immune to Rock-type moves and to Stealth Rock, and raises Speed whenever one would hit it.",
+        "flags": null
+    },
+    "ROOTED": {
+        "id": "ROOTED",
+        "name": "Rooted",
+        "description": "Gets 50% more healing from all sources.",
+        "flags": null
+    },
+    "RUGGED": {
+        "id": "RUGGED",
+        "name": "Rugged",
+        "description": "Immune to Fighting-type and Rock-type moves. Prevents Stealth Rock damage.",
+        "flags": null
+    },
+    "RUGGEDSCALES": {
+        "id": "RUGGEDSCALES",
+        "name": "Rugged Scales",
+        "description": "Protected from random added effects. Takes 30% less damage from moves with random added effects.",
+        "flags": null
+    },
+    "RUINOUS": {
+        "id": "RUINOUS",
+        "name": "Ruinous",
+        "description": "All Pok\u00e9mon deal 40% more move damage.",
+        "flags": null
+    },
+    "RUNNINGFREE": {
+        "id": "RUNNINGFREE",
+        "name": "Running Free",
+        "description": "Can't be numbed, waterlogged, trapped, or have its Speed lowered.",
+        "flags": null
+    },
+    "RUSTWRACK": {
+        "id": "RUSTWRACK",
+        "name": "Rust & Wrack",
+        "description": "The Pok\u00e9mon is also Steel-type, but it takes 15% more damage from moves.",
+        "flags": null
+    },
+    "SAFEPASSAGE": {
+        "id": "SAFEPASSAGE",
+        "name": "Safe Passage",
+        "description": "Doubles Defense in rainstorm.",
+        "flags": [
+            "RainstormSynergy"
+        ]
+    },
+    "SANDBURST": {
+        "id": "SANDBURST",
+        "name": "Sand Burst",
+        "description": "Summons a sandstorm for four turns when hit by an attack.",
+        "flags": [
+            "SandstormSynergy"
+        ]
+    },
+    "SANDSMACABRE": {
+        "id": "SANDSMACABRE",
+        "name": "Sands Macabre",
+        "description": "When it attacks from underground in sandstorm, it'll transform into Reaper form.",
+        "flags": [
+            "Immutable"
+        ]
+    },
+    "SANDSNIPER": {
+        "id": "SANDSNIPER",
+        "name": "Sand Sniper",
+        "description": "Boosts Speed by 50% in sandstorm. Can't miss during sandstorm.",
+        "flags": null
+    },
+    "SANDWORNAUGER": {
+        "id": "SANDWORNAUGER",
+        "name": "Sandworn Auger",
+        "description": "During sandstorm, Speed is boosted by 50% and twice as likely to crit.",
+        "flags": [
+            "SandstormSynergy"
+        ]
+    },
+    "SAPPER": {
+        "id": "SAPPER",
+        "name": "Sapper",
+        "description": "Upon entry, traps each opponent in a sand tomb for two turns.",
+        "flags": null
+    },
+    "SATURATER": {
+        "id": "SATURATER",
+        "name": "Saturater",
+        "description": "Special moves have a 30% chance to waterlog targets.",
+        "flags": null
+    },
+    "SATURNALSKY": {
+        "id": "SATURNALSKY",
+        "name": "Saturnal Sky",
+        "description": "Changes the weather to ring eclipse, which heralds the total ring eclipse. Lingers for 3 turns after leaving.",
+        "flags": [
+            "EclipseSynergy"
+        ]
+    },
+    "SCALDINGSMOKE": {
+        "id": "SCALDINGSMOKE",
+        "name": "Scalding Smoke",
+        "description": "Powers up Poison-type moves by 50%.",
+        "flags": null
+    },
+    "SCATHINGSYZYGY": {
+        "id": "SCATHINGSYZYGY",
+        "name": "Scathing Syzygy",
+        "description": "Boosts all of the Pok\u00e9mon's move damage by 25% during eclipse.",
+        "flags": [
+            "EclipseSynergy"
+        ]
+    },
+    "SCHADENFREUDE": {
+        "id": "SCHADENFREUDE",
+        "name": "Schadenfreude",
+        "description": "Restores 1/4th health after any foe faints.",
+        "flags": null
+    },
+    "SCOUREDSILHOUETTE": {
+        "id": "SCOUREDSILHOUETTE",
+        "name": "Scoured Silhouette",
+        "description": "Upon entry during sandstorm, lowers foe's Attack and Sp. Atk by two steps each.",
+        "flags": [
+            "SandstormSynergy"
+        ]
+    },
+    "SEALINGBODY": {
+        "id": "SEALINGBODY",
+        "name": "Sealing Body",
+        "description": "Moves used on the Pok\u00e9mon are disabled for two turns.",
+        "flags": null
+    },
+    "SECRETIONSECRET": {
+        "id": "SECRETIONSECRET",
+        "name": "Secretion Secret",
+        "description": "When targeted by a status move, the offending Pok\u00e9mon becomes poisoned.",
+        "flags": null
+    },
+    "SEEDSOWING": {
+        "id": "SEEDSOWING",
+        "name": "Seed Sowing",
+        "description": "Special moves have a 30% chance to leech targets.",
+        "flags": null
+    },
+    "SELECTIVESCUTES": {
+        "id": "SELECTIVESCUTES",
+        "name": "Selective Scutes",
+        "description": "Boosts one defending stat by two steps according to the foe's attacking stats.",
+        "flags": null
+    },
+    "SELFSUFFICIENT": {
+        "id": "SELFSUFFICIENT",
+        "name": "Self-Sufficient",
+        "description": "Heals 1/16th HP every turn. Protected from being burned or frostbitten.",
+        "flags": null
+    },
+    "SENTRY": {
+        "id": "SENTRY",
+        "name": "Sentry",
+        "description": "Takes 25% less damage while using a status move.",
+        "flags": null
+    },
+    "SERVEDCOLD": {
+        "id": "SERVEDCOLD",
+        "name": "Served Cold",
+        "description": "Boosts Attack by 20% in hail, or 40% if also below half health.",
+        "flags": null
+    },
+    "SEVERE": {
+        "id": "SEVERE",
+        "name": "Severe",
+        "description": "Its attacks are critical against numbed targets.",
+        "flags": null
+    },
+    "SHELLCRACKER": {
+        "id": "SHELLCRACKER",
+        "name": "Shellcracker",
+        "description": "Its physical attacks reduce the target's Defense.",
+        "flags": null
+    },
+    "SHIELDWALL": {
+        "id": "SHIELDWALL",
+        "name": "Shield Wall",
+        "description": "Takes 50% less damage from hyper-effective attacks.",
+        "flags": null
+    },
+    "SHIFTINGFIST": {
+        "id": "SHIFTINGFIST",
+        "name": "Shifting Fist",
+        "description": "Punching moves change secondary type and their power is boosted by 30%.",
+        "flags": null
+    },
+    "SHOCKSTYLE": {
+        "id": "SHOCKSTYLE",
+        "name": "Shock Style",
+        "description": "Powers up Fighting-type moves by 50%.",
+        "flags": null
+    },
+    "SHOCKWINGS": {
+        "id": "SHOCKWINGS",
+        "name": "Shock Wings",
+        "description": "Flying-type attacks have a 40% chance to numb.",
+        "flags": null
+    },
+    "SICKENING": {
+        "id": "SICKENING",
+        "name": "Sickening",
+        "description": "Special moves against it lower the attacker's Speed and Sp. Atk.",
+        "flags": null
+    },
+    "SIGNALJAM": {
+        "id": "SIGNALJAM",
+        "name": "Signal Jam",
+        "description": "The Pok\u00e9mon and other battlers don't benefit from same-type attacking bonus.",
+        "flags": null
+    },
+    "SILVERLINING": {
+        "id": "SILVERLINING",
+        "name": "Silver Lining",
+        "description": "Boosts Speed by 50% in rainstorm. Doubles random added effect chance in rainstorm.",
+        "flags": [
+            "RainstormSynergy"
+        ]
+    },
+    "SILVERSENSE": {
+        "id": "SILVERSENSE",
+        "name": "Silver Sense",
+        "description": "Twice as likely for moves to be critical. Restores HP for half the damage it does with critical hits.",
+        "flags": null
+    },
+    "SINKINGFEELING": {
+        "id": "SINKINGFEELING",
+        "name": "Sinking Feeling",
+        "description": "At the end of each round, lowers other waterlogged Pok\u00e9mon's Attack and Sp. Atk by two steps.",
+        "flags": null
+    },
+    "SIPHONSNIPER": {
+        "id": "SIPHONSNIPER",
+        "name": "Siphon Sniper",
+        "description": "On the first turn, its attacks leech the target.",
+        "flags": null
+    },
+    "SIRENSONG": {
+        "id": "SIRENSONG",
+        "name": "Siren Song",
+        "description": "After using a sound move, lowers one of each foe's attacking stats, whichever is higher.",
+        "flags": null
+    },
+    "SLAPSTICK": {
+        "id": "SLAPSTICK",
+        "name": "Slapstick",
+        "description": "Whenever a foe fails or misses, they take 1/8th HP damage.",
+        "flags": null
+    },
+    "SLEETSHAKER": {
+        "id": "SLEETSHAKER",
+        "name": "Sleetshaker",
+        "description": "Boosts Attack by 30% in hail.",
+        "flags": [
+            "HailSynergy"
+        ]
+    },
+    "SLICKSURFACE": {
+        "id": "SLICKSURFACE",
+        "name": "Slick Surface",
+        "description": "Can't be leeched, drained, or trapped.",
+        "flags": null
+    },
+    "SLINKY": {
+        "id": "SLINKY",
+        "name": "Slinky",
+        "description": "Two-turn retreat moves such as Dig skip the retreat turn.",
+        "flags": null
+    },
+    "SLIPSTREAM": {
+        "id": "SLIPSTREAM",
+        "name": "Slipstream",
+        "description": "Attack is boosted by 50% if a Tailwind is blowing.",
+        "flags": null
+    },
+    "SLUGGISH": {
+        "id": "SLUGGISH",
+        "name": "Sluggish",
+        "description": "The Pok\u00e9mon is also Bug-type, but its Speed is halved.",
+        "flags": null
+    },
+    "SLUMBERINGDRAKE": {
+        "id": "SLUMBERINGDRAKE",
+        "name": "Slumbering Drake",
+        "description": "Falls asleep upon entry, but raises all of its stats by two steps.",
+        "flags": null
+    },
+    "SNOOZEFEST": {
+        "id": "SNOOZEFEST",
+        "name": "Snoozefest",
+        "description": "Whenever the Pok\u00e9mon falls asleep, each other battler becomes drowsy.",
+        "flags": null
+    },
+    "SNOWSHROUD": {
+        "id": "SNOWSHROUD",
+        "name": "Snow Shroud",
+        "description": "Takes 25% less damage in a hail.",
+        "flags": [
+            "HailSynergy"
+        ]
+    },
+    "SOLARCELL": {
+        "id": "SOLARCELL",
+        "name": "Solar Cell",
+        "description": "In sunshine, gets a 25% boost to Sp. Atk and Sp. Def.",
+        "flags": [
+            "SunshineSynergy"
+        ]
+    },
+    "SOLONOCTURNE": {
+        "id": "SOLONOCTURNE",
+        "name": "Solo Nocturne",
+        "description": "Doubles Defense in moonglow.",
+        "flags": [
+            "MoonglowSynergy"
+        ]
+    },
+    "SOPPING": {
+        "id": "SOPPING",
+        "name": "Sopping",
+        "description": "Physical attacks against the Pok\u00e9mon have a 30% chance to waterlog the attacker.",
+        "flags": null
+    },
+    "SOULREAD": {
+        "id": "SOULREAD",
+        "name": "Soul Read",
+        "description": "Double damage to targets who don't share a type with their last-used move.",
+        "flags": null
+    },
+    "SOUNDBARRIER": {
+        "id": "SOUNDBARRIER",
+        "name": "Sound Barrier",
+        "description": "After using a sound move, raises both of the Pok\u00e9mon's defensive stats.",
+        "flags": null
+    },
+    "SPACEINTERLOPER": {
+        "id": "SPACEINTERLOPER",
+        "name": "Space Interloper",
+        "description": "Attacks hit twice for half damage, drain 25% of damage dealt and become special.",
+        "flags": null
+    },
+    "SPARESCALES": {
+        "id": "SPARESCALES",
+        "name": "Spare Scales",
+        "description": "Raises defenses after using a Grass-, Ground-, or Steel-type move.",
+        "flags": null
+    },
+    "SPECTRUMVISION": {
+        "id": "SPECTRUMVISION",
+        "name": "Spectrum Vision",
+        "description": "The Pok\u00e9mon and its allies' moves are twice as likely to be critical.",
+        "flags": null
+    },
+    "SPINESPLODE": {
+        "id": "SPINESPLODE",
+        "name": "Spinesplode",
+        "description": "Leaves two layers of spikes after it self-destructs.",
+        "flags": null
+    },
+    "SPINTENSITY": {
+        "id": "SPINTENSITY",
+        "name": "Spintensity",
+        "description": "Speed is raised each turn. Speed is reset when hit, but the attacker takes 1/8th HP damage for each step lost.",
+        "flags": null
+    },
+    "STABILITY": {
+        "id": "STABILITY",
+        "name": "Stability",
+        "description": "Can't be afflicted with any non-volatile status condition.",
+        "flags": null
+    },
+    "STAGGERINGSLAPS": {
+        "id": "STAGGERINGSLAPS",
+        "name": "Staggering Slaps",
+        "description": "Has a 30% chance to dizzy targets when using physical moves.",
+        "flags": null
+    },
+    "STAINLESSSTEEL": {
+        "id": "STAINLESSSTEEL",
+        "name": "Stainless Steel",
+        "description": "Prevents stat steps from being lowered (except when self-inflicted). Immune to weather downsides.",
+        "flags": [
+            "AllWeatherSynergy",
+            "OtherStatDropImmunity"
+        ]
+    },
+    "STAMPEDE": {
+        "id": "STAMPEDE",
+        "name": "Stampede",
+        "description": "The user's critical hit chance raises or lowers with its Speed.",
+        "flags": null
+    },
+    "STARGUARDIAN": {
+        "id": "STARGUARDIAN",
+        "name": "Star Guardian",
+        "description": "Sets a Light Screen for 4 turns upon entering the battle.",
+        "flags": null
+    },
+    "STARSALIGN": {
+        "id": "STARSALIGN",
+        "name": "Stars Align",
+        "description": "During eclipse, its moves can't miss and always activate their random effects.",
+        "flags": [
+            "EclipseSynergy"
+        ]
+    },
+    "STEAMPOWER": {
+        "id": "STEAMPOWER",
+        "name": "Steam Power",
+        "description": "Takes 50% less damage from Water-type moves. Raises Speed by four steps when hit by one.",
+        "flags": null
+    },
+    "STEELABSORB": {
+        "id": "STEELABSORB",
+        "name": "Steel Absorb",
+        "description": "Immune to Steel-type moves and restores 25% of max HP if hit by one.",
+        "flags": null
+    },
+    "STEELYSHELL": {
+        "id": "STEELYSHELL",
+        "name": "Steely Shell",
+        "description": "Steel-type attacks deal 50% more damage, and the Pok\u00e9mon is protected from critical hits.",
+        "flags": [
+            "CritImmunity"
+        ]
+    },
+    "STEEPFLYING": {
+        "id": "STEEPFLYING",
+        "name": "Steep Flying",
+        "description": "Fly and Dive Bomb deal 50% more damage.",
+        "flags": null
+    },
+    "STICKYFINGERS": {
+        "id": "STICKYFINGERS",
+        "name": "Sticky Fingers",
+        "description": "Can hold a second item by stealing it.",
+        "flags": [
+            "MultipleItems"
+        ]
+    },
+    "STICKYMOLD": {
+        "id": "STICKYMOLD",
+        "name": "Sticky Mold",
+        "description": "If an attack lowers its HP to half or less, leeches the attacker.",
+        "flags": null
+    },
+    "STONEMANE": {
+        "id": "STONEMANE",
+        "name": "Stone Mane",
+        "description": "Prevents half the self-damage from recoil. Powers up moves that have recoil damage by 20%.",
+        "flags": null
+    },
+    "STORMBRINGER": {
+        "id": "STORMBRINGER",
+        "name": "Stormbringer",
+        "description": "Summons rainstorm for four turns when hit by an attack.",
+        "flags": [
+            "RainstormSynergy"
+        ]
+    },
+    "STORMTOTEM": {
+        "id": "STORMTOTEM",
+        "name": "Storm Totem",
+        "description": "Upon entry, summons a Turbulent Sky on the Pok\u00e9mon's side for 6 turns.",
+        "flags": null
+    },
+    "STRAIGHTAHEAD": {
+        "id": "STRAIGHTAHEAD",
+        "name": "Straight Ahead",
+        "description": "Ignores Abilities that would affect its moves. Its attacks can't be redirected to new targets.",
+        "flags": [
+            "MoldBreaking",
+            "RedirectionImmunity"
+        ]
+    },
+    "STRATAGEM": {
+        "id": "STRATAGEM",
+        "name": "Stratagem",
+        "description": "Powers up Rock-type moves by 50%.",
+        "flags": null
+    },
+    "STRESSFUL": {
+        "id": "STRESSFUL",
+        "name": "Stressful",
+        "description": "Makes foes stressed and unable to use their items.",
+        "flags": null
+    },
+    "STRIKETWICE": {
+        "id": "STRIKETWICE",
+        "name": "Strikes Twice",
+        "description": "In rainstorm, each of its hits is followed by an extra hit at 25% power.",
+        "flags": [
+            "RainstormSynergy"
+        ]
+    },
+    "STUBBORN": {
+        "id": "STUBBORN",
+        "name": "Stubborn",
+        "description": "Prevents its stats from being lowered by more than 1 step at a time.",
+        "flags": null
+    },
+    "STUPEFYING": {
+        "id": "STUPEFYING",
+        "name": "Stupefying",
+        "description": "Ignores Abilities that would affect its moves. Dizzies opponents that it hits below half health.",
+        "flags": [
+            "MoldBreaking"
+        ]
+    },
+    "STYGIANNIGHT": {
+        "id": "STYGIANNIGHT",
+        "name": "Stygian Night",
+        "description": "Changes the weather to Blood Moon, which heralds the Full Blood Moon. Lingers for 3 turns after leaving.",
+        "flags": [
+            "MoonglowSynergy"
+        ]
+    },
+    "STYLISH": {
+        "id": "STYLISH",
+        "name": "Stylish",
+        "description": "The Pok\u00e9mon benefits twice as much from style points.",
+        "flags": [
+            "Immutable"
+        ]
+    },
+    "SUBSPACESCHISM": {
+        "id": "SUBSPACESCHISM",
+        "name": "Subspace Schism",
+        "description": "Upon entry, creates a Trick Room for five turns, inverting the effect of Speed.",
+        "flags": null
+    },
+    "SUBZERO": {
+        "id": "SUBZERO",
+        "name": "Sub Zero",
+        "description": "Powers up Ice-type moves by 50%.",
+        "flags": null
+    },
+    "SUDDENCHILL": {
+        "id": "SUDDENCHILL",
+        "name": "Sudden Chill",
+        "description": "Special moves against the Pok\u00e9mon have a 30% chance to frostbite the attacker.",
+        "flags": null
+    },
+    "SUDDENTURN": {
+        "id": "SUDDENTURN",
+        "name": "Sudden Turn",
+        "description": "Uses Rapid Spin after its first attack to clear hazards, raise Speed, and deal damage.",
+        "flags": null
+    },
+    "SUMMITSPIRIT": {
+        "id": "SUMMITSPIRIT",
+        "name": "Summit Spirit",
+        "description": "Boosts Sp. Atk by 30% in hail.",
+        "flags": [
+            "HailSynergy"
+        ]
+    },
+    "SUNBURNING": {
+        "id": "SUNBURNING",
+        "name": "Sun Burning",
+        "description": "At the end of each turn, if in sunshine, each Pok\u00e9mon not immune to sunshine has their defensive stats lowered by 1 step.",
+        "flags": [
+            "SunshineSynergy"
+        ]
+    },
+    "SUNCHASER": {
+        "id": "SUNCHASER",
+        "name": "Sun Chaser",
+        "description": "Boosts Attack by 30% in sunshine.",
+        "flags": [
+            "SunshineSynergy"
+        ]
+    },
+    "SUNEATER": {
+        "id": "SUNEATER",
+        "name": "Sun Eater",
+        "description": "Summons eclipse for four turns when hit by an attack.",
+        "flags": [
+            "EclipseSynergy"
+        ]
+    },
+    "SUPERALLOY": {
+        "id": "SUPERALLOY",
+        "name": "Superalloy",
+        "description": "Powers up Steel-type moves by 50%.",
+        "flags": null
+    },
+    "SURFSUP": {
+        "id": "SURFSUP",
+        "name": "Surf's Up",
+        "description": "Powers up Water-type moves by 50%.",
+        "flags": null
+    },
+    "SURVIVALIST": {
+        "id": "SURVIVALIST",
+        "name": "Survivalist",
+        "description": "It avoids hazards and can't be knocked out with one hit.",
+        "flags": [
+            "HazardImmunity"
+        ]
+    },
+    "SWIFTSTOMPS": {
+        "id": "SWIFTSTOMPS",
+        "name": "Swift Stomps",
+        "description": "The user's Speed is doubled while using kicking moves.",
+        "flags": null
+    },
+    "SWORDPLAY": {
+        "id": "SWORDPLAY",
+        "name": "Swordplay",
+        "description": "Boosts the power of blade moves by 30%.",
+        "flags": null
+    },
+    "TAIGATREKKER": {
+        "id": "TAIGATREKKER",
+        "name": "Taiga Trekker",
+        "description": "During hail, boosts Speed and Grass-type damage by 50%.",
+        "flags": [
+            "HailSynergy"
+        ]
+    },
+    "TANTALIZING": {
+        "id": "TANTALIZING",
+        "name": "Tantalizing",
+        "description": "Draws in attacks from enemies with below half health.",
+        "flags": null
+    },
+    "TEAMPLAYER": {
+        "id": "TEAMPLAYER",
+        "name": "Team Player",
+        "description": "Deals 25% more move damage for each ally in battle.",
+        "flags": null
+    },
+    "TENDERIZE": {
+        "id": "TENDERIZE",
+        "name": "Tenderize",
+        "description": "At the end of each round, lowers other numbed Pok\u00e9mon's Defense and Sp. Def by two steps.",
+        "flags": null
+    },
+    "TERRITORIAL": {
+        "id": "TERRITORIAL",
+        "name": "Territorial",
+        "description": "Boosts damage by 20% if there is a weather. Immune to weather downsides.",
+        "flags": [
+            "AllWeatherSynergy"
+        ]
+    },
+    "TERRORIZE": {
+        "id": "TERRORIZE",
+        "name": "Terrorize",
+        "description": "Flinching moves always activate their random effects.",
+        "flags": null
+    },
+    "TESLACOILS": {
+        "id": "TESLACOILS",
+        "name": "Tesla Coils",
+        "description": "Becomes energy charged upon entry, doubling the power of its next Electric-type attack.",
+        "flags": null
+    },
+    "THIEFSDIVERSION": {
+        "id": "THIEFSDIVERSION",
+        "name": "Thief's Diversion",
+        "description": "By sacrificing a held item the Pok\u00e9mon didn't start with, it can negate one attack against it.",
+        "flags": null
+    },
+    "THUNDERSTRUCK": {
+        "id": "THUNDERSTRUCK",
+        "name": "Thunderstruck",
+        "description": "Becomes energy charged when hit by an attack, doubling the power of its next Electric-type attack.",
+        "flags": null
+    },
+    "TIMEINTERLOPER": {
+        "id": "TIMEINTERLOPER",
+        "name": "Time Interloper",
+        "description": "Its attacks have priority, deal 25% less damage and become special.",
+        "flags": null
+    },
+    "TIMESKIP": {
+        "id": "TIMESKIP",
+        "name": "Time Skip",
+        "description": "Between each turn there's another turn where no one moves.",
+        "flags": null
+    },
+    "TOILANDTROUBLE": {
+        "id": "TOILANDTROUBLE",
+        "name": "Toil and Trouble",
+        "description": "Foes suffer 50% more stat reduction from burn, frostbite, and numb.",
+        "flags": null
+    },
+    "TOLLTHEBELLS": {
+        "id": "TOLLTHEBELLS",
+        "name": "Toll the Bells",
+        "description": "Upon entry during eclipse, heals the lowest HP ally or self by 50%.",
+        "flags": [
+            "EclipseSynergy"
+        ]
+    },
+    "TORPORSAP": {
+        "id": "TORPORSAP",
+        "name": "Torpor Sap",
+        "description": "Restores its HP by 50% of the damage it deals to sleeping targets.",
+        "flags": null
+    },
+    "TOUGH": {
+        "id": "TOUGH",
+        "name": "Tough",
+        "description": "Takes half damage from Fighting- and Rock-type moves.",
+        "flags": null
+    },
+    "TOXICATTITUDE": {
+        "id": "TOXICATTITUDE",
+        "name": "Toxic Attitude",
+        "description": "Powers up Poison-type moves of itself and its allies by 50%.",
+        "flags": null
+    },
+    "TOXINTAX": {
+        "id": "TOXINTAX",
+        "name": "Toxin Tax",
+        "description": "Heals based on the damage other battlers take from being poisoned.",
+        "flags": null
+    },
+    "TRACTORBEAM": {
+        "id": "TRACTORBEAM",
+        "name": "Tractor Beam",
+        "description": "Prevents the foe from escaping during eclipse.",
+        "flags": null
+    },
+    "TRAPPER": {
+        "id": "TRAPPER",
+        "name": "Trapper",
+        "description": "Takes 25% less damage from Pok\u00e9mon that are trapped.",
+        "flags": null
+    },
+    "TRAUMATIZING": {
+        "id": "TRAUMATIZING",
+        "name": "Traumatizing",
+        "description": "Foes whose stats are lowered by the Pok\u00e9mon keep those lowered stats even after switching.",
+        "flags": null
+    },
+    "TRENCHCARVER": {
+        "id": "TRENCHCARVER",
+        "name": "Trench Carver",
+        "description": "The user's Speed is doubled while using recoil moves.",
+        "flags": null
+    },
+    "TUNEDOUT": {
+        "id": "TUNEDOUT",
+        "name": "Tuned Out",
+        "description": "Boosts the power of sound moves by 30%. Sound moves ignore the target's defensive stat changes.",
+        "flags": null
+    },
+    "TUNNELMAKER": {
+        "id": "TUNNELMAKER",
+        "name": "Tunnel Maker",
+        "description": "Powers up Ground-type moves by 50%.",
+        "flags": null
+    },
+    "ULTRAADAPTED": {
+        "id": "ULTRAADAPTED",
+        "name": "Ultra Adapted",
+        "description": "Powers up moves of the same type by 50%.",
+        "flags": null
+    },
+    "UNAFRAID": {
+        "id": "UNAFRAID",
+        "name": "Unafraid",
+        "description": "Takes half damage from Dark- and Bug-type moves.",
+        "flags": null
+    },
+    "UNASSUMING": {
+        "id": "UNASSUMING",
+        "name": "Unassuming",
+        "description": "Before using a status move against a single foe, lowers their Defense by two steps.",
+        "flags": null
+    },
+    "UNBREAKABLE": {
+        "id": "UNBREAKABLE",
+        "name": "Unbreakable",
+        "description": "Prevents half the self-damage from recoil and Self-Destruct/Explosion.",
+        "flags": null
+    },
+    "UNCANNYCOLD": {
+        "id": "UNCANNYCOLD",
+        "name": "Uncanny Cold",
+        "description": "Powers up Ice-type moves by 50%.",
+        "flags": null
+    },
+    "UNCANNYLUCK": {
+        "id": "UNCANNYLUCK",
+        "name": "Uncanny Luck",
+        "description": "If an attacker would activate a random added effect on the Pok\u00e9mon, that effect is placed on the attacker instead.",
+        "flags": null
+    },
+    "UNCONQUERABLE": {
+        "id": "UNCONQUERABLE",
+        "name": "Unconquerable",
+        "description": "Blocks random added effects of attacks taken, and prevents critical hits.",
+        "flags": [
+            "CritImmunity"
+        ]
+    },
+    "UNCONVENTIONAL": {
+        "id": "UNCONVENTIONAL",
+        "name": "Unconventional",
+        "description": "Moves that use stats other than the default deal 50% more damage.",
+        "flags": null
+    },
+    "UNFAZED": {
+        "id": "UNFAZED",
+        "name": "Unfazed",
+        "description": "Takes 20% less damage from neutrally effective attacks.",
+        "flags": null
+    },
+    "UNIDENTIFIED": {
+        "id": "UNIDENTIFIED",
+        "name": "Unidentified",
+        "description": "The Pok\u00e9mon is Mutant-type.",
+        "flags": [
+            "Immutable"
+        ]
+    },
+    "UNNERVE": {
+        "id": "UNNERVE",
+        "name": "Unnerve",
+        "description": "Makes the foe nervous and unable to eat Berries or Leftovers.",
+        "flags": null
+    },
+    "VANDAL": {
+        "id": "VANDAL",
+        "name": "Vandal",
+        "description": "Deals 30% more damage to targets that have an item. After attacking a foe, destroys their clothing items.",
+        "flags": null
+    },
+    "VARIETY": {
+        "id": "VARIETY",
+        "name": "Variety",
+        "description": "Powers up moves different than the last move by 50%.",
+        "flags": null
+    },
+    "VENGEANCE": {
+        "id": "VENGEANCE",
+        "name": "Vengeance",
+        "description": "After an attack reduces its HP to half or less, deals 1/4 of the attacker's HP back to the attacker.",
+        "flags": null
+    },
+    "VENOMDETTA": {
+        "id": "VENOMDETTA",
+        "name": "Venomdetta",
+        "description": "Immune to Poison-type moves, and raises both attacking stats if hit by one.",
+        "flags": null
+    },
+    "VENOMGORGER": {
+        "id": "VENOMGORGER",
+        "name": "Venom Gorger",
+        "description": "Whenever a foe's poison worsens, the Pok\u00e9mon heals for 25% max HP.",
+        "flags": null
+    },
+    "VERDANT": {
+        "id": "VERDANT",
+        "name": "Verdant",
+        "description": "Powers up Grass-type moves of itself and its allies by 50%.",
+        "flags": null
+    },
+    "VICTORYMOLT": {
+        "id": "VICTORYMOLT",
+        "name": "Victory Molt",
+        "description": "Heals status conditions and resets stat changes after knocking out any Pok\u00e9mon.",
+        "flags": null
+    },
+    "VITALRHYTHM": {
+        "id": "VITALRHYTHM",
+        "name": "Vital Rhythm",
+        "description": "At the end of each turn, itself and each ally heals for 1/16th of their HP.",
+        "flags": null
+    },
+    "WALLNINJA": {
+        "id": "WALLNINJA",
+        "name": "Wall Ninja",
+        "description": "The Pok\u00e9mon's attacks are always critical if there is an active Room.",
+        "flags": null
+    },
+    "WARPINGEFFECT": {
+        "id": "WARPINGEFFECT",
+        "name": "Warping Effect",
+        "description": "Double Sp. Def in eclipse.",
+        "flags": [
+            "EclipseSynergy"
+        ]
+    },
+    "WATERFALLCONDITIONING": {
+        "id": "WATERFALLCONDITIONING",
+        "name": "Waterfall Conditioning",
+        "description": "Boosts Speed by 50% in rainstorm. Can't miss during rainstorm.",
+        "flags": [
+            "RainstormSynergy"
+        ]
+    },
+    "WEATHERED": {
+        "id": "WEATHERED",
+        "name": "Weathered",
+        "description": "Immune to weather downsides, and takes 20% less damage from attacks during weather.",
+        "flags": [
+            "AllWeatherSynergy"
+        ]
+    },
+    "WELLSUITED": {
+        "id": "WELLSUITED",
+        "name": "Well Suited",
+        "description": "Takes 50% less damage from not-very-effective or barely-effective attacks.",
+        "flags": null
+    },
+    "WHITEKNIGHT": {
+        "id": "WHITEKNIGHT",
+        "name": "White Knight",
+        "description": "Draws in moves from foes with base power 100 or more. Takes 15% less move damage.",
+        "flags": null
+    },
+    "WIBBLEWOBBLE": {
+        "id": "WIBBLEWOBBLE",
+        "name": "Wibble Wobble",
+        "description": "Uses Power Split upon entry or when hit by a move.",
+        "flags": null
+    },
+    "WILDTOTEM": {
+        "id": "WILDTOTEM",
+        "name": "Wild Totem",
+        "description": "Upon entry, summons a Primal Forest on the Pok\u00e9mon's side for 6 turns.",
+        "flags": null
+    },
+    "WILLAURA": {
+        "id": "WILLAURA",
+        "name": "Will Aura",
+        "description": "Upon entry, creates a Willful Room for five turns, reducing all hits by 30 damage.",
+        "flags": null
+    },
+    "WINTERINSULATION": {
+        "id": "WINTERINSULATION",
+        "name": "Winter Insulation",
+        "description": "During hail, immune to Fire- and Electric-type moves.",
+        "flags": [
+            "HailSynergy"
+        ]
+    },
+    "WIRECUTTER": {
+        "id": "WIRECUTTER",
+        "name": "Live Wire",
+        "description": "Lays an electrical hazard around the opponent when its HP is lowered below half.",
+        "flags": null
+    },
+    "WISEHUNTER": {
+        "id": "WISEHUNTER",
+        "name": "Wise Hunter",
+        "description": "After knocking out any Pok\u00e9mon, raises its Sp. Atk and Sp. Def.",
+        "flags": null
+    },
+    "WISHMAKER": {
+        "id": "WISHMAKER",
+        "name": "Wish Maker",
+        "description": "The random added effects of moves by all battlers always activate.",
+        "flags": null
+    },
+    "WORLDQUAKE": {
+        "id": "WORLDQUAKE",
+        "name": "Worldquake",
+        "description": "Ground-type moves deal 50% more damage in eclipse.",
+        "flags": [
+            "EclipseSynergy"
+        ]
+    },
+    "WRATHINSTINCT": {
+        "id": "WRATHINSTINCT",
+        "name": "Wrath Instinct",
+        "description": "Uses Dragon Dance if an attack lowers its HP to half or below.",
+        "flags": null
+    },
+    "WREAKHAVOC": {
+        "id": "WREAKHAVOC",
+        "name": "Wreak Havoc",
+        "description": "Boosts the power of rampaging moves by 30%, and makes them physical or special based on which would be more effective.",
+        "flags": null
+    }
+}

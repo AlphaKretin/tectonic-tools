@@ -1,6 +1,8 @@
+import { abilities } from "../abilities";
 import { PokemonTribe, PokemonType } from "../basicData";
 import { moves } from "../moves";
 import { Evolution, LoadedPokemon } from "../pokemon";
+import { Ability } from "./Ability";
 import { Move } from "./Move";
 
 export interface Stats {
@@ -32,6 +34,7 @@ export class Pokemon {
     type1: PokemonType;
     type2?: PokemonType;
     stats: Stats;
+    abilities: Ability[];
     level_moves: [number, Move][];
     line_moves: Move[];
     tutor_moves: Move[];
@@ -50,6 +53,7 @@ export class Pokemon {
             this.type2 = mon.type2 as PokemonType;
         }
         this.stats = mon.stats;
+        this.abilities = mon.abilities.map((a) => abilities[a]);
         this.level_moves = mon.level_moves.map((m) => [m[0] as number, moves[m[1]]]);
         this.line_moves = [];
         if (mon.line_moves !== null) {

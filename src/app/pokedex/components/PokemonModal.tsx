@@ -9,7 +9,7 @@ interface PokemonModalProps {
     onClose: () => void;
 }
 
-const tabs = ["Info", "Stats", "Abilities", "Moves"] as const;
+const tabs = ["Info", "Abilities", "Stats", "Moves"] as const;
 export type Tab = (typeof tabs)[number];
 
 const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon, onClose }) => {
@@ -122,6 +122,14 @@ const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon, onClose }) => {
                                 <p className="text-gray-600 dark:text-gray-300">{currentPokemon.pokedex}</p>
                             </div>
                         </PokemonTab>
+                        <PokemonTab tab="Abilities" activeTab={activeTab}>
+                            {currentPokemon.abilities.map((a) => (
+                                <>
+                                    <h3 className="font-semibold text-gray-800 dark:text-gray-100">{a.name}</h3>
+                                    <p className="text-gray-600 dark:text-gray-300">{a.description}</p>
+                                </>
+                            ))}
+                        </PokemonTab>
                         {activeTab === "Stats" && (
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                 <div>
@@ -140,16 +148,6 @@ const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon, onClose }) => {
                                     <h3 className="font-semibold text-gray-800 dark:text-gray-100">Speed</h3>
                                     <p className="text-gray-600 dark:text-gray-300">{currentPokemon.stats.speed}</p>
                                 </div>
-                            </div>
-                        )}
-                        {activeTab === "Abilities" && (
-                            <div>
-                                <h3 className="font-semibold text-gray-800 dark:text-gray-100">Abilities</h3>
-                                <ul className="list-disc list-inside text-gray-600 dark:text-gray-300">
-                                    {/* {currentPokemon.abilities.map((ability, index) => (
-                                        <li key={index}>{ability}</li>
-                                    ))} */}
-                                </ul>
                             </div>
                         )}
                         {activeTab === "Moves" && (

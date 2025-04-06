@@ -13,6 +13,7 @@ export interface LoadedPokemon {
     type1: string;
     type2: string | null;
     stats: Stats;
+    abilities: string[];
     level_moves: (number | string)[][];
     line_moves: string[] | null;
     tutor_moves: string[] | null;
@@ -35,6 +36,7 @@ export const nullPokemon: Pokemon = new Pokemon(
         type1: "Normal",
         type2: null,
         stats: blankStats,
+        abilities: [],
         level_moves: [],
         line_moves: null,
         tutor_moves: null,
