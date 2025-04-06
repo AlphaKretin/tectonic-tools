@@ -20,7 +20,7 @@ import { nullTrainer, trainers } from "../data/trainers";
 import { Move } from "../data/types/Move";
 import { blankStats, Pokemon, Stats } from "../data/types/Pokemon";
 import { Trainer } from "../data/types/Trainer";
-import { CalcPokemon, calculateDamage, DamageResult } from "./damageCalc";
+import { calculateDamage, DamageResult, PokemonStats } from "./damageCalc";
 
 function isNull(o: Pokemon | Pokemon | Move | Trainer | undefined): boolean {
     return !o || o.name === "";
@@ -251,14 +251,12 @@ const PokemonDamageCalculator: NextPage = () => {
         return "Adaptive (" + trueCategory + ")";
     }
 
-    const playerPokemonWithStats: CalcPokemon = {
-        ...playerPokemon,
+    const playerPokemonStats: PokemonStats = {
         stats: playerCalculatedStats,
         level: playerLevel,
         status: playerStatusEffect,
     };
-    const opponentPokemonWithStats: CalcPokemon = {
-        ...opponentPokemon,
+    const opponentPokemonStats: PokemonStats = {
         stats: opponentCalculatedStats,
         level: opponentLevel,
         status: opponentStatusEffect,
@@ -269,7 +267,14 @@ const PokemonDamageCalculator: NextPage = () => {
         criticalHit,
     };
 
-    const damageResult = calculateDamage(playerMove, playerPokemonWithStats, opponentPokemonWithStats, battleState);
+    const damageResult = calculateDamage(
+        playerMove,
+        playerPokemon,
+        playerPokemonStats,
+        opponentPokemon,
+        opponentPokemonStats,
+        battleState
+    );
 
     function pokemonSelect(side: Side) {
         return (
@@ -507,7 +512,8 @@ const PokemonDamageCalculator: NextPage = () => {
                                                     <option value="" className="bg-gray-800">
                                                         Select Move
                                                     </option>
-                                                    {playerPokemon.moves
+                                                    {playerPokemon
+                                                        .allMoves()
                                                         .filter((m) => m.bp > 0)
                                                         .map((m) => (
                                                             <option
@@ -544,7 +550,7 @@ const PokemonDamageCalculator: NextPage = () => {
                                                     <TypeBadge type1={playerMove.type} type2={undefined} />
                                                     <div className="text-right text-gray-400">Power:</div>
                                                     <div className="text-left text-gray-200">
-                                                        {playerMove.getPower(playerPokemonWithStats)}
+                                                        {playerMove.getPower(playerPokemonStats)}
                                                     </div>
                                                     <div className="text-right text-gray-400">Category:</div>
                                                     <div className="text-left text-gray-200">

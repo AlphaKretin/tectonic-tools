@@ -1,40 +1,49 @@
 import loadedPokemon from "public/data/pokemon.json";
-import { PokemonType } from "./basicData";
-import { moves } from "./moves";
-import { Pokemon, Stats } from "./types/Pokemon";
+import { blankStats, Pokemon, Stats } from "./types/Pokemon";
 
-interface LoadedPokemon {
+export interface Evolution {
+    target: string;
+    method: string;
+    param: string;
+}
+
+export interface LoadedPokemon {
     id: string;
     name: string;
     type1: string;
-    type2: string;
+    type2: string | null;
     stats: Stats;
-    moves: string[];
-}
-
-function loadPokemon(mon: LoadedPokemon, i: number): Pokemon {
-    const newMoves = mon.moves.map((m) => moves[m]);
-    const type2 = mon.type2.length > 0 ? (mon.type2 as PokemonType) : undefined;
-    return { ...mon, moves: newMoves, type1: mon.type1 as PokemonType, type2, dex: i + 1 };
+    level_moves: (number | string)[][];
+    line_moves: string[] | null;
+    tutor_moves: string[] | null;
+    tribes: string[] | null;
+    height: number;
+    weight: number;
+    kind: string;
+    pokedex: string;
+    evos: Evolution[] | null;
 }
 
 export const pokemon: Record<string, Pokemon> = Object.fromEntries(
-    Object.entries(loadedPokemon).map(([id, mon], i) => [id, loadPokemon(mon, i)])
+    Object.entries(loadedPokemon).map(([id, mon], i) => [id, new Pokemon(mon, i + 1)])
 );
 
-export const nullPokemon: Pokemon = {
-    id: "",
-    dex: 0,
-    name: "",
-    type1: "Normal",
-    type2: "Normal",
-    stats: {
-        hp: 0,
-        attack: 0,
-        defense: 0,
-        speed: 0,
-        spatk: 0,
-        spdef: 0,
+export const nullPokemon: Pokemon = new Pokemon(
+    {
+        id: "id",
+        name: "",
+        type1: "Normal",
+        type2: null,
+        stats: blankStats,
+        level_moves: [],
+        line_moves: null,
+        tutor_moves: null,
+        tribes: null,
+        height: 0,
+        weight: 0,
+        kind: "",
+        pokedex: "",
+        evos: null,
     },
-    moves: [],
-};
+    0
+);

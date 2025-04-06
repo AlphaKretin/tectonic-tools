@@ -5,9 +5,10 @@ import { typeChart } from "../data/typeChart";
 import { Move } from "../data/types/Move";
 import { Pokemon, Stats } from "../data/types/Pokemon";
 
-export interface CalcPokemon extends Pokemon {
+export interface PokemonStats {
     level: number;
     status: StatusEffect;
+    stats: Stats;
 }
 
 export interface DamageResult {
@@ -28,8 +29,10 @@ export interface BattleState {
 
 export function calculateDamage(
     move: Move,
-    user: CalcPokemon,
-    target: CalcPokemon,
+    user: Pokemon,
+    userStats: PokemonStats,
+    target: Pokemon,
+    targetStats: PokemonStats,
     battleState: BattleState
 ): DamageResult {
     if (move.category === "Status") return { damage: 0, percentage: 0, hits: 0, typeEffectMult: 0 };
@@ -44,14 +47,23 @@ export function calculateDamage(
     const type = move.type; // TODO: implement moves that can change type
 
     // Calculate base power of move
-    const baseDmg = move.getPower(user);
+    const baseDmg = move.getPower(userStats);
 
     // In vanilla Tectonic, critical hit determination happens here
     // However, for calculation, it's determined by the UI
 
     // Calculate the actual damage dealt, and assign it to the damage state for tracking
-    const [damage, typeEffectMult] = calculateDamageForHit(move, user, target, type, baseDmg, battleState);
-    const percentage = damage / target.stats.hp;
+    const [damage, typeEffectMult] = calculateDamageForHit(
+        move,
+        user,
+        userStats,
+        target,
+        targetStats,
+        type,
+        baseDmg,
+        battleState
+    );
+    const percentage = damage / targetStats.stats.hp;
     const hits = Math.ceil(1 / percentage);
     if (move instanceof MultiHitMove) {
         const minTotal = damage * move.minHits;
@@ -63,8 +75,8 @@ export function calculateDamage(
             typeEffectMult,
             minTotal,
             maxTotal,
-            minPercentage: minTotal / target.stats.hp,
-            maxPercentage: maxTotal / target.stats.hp,
+            minPercentage: minTotal / targetStats.stats.hp,
+            maxPercentage: maxTotal / targetStats.stats.hp,
         };
     }
     return { damage, percentage, hits, typeEffectMult };
@@ -72,20 +84,30 @@ export function calculateDamage(
 
 function calculateDamageForHit(
     move: Move,
-    user: CalcPokemon,
-    target: CalcPokemon,
+    user: Pokemon,
+    userStats: PokemonStats,
+    target: Pokemon,
+    targetStats: PokemonStats,
     type: PokemonType,
     baseDmg: number,
     battleState: BattleState
 ): [number, number] {
     // Get the relevant attacking and defending stat values (after steps)
-    const [attack, defense] = damageCalcStats(move, user, target);
+    const [attack, defense] = damageCalcStats(move, userStats, targetStats);
 
     // Calculate all multiplier effects
-    const [multipliers, typeEffectMult] = calcDamageMultipliers(move, user, target, battleState, type);
+    const [multipliers, typeEffectMult] = calcDamageMultipliers(
+        move,
+        user,
+        userStats,
+        target,
+        targetStats,
+        battleState,
+        type
+    );
 
     // Main damage calculation
-    let finalCalculatedDamage = calcDamageWithMultipliers(baseDmg, attack, defense, user.level, multipliers);
+    let finalCalculatedDamage = calcDamageWithMultipliers(baseDmg, attack, defense, userStats.level, multipliers);
     finalCalculatedDamage = Math.max(Math.round(finalCalculatedDamage * multipliers.final_damage_multiplier), 1);
     finalCalculatedDamage = flatDamageReductions(finalCalculatedDamage);
 
@@ -137,10 +159,10 @@ function calcBasicDamage(
     return Math.floor(2.0 + (levelMultiplier * baseDamage * userAttackingStat) / targetDefendingStat / 50.0);
 }
 
-function damageCalcStats(move: Move, user: CalcPokemon, target: CalcPokemon): [number, number] {
+function damageCalcStats(move: Move, userStats: PokemonStats, targetStats: PokemonStats): [number, number] {
     let trueCategory: "Physical" | "Special";
     if (move.category === "Adaptive") {
-        if (user.stats.attack >= user.stats.spatk) {
+        if (userStats.stats.attack >= userStats.stats.spatk) {
             trueCategory = "Physical";
         } else {
             trueCategory = "Special";
@@ -154,7 +176,7 @@ function damageCalcStats(move: Move, user: CalcPokemon, target: CalcPokemon): [n
     // Calculate category for adaptive moves
     // Calculate user's attack stat
     // TODO: implement moves like foul play or body press
-    const attacking_stat_holder = user;
+    const attacking_stat_holder = userStats;
     const attacking_stat: keyof Stats = trueCategory === "Physical" ? "attack" : "spatk";
 
     // TODO: implement abilities and weather
@@ -171,7 +193,7 @@ function damageCalcStats(move: Move, user: CalcPokemon, target: CalcPokemon): [n
     const attack = attacking_stat_holder.stats[attacking_stat];
 
     // Calculate target's defense stat
-    const defending_stat_holder = target;
+    const defending_stat_holder = targetStats;
     const defending_stat: keyof Stats = trueCategory === "Physical" ? "defense" : "spdef";
     // TODO: implement stat steps
     // let defense_step = defending_stat_holder.steps[defending_stat];
@@ -328,8 +350,8 @@ function damageCalcStats(move: Move, user: CalcPokemon, target: CalcPokemon): [n
 
 function pbCalcStatusesDamageMultipliers(
     move: Move,
-    user: CalcPokemon,
-    target: CalcPokemon,
+    user: PokemonStats,
+    target: PokemonStats,
     multipliers: DamageMultipliers
 ): DamageMultipliers {
     // TODO: Handle abilities
@@ -503,8 +525,10 @@ function pbCalcStatusesDamageMultipliers(
 // }
 
 function pbCalcTypeBasedDamageMultipliers(
-    user: CalcPokemon,
-    target: CalcPokemon,
+    user: Pokemon,
+    userStats: PokemonStats,
+    target: Pokemon,
+    targetStats: PokemonStats,
     type: PokemonType,
     multipliers: DamageMultipliers
 ): [DamageMultipliers, number] {
@@ -661,8 +685,10 @@ interface DamageMultipliers {
 
 function calcDamageMultipliers(
     move: Move,
-    user: CalcPokemon,
-    target: CalcPokemon,
+    user: Pokemon,
+    userStats: PokemonStats,
+    target: Pokemon,
+    targetStats: PokemonStats,
     battleState: BattleState,
     type: PokemonType
 ): [DamageMultipliers, number] {
@@ -676,10 +702,10 @@ function calcDamageMultipliers(
     // multipliers = pbCalcAbilityDamageMultipliers(user, target, type, baseDmg, multipliers);
     // TODO: Handle weather
     // multipliers = pbCalcWeatherDamageMultipliers(user, target, type, multipliers);
-    multipliers = pbCalcStatusesDamageMultipliers(move, user, target, multipliers);
+    multipliers = pbCalcStatusesDamageMultipliers(move, userStats, targetStats, multipliers);
     // TODO: Handle Protect-esque moves
     // multipliers = pbCalcProtectionsDamageMultipliers(user, target, multipliers);
-    const typeResult = pbCalcTypeBasedDamageMultipliers(user, target, type, multipliers);
+    const typeResult = pbCalcTypeBasedDamageMultipliers(user, userStats, target, targetStats, type, multipliers);
     multipliers = typeResult[0];
     const typeEffectMult = typeResult[1];
     // TODO: Handle tribes

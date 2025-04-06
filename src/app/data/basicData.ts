@@ -22,6 +22,33 @@ export const pokemonTypes = [
 
 export type PokemonType = (typeof pokemonTypes)[number];
 
+export const pokemonTribes = [
+    "Animated",
+    "Artillery",
+    "Assassin",
+    "Bushwhacker",
+    "Caretaker",
+    "Charmer",
+    "Deceiver",
+    "Fortune",
+    "Harmonic",
+    "Industrious",
+    "Loyal",
+    "Mystic",
+    "Noble",
+    "Radiant",
+    "Scavenger",
+    "Scourge",
+    "Scrapper",
+    "Serene",
+    "Stampede",
+    "Tactician",
+    "Tyrannical",
+    "Warrior",
+] as const;
+
+export type PokemonTribe = (typeof pokemonTribes)[number];
+
 export type MoveCategory = "Physical" | "Special" | "Status" | "Adaptive";
 
 export interface StylePoints {
