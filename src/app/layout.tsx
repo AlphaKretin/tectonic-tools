@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: "Pokemon Tectonic Damage Calculator",
-    description: "A damage calculator using the modified mechanics of Pokemon Tectonic",
+    title: "Pokémon Tectonic Tools",
+    description: "Various tools for players of the fangame Pokémon Tectonic",
 };
 
 export default function RootLayout({
