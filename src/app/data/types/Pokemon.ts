@@ -85,4 +85,15 @@ export class Pokemon {
     public hasType(type: PokemonType): boolean {
         return this.type1 === type || this.type2 === type;
     }
+
+    public BST(): number {
+        return (
+            this.stats.hp +
+            this.stats.attack +
+            this.stats.defense +
+            this.stats.spatk +
+            this.stats.spdef +
+            this.stats.speed
+        );
+    }
 }

@@ -3,13 +3,24 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import TypeBadge from "../../../components/TypeBadge";
 import PokemonTab from "./PokemonTab";
+import StatRow from "./StatRow";
 
 interface PokemonModalProps {
     pokemon: Pokemon | null;
     onClose: () => void;
 }
 
-const tabs = ["Info", "Abilities", "Stats", "Moves"] as const;
+const tabs = [
+    "Info",
+    "Abilities",
+    "Stats",
+    // "Def. Matchups",
+    // "Atk. Matchups",
+    // "Level Up Moves",
+    // "Tutor Moves",
+    // "Evolutions",
+    // "Encounters",
+] as const;
 export type Tab = (typeof tabs)[number];
 
 const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon, onClose }) => {
@@ -130,36 +141,32 @@ const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon, onClose }) => {
                                 </>
                             ))}
                         </PokemonTab>
-                        {activeTab === "Stats" && (
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                <div>
-                                    <h3 className="font-semibold text-gray-800 dark:text-gray-100">HP</h3>
-                                    <p className="text-gray-600 dark:text-gray-300">{currentPokemon.stats.hp}</p>
-                                </div>
-                                <div>
-                                    <h3 className="font-semibold text-gray-800 dark:text-gray-100">Attack</h3>
-                                    <p className="text-gray-600 dark:text-gray-300">{currentPokemon.stats.attack}</p>
-                                </div>
-                                <div>
-                                    <h3 className="font-semibold text-gray-800 dark:text-gray-100">Defense</h3>
-                                    <p className="text-gray-600 dark:text-gray-300">{currentPokemon.stats.defense}</p>
-                                </div>
-                                <div>
-                                    <h3 className="font-semibold text-gray-800 dark:text-gray-100">Speed</h3>
-                                    <p className="text-gray-600 dark:text-gray-300">{currentPokemon.stats.speed}</p>
-                                </div>
-                            </div>
-                        )}
-                        {activeTab === "Moves" && (
+                        <PokemonTab tab="Stats" activeTab={activeTab}>
                             <div>
-                                <h3 className="font-semibold text-gray-800 dark:text-gray-100">Moves</h3>
-                                <ul className="list-disc list-inside text-gray-600 dark:text-gray-300">
-                                    {currentPokemon.allMoves().map((move, index) => (
-                                        <li key={index}>{move.name}</li>
-                                    ))}
-                                </ul>
+                                <h3 className="font-semibold text-gray-800 dark:text-gray-100">Stats</h3>
+                                <table className="table-auto w-full mt-4 border-collapse border border-gray-300 dark:border-gray-700">
+                                    <thead>
+                                        <tr>
+                                            <th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left text-gray-800 dark:text-gray-100">
+                                                Stat
+                                            </th>
+                                            <th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left text-gray-800 dark:text-gray-100">
+                                                Value
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <StatRow name="HP" value={currentPokemon.stats.hp}></StatRow>
+                                        <StatRow name="Attack" value={currentPokemon.stats.attack}></StatRow>
+                                        <StatRow name="Defense" value={currentPokemon.stats.defense}></StatRow>
+                                        <StatRow name="Sp. Atk" value={currentPokemon.stats.spatk}></StatRow>
+                                        <StatRow name="Sp. Def" value={currentPokemon.stats.spdef}></StatRow>
+                                        <StatRow name="Speed" value={currentPokemon.stats.speed}></StatRow>
+                                        <StatRow name="Total" value={currentPokemon.BST()}></StatRow>
+                                    </tbody>
+                                </table>
                             </div>
-                        )}
+                        </PokemonTab>
                     </div>
                 </div>
             </div>
