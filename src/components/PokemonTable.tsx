@@ -1,6 +1,7 @@
+import { PokemonTableProps } from "@/app/pokedex/page";
 import Image from "next/image";
-import { PokemonTableProps } from "../page";
-import { getTypeBadgeColourClass, getTypeGradient } from "./colours";
+import { getTypeGradient } from "./colours";
+import TypeBadge from "./TypeBadge";
 
 const PokemonTable: React.FC<PokemonTableProps> = ({ mons, onRowClick }) => {
     return (
@@ -25,7 +26,9 @@ const PokemonTable: React.FC<PokemonTableProps> = ({ mons, onRowClick }) => {
                         <tr
                             key={pokemon.id}
                             onClick={() => onRowClick(pokemon)}
-                            className={`hover:bg-blue-50 dark:hover:bg-blue-900 cursor-pointer transition-colors ${getTypeGradient(pokemon)}`}
+                            className={`hover:bg-blue-50 dark:hover:bg-blue-900 cursor-pointer transition-colors ${getTypeGradient(
+                                pokemon
+                            )}`}
                         >
                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-200">
                                 <Image
@@ -43,24 +46,7 @@ const PokemonTable: React.FC<PokemonTableProps> = ({ mons, onRowClick }) => {
                                 {pokemon.name}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                                <div className="flex space-x-2">
-                                    <span
-                                        className={`px-2 py-1 rounded-full text-white text-xs font-semibold ${getTypeBadgeColourClass(
-                                            pokemon.type1
-                                        )}`}
-                                    >
-                                        {pokemon.type1}
-                                    </span>
-                                    {pokemon.type2 && (
-                                        <span
-                                            className={`px-2 py-1 rounded-full text-white text-xs font-semibold ${getTypeBadgeColourClass(
-                                                pokemon.type2
-                                            )}`}
-                                        >
-                                            {pokemon.type2}
-                                        </span>
-                                    )}
-                                </div>
+                                <TypeBadge type1={pokemon.type1} type2={pokemon.type2} />
                             </td>
                         </tr>
                     ))}

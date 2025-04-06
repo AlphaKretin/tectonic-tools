@@ -1,6 +1,6 @@
 import { Pokemon } from "@/app/data/types/Pokemon";
 import { useEffect, useState } from "react";
-import { getTypeBadgeColourClass } from "./colours";
+import TypeBadge from "./TypeBadge";
 
 interface PokemonModalProps {
     pokemon: Pokemon | null;
@@ -60,24 +60,7 @@ const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon, onClose }) => {
                             <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
                                 #{currentPokemon.dex}: {currentPokemon.name}
                             </h2>
-                            <div className="flex space-x-2 mt-1">
-                                <span
-                                    className={`px-2 py-1 rounded-full text-white text-xs font-semibold ${getTypeBadgeColourClass(
-                                        currentPokemon.type1
-                                    )}`}
-                                >
-                                    {currentPokemon.type1}
-                                </span>
-                                {currentPokemon.type2 && (
-                                    <span
-                                        className={`px-2 py-1 rounded-full text-white text-xs font-semibold ${getTypeBadgeColourClass(
-                                            currentPokemon.type2
-                                        )}`}
-                                    >
-                                        {currentPokemon.type2}
-                                    </span>
-                                )}
-                            </div>
+                            <TypeBadge type1={currentPokemon.type1} type2={currentPokemon.type2} />
                         </div>
                         <button
                             onClick={handleClose}

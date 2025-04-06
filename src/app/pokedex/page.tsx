@@ -1,5 +1,6 @@
 "use client";
 
+import InternalLink from "@/components/InternalLink";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
@@ -32,9 +33,14 @@ const Home: NextPage = () => {
             </Head>
 
             <main className="container mx-auto py-8 px-4">
-                <h1 className="text-3xl font-bold text-center mb-8 text-blue-800 dark:text-blue-300">
-                    Pokémon Tectonic Online Pokédex
-                </h1>
+                <div className="flex flex-col justify-center items-center mb-10 relative">
+                    <h1 className="text-3xl font-bold text-center mb-8 text-blue-800 dark:text-blue-300">
+                        Pokémon Tectonic Online Pokédex
+                    </h1>
+                    <p>
+                        <InternalLink url="../">Return to homepage</InternalLink>
+                    </p>
+                </div>
 
                 <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
                     <PokemonTable mons={Object.values(pokemon)} onRowClick={handleRowClick} />

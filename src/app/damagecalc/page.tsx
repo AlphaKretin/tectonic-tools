@@ -1,6 +1,7 @@
 "use client";
 
 import InternalLink from "@/components/InternalLink";
+import TypeBadge from "@/components/TypeBadge";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -321,11 +322,9 @@ const PokemonDamageCalculator: NextPage = () => {
         return !isNull(getPokemon[side]) ? (
             <div className={`space-y-6`}>
                 {/* Pokemon type */}
-                <p className="text-center">
-                    {getPokemon[side].type2
-                        ? getPokemon[side].type1 + " / " + getPokemon[side].type2
-                        : getPokemon[side].type1}
-                </p>
+                <div className="text-center">
+                    <TypeBadge type1={getPokemon[side].type1} type2={getPokemon[side].type2} />
+                </div>
 
                 {/* Level input */}
                 <div className="text-center">
@@ -542,7 +541,7 @@ const PokemonDamageCalculator: NextPage = () => {
                                                 </h3>
                                                 <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
                                                     <div className="text-right text-gray-400">Type:</div>
-                                                    <div className="text-left text-gray-200">{playerMove.type}</div>
+                                                    <TypeBadge type1={playerMove.type} type2={undefined} />
                                                     <div className="text-right text-gray-400">Power:</div>
                                                     <div className="text-left text-gray-200">
                                                         {playerMove.getPower(playerPokemonWithStats)}

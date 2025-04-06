@@ -15,7 +15,7 @@ interface LoadedPokemon {
 function loadPokemon(mon: LoadedPokemon, i: number): Pokemon {
     const newMoves = mon.moves.map((m) => moves[m]);
     const type2 = mon.type2.length > 0 ? (mon.type2 as PokemonType) : undefined;
-    return { ...mon, moves: newMoves, type1: mon.type1 as PokemonType, type2, dex: i };
+    return { ...mon, moves: newMoves, type1: mon.type1 as PokemonType, type2, dex: i + 1 };
 }
 
 export const pokemon: Record<string, Pokemon> = Object.fromEntries(
