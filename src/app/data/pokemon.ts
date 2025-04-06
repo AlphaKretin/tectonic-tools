@@ -12,18 +12,19 @@ interface LoadedPokemon {
     moves: string[];
 }
 
-function loadPokemon(mon: LoadedPokemon): Pokemon {
+function loadPokemon(mon: LoadedPokemon, i: number): Pokemon {
     const newMoves = mon.moves.map((m) => moves[m]);
     const type2 = mon.type2.length > 0 ? (mon.type2 as PokemonType) : undefined;
-    return { ...mon, moves: newMoves, type1: mon.type1 as PokemonType, type2 };
+    return { ...mon, moves: newMoves, type1: mon.type1 as PokemonType, type2, dex: i };
 }
 
 export const pokemon: Record<string, Pokemon> = Object.fromEntries(
-    Object.entries(loadedPokemon).map(([id, mon]) => [id, loadPokemon(mon)])
+    Object.entries(loadedPokemon).map(([id, mon], i) => [id, loadPokemon(mon, i)])
 );
 
 export const nullPokemon: Pokemon = {
     id: "",
+    dex: 0,
     name: "",
     type1: "Normal",
     type2: "Normal",

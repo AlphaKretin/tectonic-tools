@@ -1,9 +1,9 @@
-import { PokemonType } from "./data/basicData";
-import { MultiHitMove } from "./data/moves/MultiHitMove";
-import { StatusEffect } from "./data/statusEffects";
-import { typeChart } from "./data/typeChart";
-import { Move } from "./data/types/Move";
-import { Pokemon, Stats } from "./data/types/Pokemon";
+import { PokemonType } from "../data/basicData";
+import { MultiHitMove } from "../data/moves/MultiHitMove";
+import { StatusEffect } from "../data/statusEffects";
+import { typeChart } from "../data/typeChart";
+import { Move } from "../data/types/Move";
+import { Pokemon, Stats } from "../data/types/Pokemon";
 
 export interface CalcPokemon extends Pokemon {
     level: number;

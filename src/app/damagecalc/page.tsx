@@ -11,7 +11,6 @@ import ColumnBody from "../../components/ColumnBody";
 import ColumnHeader from "../../components/ColumnHeader";
 import Dropdown from "../../components/DropDown";
 import InputLabel from "../../components/InputLabel";
-import { CalcPokemon, calculateDamage, DamageResult } from "../damageCalc";
 import { defaultStylePoints, StylePoints } from "../data/basicData";
 import { moves, nullMove } from "../data/moves";
 import { nullPokemon, pokemon } from "../data/pokemon";
@@ -20,6 +19,7 @@ import { nullTrainer, trainers } from "../data/trainers";
 import { Move } from "../data/types/Move";
 import { blankStats, Pokemon, Stats } from "../data/types/Pokemon";
 import { Trainer } from "../data/types/Trainer";
+import { CalcPokemon, calculateDamage, DamageResult } from "./damageCalc";
 
 function isNull(o: Pokemon | Pokemon | Move | Trainer | undefined): boolean {
     return !o || o.name === "";
@@ -319,7 +319,7 @@ const PokemonDamageCalculator: NextPage = () => {
 
     function pokemonStats(side: Side) {
         return !isNull(getPokemon[side]) ? (
-            <div className="space-y-6">
+            <div className={`space-y-6`}>
                 {/* Pokemon type */}
                 <p className="text-center">
                     {getPokemon[side].type2

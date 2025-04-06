@@ -21,6 +21,7 @@ export const blankStats: Stats = {
 
 export interface Pokemon {
     id: string;
+    dex: number;
     name: string;
     type1: PokemonType;
     type2?: PokemonType;
