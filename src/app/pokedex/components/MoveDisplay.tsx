@@ -1,5 +1,6 @@
 "use client";
 
+import { moveCategories, MoveCategory } from "@/app/data/basicData";
 import { nullMove } from "@/app/data/moves";
 import { Move } from "@/app/data/types/Move";
 import { Pokemon } from "@/app/data/types/Pokemon";
@@ -9,27 +10,48 @@ import { useState } from "react";
 
 export default function MoveDisplay({ pokemon, moveKey }: { pokemon: Pokemon; moveKey: "level" | "tutor" }) {
     const [selectedMove, setSelectedMove] = useState<Move>(nullMove);
+    const [selectedCategory, setSelectedCategory] = useState<MoveCategory>("Physical");
     const moves =
         moveKey === "level" ? pokemon.level_moves.map((m) => m[1]) : pokemon.line_moves.concat(pokemon.tutor_moves);
     const levels = moveKey === "level" ? pokemon.level_moves.map((m) => m[0]) : [];
+    const filteredMoves = levels.length === 0 ? moves.filter((move) => move.category === selectedCategory) : moves;
+
     return (
         <>
             <div className="flex">
                 {/* Moves List */}
-                <div className="w-1/2 max-h-64 overflow-y-auto">
-                    <ul className="list-disc list-inside text-gray-600 dark:text-gray-300">
-                        {moves.map((move, index) => (
-                            <li
-                                key={index}
-                                className="cursor-pointer hover:text-blue-600 dark:hover:text-blue-400"
-                                onMouseEnter={() => setSelectedMove(move)}
-                                onClick={() => setSelectedMove(move)}
+                <div className="w-1/2">
+                    {levels.length === 0 && (
+                        <div className="mb-2">
+                            <label className="text-gray-600 dark:text-gray-300 mr-2">Category:</label>
+                            <select
+                                value={selectedCategory}
+                                onChange={(e) => setSelectedCategory(e.target.value as MoveCategory)}
+                                className="border rounded px-2 py-1 text-gray-600 dark:text-gray-300 bg-white dark:bg-gray-800"
                             >
-                                {levels.length > 0 ? (levels[index] === 0 ? "E: " : `${levels[index]}: `) : ""}
-                                <span className={move.isSTAB(pokemon) ? "font-semibold" : ""}>{move.name}</span>
-                            </li>
-                        ))}
-                    </ul>
+                                {moveCategories.map((c) => (
+                                    <option value={c} key={c}>
+                                        {c}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    )}
+                    <div className="max-h-64 overflow-y-auto">
+                        <ul className="list-disc list-inside text-gray-600 dark:text-gray-300">
+                            {filteredMoves.map((move, index) => (
+                                <li
+                                    key={index}
+                                    className="cursor-pointer hover:text-blue-600 dark:hover:text-blue-400"
+                                    onMouseEnter={() => setSelectedMove(move)}
+                                    onClick={() => setSelectedMove(move)}
+                                >
+                                    {levels.length > 0 ? (levels[index] === 0 ? "E: " : `${levels[index]}: `) : ""}
+                                    <span className={move.isSTAB(pokemon) ? "font-semibold" : ""}>{move.name}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
 
                 {/* Move Details */}

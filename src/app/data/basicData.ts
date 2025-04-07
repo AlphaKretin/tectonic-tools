@@ -49,7 +49,9 @@ export const pokemonTribes = [
 
 export type PokemonTribe = (typeof pokemonTribes)[number];
 
-export type MoveCategory = "Physical" | "Special" | "Status" | "Adaptive";
+export const moveCategories = ["Physical", "Special", "Status", "Adaptive"] as const;
+
+export type MoveCategory = (typeof moveCategories)[number];
 
 export interface StylePoints {
     hp: number;
