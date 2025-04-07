@@ -29,6 +29,7 @@ export const moves: Record<string, Move> = Object.fromEntries(
 export const nullMove: Move = new Move({
     id: "",
     name: "",
+    description: "",
     type: "Normal",
     bp: 0,
     category: "Status",

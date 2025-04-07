@@ -20,11 +20,8 @@ import { nullTrainer, trainers } from "../data/trainers";
 import { Move } from "../data/types/Move";
 import { blankStats, Pokemon, Stats } from "../data/types/Pokemon";
 import { Trainer } from "../data/types/Trainer";
+import { isNull } from "../data/util";
 import { calculateDamage, DamageResult, PokemonStats } from "./damageCalc";
-
-function isNull(o: Pokemon | Pokemon | Move | Trainer | undefined): boolean {
-    return !o || o.name === "";
-}
 
 function isKey<T extends object>(k: string | number | symbol, o: T): k is keyof T {
     return k in o;

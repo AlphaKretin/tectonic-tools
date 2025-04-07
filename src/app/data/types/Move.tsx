@@ -7,8 +7,11 @@ import { Pokemon } from "./Pokemon";
 export interface LoadedMove {
     id: string;
     name: string;
+    description: string;
     type: string;
     bp: number;
+    accuracy: number;
+    pp: number;
     category: string;
     target: string;
     minHits?: number;
@@ -38,15 +41,21 @@ const spreadTargets: MoveTarget[] = ["AllBattlers", "AllNearFoes", "AllNearOther
 export class Move {
     id: string;
     name: string;
+    description: string;
     type: PokemonType;
     bp: number;
+    accuracy: number;
+    pp: number;
     category: MoveCategory;
     target: MoveTarget;
     constructor(loadedMove: LoadedMove) {
         this.id = loadedMove.id;
         this.name = loadedMove.name;
+        this.description = loadedMove.description;
         this.type = loadedMove.type as PokemonType;
         this.bp = loadedMove.bp;
+        this.accuracy = loadedMove.accuracy;
+        this.pp = loadedMove.pp;
         this.category = loadedMove.category as MoveCategory;
         this.target = loadedMove.target as MoveTarget;
     }

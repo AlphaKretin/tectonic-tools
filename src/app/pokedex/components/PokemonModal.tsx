@@ -1,9 +1,11 @@
 import { PokemonType, pokemonTypes } from "@/app/data/basicData";
 import { items } from "@/app/data/items";
-import { moves } from "@/app/data/moves";
+import { moves, nullMove } from "@/app/data/moves";
 import { pokemon } from "@/app/data/pokemon";
 import { typeChart } from "@/app/data/typeChart";
+import { Move } from "@/app/data/types/Move";
 import { Evolution, Pokemon } from "@/app/data/types/Pokemon";
+import { isNull } from "@/app/data/util";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import TypeBadge from "../../../components/TypeBadge";
@@ -21,7 +23,7 @@ const tabs = [
     "Stats",
     "Def. Matchups",
     "Atk. Matchups",
-    // "Level Up Moves",
+    "Level Up Moves",
     // "Tutor Moves",
     "Evolutions",
     // "Encounters",
@@ -33,6 +35,7 @@ const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon: mon, onClose }) =>
     const [isRendered, setIsRendered] = useState(false);
     const [currentPokemon, setCurrentPokemon] = useState(mon);
     const [activeTab, setActiveTab] = useState<Tab>("Info"); // Track active tab
+    const [selectedMove, setSelectedMove] = useState<Move>(nullMove);
 
     useEffect(() => {
         if (mon) {
@@ -366,6 +369,62 @@ const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon: mon, onClose }) =>
                                                     ))}
                                             </ul>
                                         </div>
+                                    )}
+                                </div>
+                            </div>
+                        </PokemonTab>
+                        <PokemonTab tab="Level Up Moves" activeTab={activeTab}>
+                            <div className="flex">
+                                {/* Moves List */}
+                                <div className="w-1/2">
+                                    <h3 className="font-semibold text-gray-800 dark:text-gray-100">Level Up Moves</h3>
+                                    <ul className="list-disc list-inside text-gray-600 dark:text-gray-300">
+                                        {currentPokemon.level_moves.map((move, index) => (
+                                            <li
+                                                key={index}
+                                                className="cursor-pointer hover:text-blue-600 dark:hover:text-blue-400"
+                                                onMouseEnter={() => setSelectedMove(move[1])}
+                                                onClick={() => setSelectedMove(move[1])}
+                                            >
+                                                {move[0] === 0 ? "E" : `${move[0]}`}:{" "}
+                                                <span className="font-semibold">{move[1].name}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                {/* Move Details */}
+                                <div className="w-1/2 pl-4">
+                                    {!isNull(selectedMove) ? (
+                                        <div>
+                                            <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
+                                                {selectedMove.name}
+                                            </h4>
+                                            <p className="text-gray-600 dark:text-gray-300">
+                                                {selectedMove.description}
+                                            </p>
+                                            <div className="mt-2 text-gray-600 dark:text-gray-300">
+                                                <span className="font-semibold">Type:</span>{" "}
+                                                <TypeBadge type1={selectedMove.type} />
+                                            </div>
+                                            <p className="mt-2 text-gray-600 dark:text-gray-300">
+                                                <span className="font-semibold">Category:</span> {selectedMove.category}
+                                            </p>
+                                            <p className="mt-2 text-gray-600 dark:text-gray-300">
+                                                <span className="font-semibold">Power:</span> {selectedMove.bp || "—"}
+                                            </p>
+                                            <p className="mt-2 text-gray-600 dark:text-gray-300">
+                                                <span className="font-semibold">Accuracy:</span>{" "}
+                                                {selectedMove.accuracy || "—"}
+                                            </p>
+                                            <p className="mt-2 text-gray-600 dark:text-gray-300">
+                                                <span className="font-semibold">PP:</span> {selectedMove.pp}
+                                            </p>
+                                        </div>
+                                    ) : (
+                                        <p className="text-gray-600 dark:text-gray-300">
+                                            Hover over or click a move to see details.
+                                        </p>
                                     )}
                                 </div>
                             </div>
