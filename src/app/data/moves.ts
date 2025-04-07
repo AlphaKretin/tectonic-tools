@@ -32,6 +32,8 @@ export const nullMove: Move = new Move({
     description: "",
     type: "Normal",
     bp: 0,
+    accuracy: 0,
+    pp: 0,
     category: "Status",
     target: "User",
 });
