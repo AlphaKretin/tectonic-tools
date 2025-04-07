@@ -3,7 +3,7 @@
 import InternalLink from "@/components/InternalLink";
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { pokemon } from "../data/pokemon";
 import { Pokemon } from "../data/types/Pokemon";
 import PokemonModal from "./components/PokemonModal";
@@ -16,6 +16,14 @@ export interface PokemonTableProps {
 
 const Home: NextPage = () => {
     const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
+
+    useEffect(() => {
+        if (selectedPokemon) {
+            document.body.style.overflow = "hidden"; // Disable scrolling
+        } else {
+            document.body.style.overflow = ""; // Re-enable scrolling
+        }
+    }, [selectedPokemon]);
 
     const handleRowClick = (pokemon: Pokemon) => {
         setSelectedPokemon(pokemon);
