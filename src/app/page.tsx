@@ -14,6 +14,9 @@ const HomePage: NextPage = () => {
                 <ToolLink url="/pokedex" title="Online Pokédex">
                     Information on all of the available Pokémon
                 </ToolLink>
+                <ToolLink url="/teambuilder" title="Team Builder">
+                    Build a team of six and see their strengths and weaknesses
+                </ToolLink>
 
                 <div className="mt-8 pt-6 border-t border-gray-700 text-center text-gray-400">
                     <p>

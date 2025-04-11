@@ -198,12 +198,7 @@ const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon: mon, onClose }) =>
                     <div className="flex justify-between items-start">
                         <div>
                             <Image
-                                src={
-                                    "/Pokemon/" +
-                                    currentPokemon.id +
-                                    (currentForm > 0 ? "_" + currentPokemon.forms[currentForm].formId : "") +
-                                    ".png"
-                                }
+                                src={currentPokemon.getImage()}
                                 alt={currentPokemon.name}
                                 height="160"
                                 width="160"

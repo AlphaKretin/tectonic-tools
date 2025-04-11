@@ -147,4 +147,8 @@ export class Pokemon {
     public getStats = getterFactory(this, "stats");
     public getPokedex = getterFactory(this, "pokedex");
     public getLevelMoves = getterFactory(this, "levelMoves");
+
+    public getImage(currentForm: number = 0) {
+        return "/Pokemon/" + this.id + (currentForm > 0 ? "_" + this.forms[currentForm].formId : "") + ".png";
+    }
 }
