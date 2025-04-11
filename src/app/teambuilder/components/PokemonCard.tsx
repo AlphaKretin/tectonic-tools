@@ -1,7 +1,7 @@
 "use client";
 
 import { moves, nullMove } from "@/app/data/moves";
-import { pokemon } from "@/app/data/pokemon";
+import { nullPokemon, pokemon } from "@/app/data/pokemon";
 import { isNull } from "@/app/data/util";
 import Dropdown from "@/components/DropDown";
 import TypeBadge from "@/components/TypeBadge";
@@ -13,10 +13,17 @@ export default function PokemonCard({ data, update }: { data: CardData; update: 
     const currentMoves = data.moves;
 
     function updatePokemon(pokemonId: string) {
-        update({
-            pokemon: pokemon[pokemonId],
-            moves: currentMoves,
-        });
+        if (pokemonId in pokemon) {
+            update({
+                pokemon: pokemon[pokemonId],
+                moves: currentMoves,
+            });
+        } else {
+            update({
+                pokemon: nullPokemon,
+                moves: currentMoves,
+            });
+        }
     }
 
     function updateMoves(moveId: string, moveIndex: number) {
@@ -68,7 +75,11 @@ export default function PokemonCard({ data, update }: { data: CardData; update: 
                                     >
                                         <option value="">Select Move {moveIndex + 1}</option>
                                         {currentPokemon.allMoves().map((m) => (
-                                            <option key={m.id} value={m.id}>
+                                            <option
+                                                key={m.id}
+                                                value={m.id}
+                                                className={m.isSTAB(currentPokemon) ? "font-semibold" : ""}
+                                            >
                                                 {m.name}
                                             </option>
                                         ))}
