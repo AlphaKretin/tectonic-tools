@@ -135,9 +135,9 @@ const TeamBuilder: NextPage = () => {
                             Defensive Matchups
                         </h2>
                         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-                            <div className="overflow-x-auto">
+                            <div className="overflow-auto max-h-[calc(100vh-300px)]">
                                 <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                                    <thead className="bg-gray-50 dark:bg-gray-700">
+                                    <thead className="bg-gray-50 dark:bg-gray-700 sticky top-0 z-10">
                                         <tr>
                                             <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                                 Type
@@ -160,7 +160,10 @@ const TeamBuilder: NextPage = () => {
                                     </thead>
                                     <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                                         {nonMutantTypes.map((type) => (
-                                            <tr key={type}>
+                                            <tr
+                                                key={type}
+                                                className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                                            >
                                                 <td className="px-4 py-4 whitespace-nowrap">
                                                     <div className="flex items-center">
                                                         <TypeBadge type1={type} />
@@ -178,15 +181,16 @@ const TeamBuilder: NextPage = () => {
                             </div>
                         </div>
                     </div>
+
                     {/* Offensive Matchups Table */}
                     <div className="w-full max-w-6xl mx-auto mt-12">
                         <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4 text-center">
                             Offensive Matchups
                         </h2>
                         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-                            <div className="overflow-x-auto">
+                            <div className="overflow-auto max-h-[calc(100vh-300px)]">
                                 <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                                    <thead className="bg-gray-50 dark:bg-gray-700">
+                                    <thead className="bg-gray-50 dark:bg-gray-700 sticky top-0 z-10">
                                         <tr>
                                             <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                                 Type
@@ -209,7 +213,10 @@ const TeamBuilder: NextPage = () => {
                                     </thead>
                                     <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                                         {pokemonTypes.map((type) => (
-                                            <tr key={type}>
+                                            <tr
+                                                key={type}
+                                                className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                                            >
                                                 <td className="px-4 py-4 whitespace-nowrap">
                                                     <div className="flex items-center">
                                                         <TypeBadge type1={type} />
