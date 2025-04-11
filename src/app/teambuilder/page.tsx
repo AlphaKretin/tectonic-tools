@@ -80,99 +80,153 @@ const TeamBuilder: NextPage = () => {
                             <PokemonCard key={index} data={cards[index]} update={(c) => updateCards(index, c)} />
                         ))}
                     </div>
-                    <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Potential Tribes</h2>
-                    <table className="table-auto border-collapse border border-gray-400 mt-4">
-                        <thead>
-                            <tr>
-                                <th className="border border-gray-400 px-4 py-2 text-center">Tribe</th>
-                                {Object.keys(tribeCounts)
-                                    .filter((tribe) => tribeCounts[tribe] > 1)
-                                    .sort((a, b) => tribeCounts[b] - tribeCounts[a])
-                                    .map((tribe) => (
-                                        <th key={tribe} className="border border-gray-400 px-4 py-2 text-center">
-                                            {tribe}
-                                        </th>
-                                    ))}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td className="border border-gray-400 px-4 py-2 text-center">Count</td>
-                                {Object.entries(tribeCounts)
-                                    .filter(([, count]) => count > 1)
-                                    .sort((a, b) => b[1] - a[1])
-                                    .map(([t, count]) => (
-                                        <td key={t} className="border border-gray-400 px-4 py-2 text-center">
-                                            {count}
-                                        </td>
-                                    ))}
-                            </tr>
-                        </tbody>
-                    </table>
-                    <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Defensive Matchups</h2>
-                    <table className="table-auto border-collapse border border-gray-400 mt-8">
-                        <thead>
-                            <tr>
-                                <th className="border border-gray-400 px-4 py-2 text-center">Type</th>
-                                {cards.map((_, index) => (
-                                    <th key={index} className="border border-gray-400 px-4 py-2 text-center">
-                                        <TableHeader pokemon={cards[index].pokemon} />
-                                    </th>
-                                ))}
-                                <th className="border border-gray-400 px-4 py-2 text-center">Total Weak</th>
-                                <th className="border border-gray-400 px-4 py-2 text-center">Total Resist</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {nonMutantTypes.map((type) => (
-                                <tr key={type}>
-                                    <td className="border border-gray-400 px-4 py-2 text-center">
-                                        <TypeBadge type1={type} />
-                                    </td>
-                                    {cards.map((card, index) => (
-                                        <DefTableCell key={index} type={type} pokemon={card.pokemon} />
-                                    ))}
-                                    {/* Total Weak */}
-                                    <DefTotalCell cards={cards} type={type} total="weak" />
 
-                                    {/* Total Resist */}
-                                    <DefTotalCell cards={cards} type={type} total="strong" />
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Offensive Matchups</h2>
-                    <table className="table-auto border-collapse border border-gray-400 mt-8">
-                        <thead>
-                            <tr>
-                                <th className="border border-gray-400 px-4 py-2 text-center">Type</th>
-                                {cards.map((_, index) => (
-                                    <th key={index} className="border border-gray-400 px-4 py-2 text-center">
-                                        <TableHeader pokemon={cards[index].pokemon} />
-                                    </th>
-                                ))}
-                                <th className="border border-gray-400 px-4 py-2 text-center">Total NVE</th>
-                                <th className="border border-gray-400 px-4 py-2 text-center">Total SE</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {nonMutantTypes.map((type) => (
-                                <tr key={type}>
-                                    <td className="border border-gray-400 px-4 py-2 text-center">
-                                        <TypeBadge type1={type} />
-                                    </td>
-                                    {cards.map((card, index) => (
-                                        <AtkTableCell key={index} type={type} card={card} />
-                                    ))}
-                                    {/* Total NVE */}
-                                    <AtkTotalCell cards={cards} type={type} total="nve" />
-
-                                    {/* Total SE */}
-                                    <AtkTotalCell cards={cards} type={type} total="se" />
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    {/* Potential Tribes Table */}
+                    <div className="w-full max-w-4xl mx-auto mt-8">
+                        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4 text-center">
+                            Potential Tribes
+                        </h2>
+                        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                            <div className="overflow-x-auto">
+                                <table className="w-full">
+                                    <thead className="bg-gray-50 dark:bg-gray-700">
+                                        <tr>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                                Tribe
+                                            </th>
+                                            {Object.keys(tribeCounts)
+                                                .filter((tribe) => tribeCounts[tribe] > 1)
+                                                .sort((a, b) => tribeCounts[b] - tribeCounts[a])
+                                                .map((tribe) => (
+                                                    <th
+                                                        key={tribe}
+                                                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
+                                                    >
+                                                        {tribe}
+                                                    </th>
+                                                ))}
+                                        </tr>
+                                    </thead>
+                                    <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                        <tr>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
+                                                Count
+                                            </td>
+                                            {Object.entries(tribeCounts)
+                                                .filter(([, count]) => count > 1)
+                                                .sort((a, b) => b[1] - a[1])
+                                                .map(([t, count]) => (
+                                                    <td
+                                                        key={t}
+                                                        className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300"
+                                                    >
+                                                        {count}
+                                                    </td>
+                                                ))}
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    {/* Defensive Matchups Table */}
+                    <div className="w-full max-w-6xl mx-auto mt-12">
+                        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4 text-center">
+                            Defensive Matchups
+                        </h2>
+                        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                            <div className="overflow-x-auto">
+                                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                    <thead className="bg-gray-50 dark:bg-gray-700">
+                                        <tr>
+                                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                                Type
+                                            </th>
+                                            {cards.map((_, index) => (
+                                                <th
+                                                    key={index}
+                                                    className="px-4 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
+                                                >
+                                                    <TableHeader pokemon={cards[index].pokemon} />
+                                                </th>
+                                            ))}
+                                            <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                                Total Weak
+                                            </th>
+                                            <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                                Total Resist
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                        {nonMutantTypes.map((type) => (
+                                            <tr key={type}>
+                                                <td className="px-4 py-4 whitespace-nowrap">
+                                                    <div className="flex items-center">
+                                                        <TypeBadge type1={type} />
+                                                    </div>
+                                                </td>
+                                                {cards.map((card, index) => (
+                                                    <DefTableCell key={index} type={type} pokemon={card.pokemon} />
+                                                ))}
+                                                <DefTotalCell cards={cards} type={type} total="weak" />
+                                                <DefTotalCell cards={cards} type={type} total="strong" />
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    {/* Offensive Matchups Table */}
+                    <div className="w-full max-w-6xl mx-auto mt-12">
+                        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4 text-center">
+                            Offensive Matchups
+                        </h2>
+                        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                            <div className="overflow-x-auto">
+                                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                    <thead className="bg-gray-50 dark:bg-gray-700">
+                                        <tr>
+                                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                                Type
+                                            </th>
+                                            {cards.map((_, index) => (
+                                                <th
+                                                    key={index}
+                                                    className="px-4 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
+                                                >
+                                                    <TableHeader pokemon={cards[index].pokemon} />
+                                                </th>
+                                            ))}
+                                            <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                                Total NVE
+                                            </th>
+                                            <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                                Total SE
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                        {pokemonTypes.map((type) => (
+                                            <tr key={type}>
+                                                <td className="px-4 py-4 whitespace-nowrap">
+                                                    <div className="flex items-center">
+                                                        <TypeBadge type1={type} />
+                                                    </div>
+                                                </td>
+                                                {cards.map((card, index) => (
+                                                    <AtkTableCell key={index} type={type} card={card} />
+                                                ))}
+                                                <AtkTotalCell cards={cards} type={type} total="nve" />
+                                                <AtkTotalCell cards={cards} type={type} total="se" />
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </main>
         </div>

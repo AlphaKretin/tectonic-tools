@@ -13,16 +13,16 @@ export default function AtkTableCell({ type, card }: { type: PokemonType; card: 
         if (matchup > 1 || matchup === 0) {
             content = "×" + matchup;
             if (matchup === 0) {
-                bg = "bg-red-700";
+                bg = "bg-rose-400 dark:bg-rose-500";
             }
             if (matchup === 2) {
-                bg = "bg-green-600";
+                bg = "bg-emerald-200 dark:bg-emerald-800";
             }
         }
 
         if (matchup === 0.5) {
             content = "½";
-            bg = "bg-red-900";
+            bg = "bg-rose-300 dark:bg-rose-600";
         }
     }
 
