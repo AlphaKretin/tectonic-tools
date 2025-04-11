@@ -1,8 +1,9 @@
 import { abilities } from "../abilities";
-import { PokemonTribe, PokemonType } from "../basicData";
+import { PokemonTribe, PokemonType, pokemonTypes } from "../basicData";
 import { PokemonForm } from "../forms";
 import { moves } from "../moves";
 import { LoadedPokemon, pokemon } from "../pokemon";
+import { typeChart } from "../typeChart";
 import { Ability } from "./Ability";
 import { Move } from "./Move";
 
@@ -150,5 +151,23 @@ export class Pokemon {
 
     public getImage(currentForm: number = 0) {
         return "/Pokemon/" + this.id + (currentForm > 0 ? "_" + this.forms[currentForm].formId : "") + ".png";
+    }
+
+    public defMatchups(currentForm: number = 0) {
+        return Object.fromEntries(
+            pokemonTypes.map((t) => {
+                const type2 = this.getType2(currentForm);
+                return [t, typeChart[t][this.getType1(currentForm)] * (type2 ? typeChart[t][type2] : 1)];
+            })
+        );
+    }
+
+    public atkMatchups(currentForm: number = 0) {
+        return Object.fromEntries(
+            pokemonTypes.map((t) => {
+                const type2 = this.getType2(currentForm);
+                return [t, Math.max(typeChart[this.getType1(currentForm)][t], type2 ? typeChart[type2][t] : 0)];
+            })
+        );
     }
 }

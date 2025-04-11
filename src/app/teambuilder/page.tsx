@@ -2,14 +2,19 @@
 
 import InlineLink from "@/components/InlineLink";
 import InternalLink from "@/components/InternalLink";
+import TypeBadge from "@/components/TypeBadge";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
+import { pokemonTypes } from "../data/basicData";
 import { nullMove } from "../data/moves";
 import { nullPokemon } from "../data/pokemon";
 import { Move } from "../data/types/Move";
 import { Pokemon } from "../data/types/Pokemon";
 import PokemonCard from "./components/PokemonCard";
+import TableCell from "./components/TableCell";
+import TableHeader from "./components/TableHeader";
+import TotalCell from "./components/WeakCell";
 
 export interface CardData {
     pokemon: Pokemon;
@@ -29,6 +34,9 @@ const TeamBuilder: NextPage = () => {
         newCards[index] = card;
         setCards(newCards);
     }
+
+    // Mutant type is secret and irrelevant to defensive matchups
+    const nonMutantTypes = pokemonTypes.slice(0, pokemonTypes.length - 1);
 
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
@@ -55,6 +63,38 @@ const TeamBuilder: NextPage = () => {
                             <PokemonCard key={index} data={cards[index]} update={(c) => updateCards(index, c)} />
                         ))}
                     </div>
+                    <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Defensive Matchups</h2>
+                    <table className="table-auto border-collapse border border-gray-400 mt-8">
+                        <thead>
+                            <tr>
+                                <th className="border border-gray-400 px-4 py-2 text-center">Type</th>
+                                {cards.map((_, index) => (
+                                    <th key={index} className="border border-gray-400 px-4 py-2 text-center">
+                                        <TableHeader pokemon={cards[index].pokemon} />
+                                    </th>
+                                ))}
+                                <th className="border border-gray-400 px-4 py-2 text-center">Total Weak</th>
+                                <th className="border border-gray-400 px-4 py-2 text-center">Total Resist</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {nonMutantTypes.map((type) => (
+                                <tr key={type}>
+                                    <td className="border border-gray-400 px-4 py-2 text-center">
+                                        <TypeBadge type1={type} />
+                                    </td>
+                                    {cards.map((card, index) => (
+                                        <TableCell key={index} type={type} pokemon={card.pokemon} />
+                                    ))}
+                                    {/* Total Weak */}
+                                    <TotalCell cards={cards} type={type} total="weak" />
+
+                                    {/* Total Resist */}
+                                    <TotalCell cards={cards} type={type} total="strong" />
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
             </main>
         </div>

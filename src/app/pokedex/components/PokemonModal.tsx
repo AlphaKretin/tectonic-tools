@@ -1,9 +1,8 @@
-import { PokemonType, pokemonTypes } from "@/app/data/basicData";
+import { PokemonType } from "@/app/data/basicData";
 import { encounters } from "@/app/data/encounters";
 import { items } from "@/app/data/items";
 import { moves } from "@/app/data/moves";
 import { pokemon } from "@/app/data/pokemon";
-import { typeChart } from "@/app/data/typeChart";
 import { EncounterArea } from "@/app/data/types/Encounter";
 import { Evolution, Pokemon } from "@/app/data/types/Pokemon";
 import Image from "next/image";
@@ -68,20 +67,6 @@ const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon: mon, onClose }) =>
     };
 
     if (!isRendered || !currentPokemon) return null;
-
-    const defMatchups = Object.fromEntries(
-        pokemonTypes.map((t) => {
-            const type2 = currentPokemon.getType2(currentForm);
-            return [t, typeChart[t][currentPokemon.getType1(currentForm)] * (type2 ? typeChart[t][type2] : 1)];
-        })
-    );
-
-    const atkMatchups = Object.fromEntries(
-        pokemonTypes.map((t) => {
-            const type2 = currentPokemon.getType2(currentForm);
-            return [t, Math.max(typeChart[currentPokemon.getType1(currentForm)][t], type2 ? typeChart[type2][t] : 0)];
-        })
-    );
 
     function prioritiseSort<T>(prio: T) {
         return function (a: T, b: T): number {
@@ -180,6 +165,9 @@ const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon: mon, onClose }) =>
     }
 
     const stats = currentPokemon.getStats(currentForm);
+
+    const defMatchups = currentPokemon.defMatchups(currentForm);
+    const atkMatchups = currentPokemon.atkMatchups(currentForm);
 
     return (
         <div
