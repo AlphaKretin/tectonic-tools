@@ -81,7 +81,7 @@ export default function PokemonCard({ data, update }: { data: CardData; update: 
                         <TypeBadge type1={currentPokemon.type1} type2={currentPokemon.type2} />
                     </div>
                     <div className="w-full mt-4 text-center">
-                        <h3>Moves</h3>
+                        <h3 className="font-semibold text-gray-800 dark:text-gray-100">Moves</h3>
                         {Array.from({ length: 4 }).map((_, moveIndex) => (
                             <div key={moveIndex} className="flex items-center space-x-2">
                                 <div className="flex-1">
@@ -112,7 +112,7 @@ export default function PokemonCard({ data, update }: { data: CardData; update: 
                         ))}
                     </div>
                     <div className="w-full mt-4 text-center">
-                        <h3>Ability</h3>
+                        <h3 className="font-semibold text-gray-800 dark:text-gray-100">Ability</h3>
                         <Dropdown value={currentAbility.id} onChange={(e) => updateAbility(e.target.value)}>
                             <option value="">Select Ability</option>
                             {currentPokemon.abilities.map((a) => (
@@ -123,7 +123,7 @@ export default function PokemonCard({ data, update }: { data: CardData; update: 
                         </Dropdown>
                     </div>
                     <div className="w-full mt-4 text-center">
-                        <h3>Held Item</h3>
+                        <h3 className="font-semibold text-gray-800 dark:text-gray-100">Held Item</h3>
                         <Dropdown value={currentItem.id} onChange={(e) => updateItem(e.target.value)}>
                             <option value="">Select Item</option>
                             {Object.values(items).map((i) => (
@@ -132,6 +132,14 @@ export default function PokemonCard({ data, update }: { data: CardData; update: 
                                 </option>
                             ))}
                         </Dropdown>
+                    </div>
+                    <div className="w-full mt-4 text-center">
+                        <h3 className="font-semibold text-gray-800 dark:text-gray-100">Tribes</h3>
+                        <ul className="list-disc list-inside text-gray-600 dark:text-gray-300">
+                            {currentPokemon.tribes.map((tribe, index) => (
+                                <li key={index}>{tribe}</li>
+                            ))}
+                        </ul>
                     </div>
                 </div>
             )}

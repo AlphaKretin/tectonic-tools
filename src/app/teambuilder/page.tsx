@@ -7,7 +7,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
 import { nullAbility } from "../data/abilities";
-import { pokemonTypes } from "../data/basicData";
+import { pokemonTribes, pokemonTypes } from "../data/basicData";
 import { nullItem } from "../data/items";
 import { nullMove } from "../data/moves";
 import { nullPokemon } from "../data/pokemon";
@@ -48,6 +48,13 @@ const TeamBuilder: NextPage = () => {
     // Mutant type is secret and irrelevant to defensive matchups
     const nonMutantTypes = pokemonTypes.slice(0, pokemonTypes.length - 1);
 
+    const tribeCounts = Object.fromEntries(pokemonTribes.map((t) => [t, 0]));
+    for (const card of cards) {
+        for (const tribe of card.pokemon.tribes) {
+            tribeCounts[tribe]++;
+        }
+    }
+
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
             <Head>
@@ -73,6 +80,35 @@ const TeamBuilder: NextPage = () => {
                             <PokemonCard key={index} data={cards[index]} update={(c) => updateCards(index, c)} />
                         ))}
                     </div>
+                    <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Potential Tribes</h2>
+                    <table className="table-auto border-collapse border border-gray-400 mt-4">
+                        <thead>
+                            <tr>
+                                <th className="border border-gray-400 px-4 py-2 text-center">Tribe</th>
+                                {Object.keys(tribeCounts)
+                                    .filter((tribe) => tribeCounts[tribe] > 1)
+                                    .sort((a, b) => tribeCounts[b] - tribeCounts[a])
+                                    .map((tribe) => (
+                                        <th key={tribe} className="border border-gray-400 px-4 py-2 text-center">
+                                            {tribe}
+                                        </th>
+                                    ))}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td className="border border-gray-400 px-4 py-2 text-center">Count</td>
+                                {Object.entries(tribeCounts)
+                                    .filter(([, count]) => count > 1)
+                                    .sort((a, b) => b[1] - a[1])
+                                    .map(([t, count]) => (
+                                        <td key={t} className="border border-gray-400 px-4 py-2 text-center">
+                                            {count}
+                                        </td>
+                                    ))}
+                            </tr>
+                        </tbody>
+                    </table>
                     <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Defensive Matchups</h2>
                     <table className="table-auto border-collapse border border-gray-400 mt-8">
                         <thead>
