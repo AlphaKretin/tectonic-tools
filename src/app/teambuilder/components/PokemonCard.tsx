@@ -1,21 +1,41 @@
 "use client";
 
 import { moves, nullMove } from "@/app/data/moves";
-import { nullPokemon, pokemon } from "@/app/data/pokemon";
-import { Move } from "@/app/data/types/Move";
-import { Pokemon } from "@/app/data/types/Pokemon";
+import { pokemon } from "@/app/data/pokemon";
 import { isNull } from "@/app/data/util";
 import Dropdown from "@/components/DropDown";
 import TypeBadge from "@/components/TypeBadge";
 import Image from "next/image";
-import { useState } from "react";
+import { CardData } from "../page";
 
-export default function PokemonCard() {
-    const [currentPokemon, setCurrentPokemon] = useState<Pokemon>(nullPokemon);
-    const [currentMoves, setCurrentMoves] = useState<Move[]>(Array(4).fill(nullMove));
+export default function PokemonCard({ data, update }: { data: CardData; update: (c: CardData) => void }) {
+    const currentPokemon = data.pokemon;
+    const currentMoves = data.moves;
+
+    function updatePokemon(pokemonId: string) {
+        update({
+            pokemon: pokemon[pokemonId],
+            moves: currentMoves,
+        });
+    }
+
+    function updateMoves(moveId: string, moveIndex: number) {
+        const newMoves = [...currentMoves];
+        if (moveId in moves) {
+            newMoves[moveIndex] = moves[moveId];
+        } else {
+            newMoves[moveIndex] = nullMove;
+        }
+
+        update({
+            pokemon: currentPokemon,
+            moves: newMoves,
+        });
+    }
+
     return (
         <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 flex flex-col items-center w-60">
-            <Dropdown value={currentPokemon.id} onChange={(e) => setCurrentPokemon(pokemon[e.target.value])}>
+            <Dropdown value={currentPokemon.id} onChange={(e) => updatePokemon(e.target.value)}>
                 <option value="">Select Pokémon</option>
                 {Object.values(pokemon).map((p) => (
                     <option key={p.id} value={p.id}>
@@ -42,15 +62,7 @@ export default function PokemonCard() {
                                 <div className="flex-1">
                                     <Dropdown
                                         onChange={(e) => {
-                                            const newMoves = [...currentMoves];
-                                            const moveId = e.target.value;
-                                            if (moveId in moves) {
-                                                newMoves[moveIndex] = moves[moveId];
-                                            } else {
-                                                newMoves[moveIndex] = nullMove;
-                                            }
-
-                                            setCurrentMoves(newMoves);
+                                            updateMoves(e.target.value, moveIndex);
                                         }}
                                         value={currentMoves[moveIndex].id}
                                     >

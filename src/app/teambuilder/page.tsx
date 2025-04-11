@@ -4,9 +4,32 @@ import InlineLink from "@/components/InlineLink";
 import InternalLink from "@/components/InternalLink";
 import type { NextPage } from "next";
 import Head from "next/head";
+import { useState } from "react";
+import { nullMove } from "../data/moves";
+import { nullPokemon } from "../data/pokemon";
+import { Move } from "../data/types/Move";
+import { Pokemon } from "../data/types/Pokemon";
 import PokemonCard from "./components/PokemonCard";
 
+export interface CardData {
+    pokemon: Pokemon;
+    moves: Move[];
+}
+
+const nullCard = {
+    pokemon: nullPokemon,
+    moves: Array(4).fill(nullMove),
+};
+
 const TeamBuilder: NextPage = () => {
+    const [cards, setCards] = useState<CardData[]>(Array(6).fill(nullCard));
+
+    function updateCards(index: number, card: CardData) {
+        const newCards = [...cards];
+        newCards[index] = card;
+        setCards(newCards);
+    }
+
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
             <Head>
@@ -29,7 +52,7 @@ const TeamBuilder: NextPage = () => {
                     </p>
                     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 w-full">
                         {Array.from({ length: 6 }).map((_, index) => (
-                            <PokemonCard key={index} />
+                            <PokemonCard key={index} data={cards[index]} update={(c) => updateCards(index, c)} />
                         ))}
                     </div>
                 </div>
