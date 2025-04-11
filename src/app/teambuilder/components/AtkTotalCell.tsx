@@ -1,24 +1,26 @@
 import { PokemonType } from "@/app/data/basicData";
-import { isNull } from "@/app/data/util";
-import { CardData } from "../page";
+import { CardData, isAttackingMove } from "../page";
 
-function compare(num: number, total: "weak" | "strong") {
-    if (total === "weak") {
+function compare(num: number, total: "nve" | "se") {
+    if (total === "se") {
         return num > 1;
     }
     return num < 1;
 }
 
-export default function TotalCell({
+export default function AtkTotalCell({
     cards,
     type,
     total,
 }: {
     cards: CardData[];
     type: PokemonType;
-    total: "weak" | "strong";
+    total: "nve" | "se";
 }): React.ReactNode {
-    const num = cards.filter((c) => !isNull(c.pokemon) && compare(c.pokemon.defMatchups()[type], total)).length;
+    const num = cards.filter((c) => {
+        const realMoves = c.moves.filter((m) => isAttackingMove(m));
+        return realMoves.length > 0 && compare(Math.max(...realMoves.map((m) => m.matchups()[type])), total);
+    }).length;
     const bgs = [
         "bg-green-600",
         "bg-green-800",
@@ -28,7 +30,7 @@ export default function TotalCell({
         "bg-red-900",
         "bg-red-700",
     ];
-    if (total === "strong") {
+    if (total === "se") {
         bgs.reverse();
     }
     return <td className={"border border-gray-400 px-4 py-2 text-center " + bgs[num]}>{num}</td>;

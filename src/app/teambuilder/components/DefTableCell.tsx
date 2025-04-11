@@ -2,7 +2,7 @@ import { PokemonType } from "@/app/data/basicData";
 import { Pokemon } from "@/app/data/types/Pokemon";
 import { isNull } from "@/app/data/util";
 
-export default function TableCell({ type, pokemon }: { type: PokemonType; pokemon: Pokemon }) {
+export default function DefTableCell({ type, pokemon }: { type: PokemonType; pokemon: Pokemon }) {
     const matchup = pokemon.defMatchups()[type];
     let content = "";
     let bg = "";

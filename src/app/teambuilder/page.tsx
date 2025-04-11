@@ -11,14 +11,21 @@ import { nullMove } from "../data/moves";
 import { nullPokemon } from "../data/pokemon";
 import { Move } from "../data/types/Move";
 import { Pokemon } from "../data/types/Pokemon";
+import { isNull } from "../data/util";
+import AtkTableCell from "./components/AtkTableCell";
+import AtkTotalCell from "./components/AtkTotalCell";
+import DefTableCell from "./components/DefTableCell";
+import DefTotalCell from "./components/DefTotalCell";
 import PokemonCard from "./components/PokemonCard";
-import TableCell from "./components/TableCell";
 import TableHeader from "./components/TableHeader";
-import TotalCell from "./components/WeakCell";
 
 export interface CardData {
     pokemon: Pokemon;
     moves: Move[];
+}
+
+export function isAttackingMove(m: Move) {
+    return !isNull(m) && m.category !== "Status";
 }
 
 const nullCard = {
@@ -84,13 +91,45 @@ const TeamBuilder: NextPage = () => {
                                         <TypeBadge type1={type} />
                                     </td>
                                     {cards.map((card, index) => (
-                                        <TableCell key={index} type={type} pokemon={card.pokemon} />
+                                        <DefTableCell key={index} type={type} pokemon={card.pokemon} />
                                     ))}
                                     {/* Total Weak */}
-                                    <TotalCell cards={cards} type={type} total="weak" />
+                                    <DefTotalCell cards={cards} type={type} total="weak" />
 
                                     {/* Total Resist */}
-                                    <TotalCell cards={cards} type={type} total="strong" />
+                                    <DefTotalCell cards={cards} type={type} total="strong" />
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Offensive Matchups</h2>
+                    <table className="table-auto border-collapse border border-gray-400 mt-8">
+                        <thead>
+                            <tr>
+                                <th className="border border-gray-400 px-4 py-2 text-center">Type</th>
+                                {cards.map((_, index) => (
+                                    <th key={index} className="border border-gray-400 px-4 py-2 text-center">
+                                        <TableHeader pokemon={cards[index].pokemon} />
+                                    </th>
+                                ))}
+                                <th className="border border-gray-400 px-4 py-2 text-center">Total NVE</th>
+                                <th className="border border-gray-400 px-4 py-2 text-center">Total SE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {nonMutantTypes.map((type) => (
+                                <tr key={type}>
+                                    <td className="border border-gray-400 px-4 py-2 text-center">
+                                        <TypeBadge type1={type} />
+                                    </td>
+                                    {cards.map((card, index) => (
+                                        <AtkTableCell key={index} type={type} card={card} />
+                                    ))}
+                                    {/* Total NVE */}
+                                    <AtkTotalCell cards={cards} type={type} total="nve" />
+
+                                    {/* Total SE */}
+                                    <AtkTotalCell cards={cards} type={type} total="se" />
                                 </tr>
                             ))}
                         </tbody>
