@@ -1,5 +1,5 @@
 import { PokemonType } from "@/app/data/basicData";
-import { CardData, isAttackingMove } from "../page";
+import { CardData } from "../page";
 
 function compare(num: number, total: "nve" | "se") {
     if (total === "se") {
@@ -18,7 +18,7 @@ export default function AtkTotalCell({
     total: "nve" | "se";
 }): React.ReactNode {
     const num = cards.filter((c) => {
-        const realMoves = c.moves.filter((m) => isAttackingMove(m));
+        const realMoves = c.moves.filter((m) => m.isAttackingMove());
         return realMoves.length > 0 && compare(Math.max(...realMoves.map((m) => m.matchups()[type])), total);
     }).length;
     const bgs = [

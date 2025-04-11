@@ -3,6 +3,7 @@ import { PokemonStats } from "../../damagecalc/damageCalc";
 import { MoveCategory, PokemonType, pokemonTypes } from "../basicData";
 import { StatusEffect } from "../statusEffects";
 import { typeChart } from "../typeChart";
+import { isNull } from "../util";
 import { Pokemon } from "./Pokemon";
 
 export interface LoadedMove {
@@ -59,6 +60,10 @@ export class Move {
         this.pp = loadedMove.pp;
         this.category = loadedMove.category as MoveCategory;
         this.target = loadedMove.target as MoveTarget;
+    }
+
+    public isAttackingMove() {
+        return !isNull(this) && this.category !== "Status";
     }
 
     public isSpread(): boolean {

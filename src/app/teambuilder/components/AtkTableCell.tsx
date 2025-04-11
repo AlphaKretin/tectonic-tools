@@ -1,8 +1,8 @@
 import { PokemonType } from "@/app/data/basicData";
-import { CardData, isAttackingMove } from "../page";
+import { CardData } from "../page";
 
 export default function AtkTableCell({ type, card }: { type: PokemonType; card: CardData }) {
-    const realMoves = card.moves.filter((m) => isAttackingMove(m));
+    const realMoves = card.moves.filter((m) => m.isAttackingMove());
     let content = "";
     let bg = "";
 

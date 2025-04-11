@@ -8,7 +8,7 @@ import { isNull } from "@/app/data/util";
 import Dropdown from "@/components/DropDown";
 import TypeBadge from "@/components/TypeBadge";
 import Image from "next/image";
-import { CardData, isAttackingMove } from "../page";
+import { CardData } from "../page";
 
 export default function PokemonCard({ data, update }: { data: CardData; update: (c: CardData) => void }) {
     const currentPokemon = data.pokemon;
@@ -104,7 +104,7 @@ export default function PokemonCard({ data, update }: { data: CardData; update: 
                                     </Dropdown>
                                 </div>
                                 <div className="w-12 flex justify-center">
-                                    {isAttackingMove(currentMoves[moveIndex]) && (
+                                    {currentMoves[moveIndex].isAttackingMove() && (
                                         <TypeBadge type1={currentMoves[moveIndex].type} />
                                     )}
                                 </div>

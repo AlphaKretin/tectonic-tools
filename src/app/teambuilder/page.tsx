@@ -15,7 +15,6 @@ import { Ability } from "../data/types/Ability";
 import { Item } from "../data/types/Item";
 import { Move } from "../data/types/Move";
 import { Pokemon } from "../data/types/Pokemon";
-import { isNull } from "../data/util";
 import AtkTableCell from "./components/AtkTableCell";
 import AtkTotalCell from "./components/AtkTotalCell";
 import DefTableCell from "./components/DefTableCell";
@@ -28,10 +27,6 @@ export interface CardData {
     moves: Move[];
     ability: Ability;
     item: Item;
-}
-
-export function isAttackingMove(m: Move) {
-    return !isNull(m) && m.category !== "Status";
 }
 
 const nullCard = {
