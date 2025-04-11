@@ -8,9 +8,11 @@ import Head from "next/head";
 import { useState } from "react";
 import { nullAbility } from "../data/abilities";
 import { pokemonTypes } from "../data/basicData";
+import { nullItem } from "../data/items";
 import { nullMove } from "../data/moves";
 import { nullPokemon } from "../data/pokemon";
 import { Ability } from "../data/types/Ability";
+import { Item } from "../data/types/Item";
 import { Move } from "../data/types/Move";
 import { Pokemon } from "../data/types/Pokemon";
 import { isNull } from "../data/util";
@@ -25,6 +27,7 @@ export interface CardData {
     pokemon: Pokemon;
     moves: Move[];
     ability: Ability;
+    item: Item;
 }
 
 export function isAttackingMove(m: Move) {
@@ -35,6 +38,7 @@ const nullCard = {
     pokemon: nullPokemon,
     moves: Array(4).fill(nullMove),
     ability: nullAbility,
+    item: nullItem,
 };
 
 const TeamBuilder: NextPage = () => {

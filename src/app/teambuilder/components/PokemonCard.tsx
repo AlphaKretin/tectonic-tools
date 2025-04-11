@@ -1,6 +1,7 @@
 "use client";
 
 import { abilities, nullAbility } from "@/app/data/abilities";
+import { items, nullItem } from "@/app/data/items";
 import { moves, nullMove } from "@/app/data/moves";
 import { nullPokemon, pokemon } from "@/app/data/pokemon";
 import { isNull } from "@/app/data/util";
@@ -13,20 +14,13 @@ export default function PokemonCard({ data, update }: { data: CardData; update: 
     const currentPokemon = data.pokemon;
     const currentMoves = data.moves;
     const currentAbility = data.ability;
+    const currentItem = data.item;
 
     function updatePokemon(pokemonId: string) {
         if (pokemonId in pokemon) {
-            update({
-                pokemon: pokemon[pokemonId],
-                moves: currentMoves,
-                ability: currentAbility,
-            });
+            update({ ...data, pokemon: pokemon[pokemonId] });
         } else {
-            update({
-                pokemon: nullPokemon,
-                moves: currentMoves,
-                ability: currentAbility,
-            });
+            update({ ...data, pokemon: nullPokemon });
         }
     }
 
@@ -38,26 +32,28 @@ export default function PokemonCard({ data, update }: { data: CardData; update: 
             newMoves[moveIndex] = nullMove;
         }
 
-        update({
-            pokemon: currentPokemon,
-            moves: newMoves,
-            ability: currentAbility,
-        });
+        update({ ...data, moves: newMoves });
     }
 
     function updateAbility(abilityId: string) {
         if (abilityId in abilities) {
             update({
-                pokemon: currentPokemon,
-                moves: currentMoves,
+                ...data,
                 ability: abilities[abilityId],
             });
         } else {
             update({
-                pokemon: currentPokemon,
-                moves: currentMoves,
+                ...data,
                 ability: nullAbility,
             });
+        }
+    }
+
+    function updateItem(itemId: string) {
+        if (itemId in items) {
+            update({ ...data, item: items[itemId] });
+        } else {
+            update({ ...data, item: nullItem });
         }
     }
 
@@ -122,6 +118,17 @@ export default function PokemonCard({ data, update }: { data: CardData; update: 
                             {currentPokemon.abilities.map((a) => (
                                 <option key={a.id} value={a.id}>
                                     {a.name}
+                                </option>
+                            ))}
+                        </Dropdown>
+                    </div>
+                    <div className="w-full mt-4 text-center">
+                        <h3>Held Item</h3>
+                        <Dropdown value={currentItem.id} onChange={(e) => updateItem(e.target.value)}>
+                            <option value="">Select Item</option>
+                            {Object.values(items).map((i) => (
+                                <option key={i.id} value={i.id}>
+                                    {i.name}
                                 </option>
                             ))}
                         </Dropdown>
