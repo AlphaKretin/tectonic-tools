@@ -6,9 +6,11 @@ import TypeBadge from "@/components/TypeBadge";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
+import { nullAbility } from "../data/abilities";
 import { pokemonTypes } from "../data/basicData";
 import { nullMove } from "../data/moves";
 import { nullPokemon } from "../data/pokemon";
+import { Ability } from "../data/types/Ability";
 import { Move } from "../data/types/Move";
 import { Pokemon } from "../data/types/Pokemon";
 import { isNull } from "../data/util";
@@ -22,6 +24,7 @@ import TableHeader from "./components/TableHeader";
 export interface CardData {
     pokemon: Pokemon;
     moves: Move[];
+    ability: Ability;
 }
 
 export function isAttackingMove(m: Move) {
@@ -31,6 +34,7 @@ export function isAttackingMove(m: Move) {
 const nullCard = {
     pokemon: nullPokemon,
     moves: Array(4).fill(nullMove),
+    ability: nullAbility,
 };
 
 const TeamBuilder: NextPage = () => {

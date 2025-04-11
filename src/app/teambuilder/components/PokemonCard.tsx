@@ -1,5 +1,6 @@
 "use client";
 
+import { abilities, nullAbility } from "@/app/data/abilities";
 import { moves, nullMove } from "@/app/data/moves";
 import { nullPokemon, pokemon } from "@/app/data/pokemon";
 import { isNull } from "@/app/data/util";
@@ -11,17 +12,20 @@ import { CardData, isAttackingMove } from "../page";
 export default function PokemonCard({ data, update }: { data: CardData; update: (c: CardData) => void }) {
     const currentPokemon = data.pokemon;
     const currentMoves = data.moves;
+    const currentAbility = data.ability;
 
     function updatePokemon(pokemonId: string) {
         if (pokemonId in pokemon) {
             update({
                 pokemon: pokemon[pokemonId],
                 moves: currentMoves,
+                ability: currentAbility,
             });
         } else {
             update({
                 pokemon: nullPokemon,
                 moves: currentMoves,
+                ability: currentAbility,
             });
         }
     }
@@ -37,7 +41,24 @@ export default function PokemonCard({ data, update }: { data: CardData; update: 
         update({
             pokemon: currentPokemon,
             moves: newMoves,
+            ability: currentAbility,
         });
+    }
+
+    function updateAbility(abilityId: string) {
+        if (abilityId in abilities) {
+            update({
+                pokemon: currentPokemon,
+                moves: currentMoves,
+                ability: abilities[abilityId],
+            });
+        } else {
+            update({
+                pokemon: currentPokemon,
+                moves: currentMoves,
+                ability: nullAbility,
+            });
+        }
     }
 
     return (
@@ -63,7 +84,8 @@ export default function PokemonCard({ data, update }: { data: CardData; update: 
                         <p className="text-lg font-semibold text-gray-800 dark:text-gray-200">{currentPokemon.name}</p>
                         <TypeBadge type1={currentPokemon.type1} type2={currentPokemon.type2} />
                     </div>
-                    <div className="w-full mt-4">
+                    <div className="w-full mt-4 text-center">
+                        <h3>Moves</h3>
                         {Array.from({ length: 4 }).map((_, moveIndex) => (
                             <div key={moveIndex} className="flex items-center space-x-2">
                                 <div className="flex-1">
@@ -92,6 +114,17 @@ export default function PokemonCard({ data, update }: { data: CardData; update: 
                                 </div>
                             </div>
                         ))}
+                    </div>
+                    <div className="w-full mt-4 text-center">
+                        <h3>Ability</h3>
+                        <Dropdown value={currentAbility.id} onChange={(e) => updateAbility(e.target.value)}>
+                            <option value="">Select Ability</option>
+                            {currentPokemon.abilities.map((a) => (
+                                <option key={a.id} value={a.id}>
+                                    {a.name}
+                                </option>
+                            ))}
+                        </Dropdown>
                     </div>
                 </div>
             )}

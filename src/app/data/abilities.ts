@@ -16,3 +16,10 @@ function loadAbility(ability: LoadedAbility): Ability {
 export const abilities: Record<string, Ability> = Object.fromEntries(
     Object.entries(loadedAbilities).map(([id, ability]) => [id, loadAbility(ability)])
 );
+
+export const nullAbility: Ability = {
+    id: "",
+    name: "",
+    description: "",
+    flags: [],
+};
