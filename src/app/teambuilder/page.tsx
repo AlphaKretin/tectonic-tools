@@ -47,6 +47,20 @@ const nullCard = {
     form: 0,
 };
 
+const indices = {
+    pokemon: Object.fromEntries(Object.keys(pokemon).map((id, i) => [id, i])),
+    ability: Object.fromEntries(Object.keys(abilities).map((id, i) => [id, i])),
+    item: Object.fromEntries(Object.keys(items).map((id, i) => [id, i])),
+    move: Object.fromEntries(Object.keys(moves).map((id, i) => [id, i])),
+};
+
+const keys = {
+    pokemon: Object.keys(pokemon),
+    ability: Object.keys(abilities),
+    item: Object.keys(items),
+    move: Object.keys(moves),
+};
+
 const TeamBuilder: NextPage = () => {
     const [cards, setCards] = useState<CardData[]>(Array(6).fill(nullCard));
     const [teamName, setTeamName] = useState<string>("");
@@ -80,7 +94,7 @@ const TeamBuilder: NextPage = () => {
         .filter((tribe) => tribeCounts[tribe] > 1)
         .sort((a, b) => tribeCounts[b] - tribeCounts[a]);
 
-    function saveTeamToJSON() {
+    function saveTeamToData() {
         const savedCards: SavedCardData[] = cards.map((c) => {
             return {
                 pokemon: c.pokemon.id,
@@ -90,7 +104,7 @@ const TeamBuilder: NextPage = () => {
                 form: c.form,
             };
         });
-        return JSON.stringify(savedCards);
+        return savedCards;
     }
 
     function saveTeam() {
@@ -98,23 +112,34 @@ const TeamBuilder: NextPage = () => {
             alert("Please name the team before saving!");
             return;
         }
-
-        localStorage.setItem(teamName, saveTeamToJSON());
+        const savedCards = saveTeamToData();
+        const json = JSON.stringify(savedCards);
+        localStorage.setItem(teamName, json);
         setSavedTeams(Object.keys(localStorage));
         alert("Character saved successfully!");
     }
 
     function exportTeam() {
-        const json = saveTeamToJSON();
-        const base64 = btoa(json);
-        setTeamCode(base64);
+        const data = saveTeamToData();
+        const savedIndices = data.map((d) => [
+            indices.pokemon[d.pokemon] || -1,
+            indices.move[d.moves[0]] || -1,
+            indices.move[d.moves[1]] || -1,
+            indices.move[d.moves[2]] || -1,
+            indices.move[d.moves[3]] || -1,
+            indices.ability[d.ability] || -1,
+            indices.item[d.item] || -1,
+            d.form,
+        ]);
+        const savedPokemon = savedIndices.map((i) => Buffer.from(new Uint16Array(i)).toString("base64"));
+        const code = savedPokemon.join("!");
+        setTeamCode(code);
         alert("Team exported successfully!");
     }
 
-    function loadTeamFromJSON(json: string) {
-        const savedCards = JSON.parse(json) as SavedCardData[];
+    function loadTeamFromData(data: SavedCardData[]) {
         setCards(
-            savedCards.map((c) => {
+            data.map((c) => {
                 return {
                     pokemon: pokemon[c.pokemon] || nullPokemon,
                     moves: c.moves.map((m) => moves[m] || nullMove),
@@ -134,15 +159,35 @@ const TeamBuilder: NextPage = () => {
         }
         const savedCardsJson = localStorage.getItem(name);
         if (savedCardsJson) {
-            loadTeamFromJSON(savedCardsJson);
+            try {
+                const savedCards = JSON.parse(savedCardsJson) as SavedCardData[];
+                loadTeamFromData(savedCards);
+            } catch (e) {
+                console.error(e);
+                alert("Error while loading team!");
+            }
         }
     }
 
     function importTeam() {
-        const base64 = teamCode;
-        const json = atob(base64);
-        loadTeamFromJSON(json);
-        alert("Team imported successfully!");
+        try {
+            const code = teamCode;
+            const loadedIndices = code.split("!").map((b) => Uint16Array.from(Buffer.from(b, "base64")));
+            const loadedData: SavedCardData[] = loadedIndices.map((i) => {
+                return {
+                    pokemon: keys.pokemon[i[0]],
+                    moves: [keys.move[i[1]], keys.move[i[2]], keys.move[i[3]], keys.move[i[4]]],
+                    ability: keys.ability[i[5]],
+                    item: keys.item[i[6]],
+                    form: i[7],
+                };
+            });
+            loadTeamFromData(loadedData);
+            alert("Team imported successfully!");
+        } catch (e) {
+            console.error(e);
+            alert("Error while importing team!");
+        }
     }
 
     return (
