@@ -159,12 +159,29 @@ const PokemonDamageCalculator: NextPage = () => {
         if (effect === "Numb") {
             speed = Math.round(speed / 2);
         }
+
+        // ignore negative attack steps if critical
+        let attackStep = statSteps.attack;
+        let spAtkStep = statSteps.spatk;
+        if (side === "player" && criticalHit) {
+            attackStep = Math.max(attackStep, 0);
+            spAtkStep = Math.max(spAtkStep, 0);
+        }
+
+        // ignore positive defense steps if critical
+        let defStep = statSteps.defense;
+        let spDefStep = statSteps.spdef;
+        if (side === "opponent" && criticalHit) {
+            defStep = Math.min(defStep, 0);
+            spDefStep = Math.min(spDefStep, 0);
+        }
+
         const newStats: Stats = {
             hp: calculateHP(baseStats.hp, level, stylePoints.hp),
-            attack: calculateStat(baseStats.attack, level, stylePoints.attacks, statSteps.attack),
-            defense: calculateStat(baseStats.defense, level, stylePoints.defense, statSteps.defense),
-            spatk: calculateStat(baseStats.spatk, level, stylePoints.attacks, statSteps.spatk),
-            spdef: calculateStat(baseStats.spdef, level, stylePoints.spdef, statSteps.spdef),
+            attack: calculateStat(baseStats.attack, level, stylePoints.attacks, attackStep),
+            defense: calculateStat(baseStats.defense, level, stylePoints.defense, defStep),
+            spatk: calculateStat(baseStats.spatk, level, stylePoints.attacks, spAtkStep),
+            spdef: calculateStat(baseStats.spdef, level, stylePoints.spdef, spDefStep),
             speed,
         };
         setCalculatedStats[side](newStats);
@@ -308,6 +325,15 @@ const PokemonDamageCalculator: NextPage = () => {
             crit = true;
         }
         setCriticalHit(crit);
+        const sides: Side[] = ["player", "opponent"];
+        for (const side of sides) {
+            const baseStats = getPokemon[side].getStats(getForm[side]);
+            const level = getLevel[side];
+            const stylePoints = getStylePoints[side];
+            const statSteps = getStatSteps[side];
+            const effect = getStatusEffect[side];
+            recalculateStats(baseStats, level, stylePoints, statSteps, effect, side);
+        }
     }
 
     function getMoveCategory(move: Move) {

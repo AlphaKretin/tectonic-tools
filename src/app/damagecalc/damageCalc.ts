@@ -185,8 +185,7 @@ function damageCalcStats(move: Move, userStats: PokemonStats, targetStats: Pokem
     //     attacking_stat_holder = target;
     // }
 
-    // TODO: implement stat steps
-    //let attack_step = attacking_stat_holder.steps[attacking_stat];
+    // in tectonic logic stat steps are handled here, but in the app it's handled in the UI
 
     // TODO: Critical hits ignore negative attack steps
     // attack_step = 0 if critical && attack_step < 0;
