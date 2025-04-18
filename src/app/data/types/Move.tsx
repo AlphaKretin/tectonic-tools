@@ -71,6 +71,11 @@ export class Move {
     }
 
     // to be extended by subclasses
+    public getType(): PokemonType {
+        return this.type;
+    }
+
+    // to be extended by subclasses
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getInput(customMoveVar: number, setCustomMoveVar: Dispatch<SetStateAction<number>>): ReactNode {
         return <></>;
