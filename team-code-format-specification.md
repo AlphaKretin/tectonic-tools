@@ -189,3 +189,5 @@ The format supports multiple versions. As described in section 3.2, the mapping 
 ## 8. References
 
 This specification is derived from the implementation in the `teamExport.ts` file, which provides the encoding and decoding functionality for the team code format.
+
+The indices used for the mapping in the example given are stored in the `versions.json` file.
