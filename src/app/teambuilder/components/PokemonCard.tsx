@@ -1,16 +1,33 @@
 "use client";
 
 import { abilities, nullAbility } from "@/app/data/abilities";
+import { TwoItemAbility } from "@/app/data/abilities/TwoItemAbility";
 import { items, nullItem } from "@/app/data/items";
 import { moves, nullMove } from "@/app/data/moves";
 import { nullPokemon, pokemon } from "@/app/data/pokemon";
 import { calculateHP, calculateStat } from "@/app/data/stats";
 import { CardData, MAX_LEVEL, MAX_SP, MIN_LEVEL, MIN_SP, STYLE_POINT_CAP, styleFromStat } from "@/app/data/teamExport";
+import { Ability } from "@/app/data/types/Ability";
+import { Item } from "@/app/data/types/Item";
 import { Stats, StylePoints } from "@/app/data/types/Pokemon";
 import { isNull, negativeMod, safeKeys } from "@/app/data/util";
 import Dropdown from "@/components/DropDown";
 import TypeBadge from "@/components/TypeBadge";
 import Image from "next/image";
+
+function legalItems(currentItems: Item[], ability: Ability, index: number): Item[] {
+    // TODO: Add a non-magic map of pockets somewhere
+    const heldItems = Object.values(items).filter((i) => i.pocket === 5);
+    // only allow selecting items that maintain the legality constraint
+    if (ability instanceof TwoItemAbility) {
+        return heldItems.filter((i) => {
+            const newItems = [...currentItems];
+            newItems[index] = i;
+            return ability.validateItems(newItems);
+        });
+    }
+    return heldItems;
+}
 
 export default function PokemonCard({ data, update }: { data: CardData; update: (c: CardData) => void }) {
     const currentPokemon = data.pokemon;
@@ -98,9 +115,6 @@ export default function PokemonCard({ data, update }: { data: CardData; update: 
         spdef: calculateStat(currentPokemon.stats.spdef, currentLevel, currentSP.spdef, 0, stylish),
         speed: calculateStat(currentPokemon.stats.speed, currentLevel, currentSP.speed, 0, stylish),
     };
-
-    // TODO: Add a non-magic map of pockets somewhere
-    const heldItems = Object.values(items).filter((i) => i.pocket === 5);
 
     return (
         <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 flex flex-col items-center w-60">
@@ -212,31 +226,35 @@ export default function PokemonCard({ data, update }: { data: CardData; update: 
                     <div className="w-full mt-4 text-center">
                         <h3 className="font-semibold text-gray-800 dark:text-gray-100">Held Item</h3>
                         <div>
-                            {Array.from({ length: 2 }).map((_, i) => (
-                                <div key={i} className="flex items-center space-x-2">
-                                    <Dropdown
-                                        value={currentItems[i].id}
-                                        onChange={(e) => updateItem(e.target.value, i)}
-                                    >
-                                        <option value="">Select Item</option>
-                                        {Object.values(heldItems).map((i) => (
-                                            <option key={i.id} value={i.id}>
-                                                {i.name}
-                                            </option>
-                                        ))}
-                                    </Dropdown>
-                                    <div className="w-12 flex justify-center">
-                                        {!isNull(currentItems[i]) && (
-                                            <Image
-                                                alt={currentItems[i].name}
-                                                src={currentItems[i].getImage()}
-                                                width={50}
-                                                height={50}
-                                            />
-                                        )}
-                                    </div>
-                                </div>
-                            ))}
+                            {Array.from({ length: 2 }).map(
+                                (_, i) =>
+                                    // only display second item if ability enables it
+                                    (i === 0 || currentAbility instanceof TwoItemAbility) && (
+                                        <div key={i} className="flex items-center space-x-2">
+                                            <Dropdown
+                                                value={currentItems[i].id}
+                                                onChange={(e) => updateItem(e.target.value, i)}
+                                            >
+                                                <option value="">Select Item</option>
+                                                {legalItems(currentItems, currentAbility, i).map((i) => (
+                                                    <option key={i.id} value={i.id}>
+                                                        {i.name}
+                                                    </option>
+                                                ))}
+                                            </Dropdown>
+                                            <div className="w-12 flex justify-center">
+                                                {!isNull(currentItems[i]) && (
+                                                    <Image
+                                                        alt={currentItems[i].name}
+                                                        src={currentItems[i].getImage()}
+                                                        width={50}
+                                                        height={50}
+                                                    />
+                                                )}
+                                            </div>
+                                        </div>
+                                    )
+                            )}
                         </div>
                     </div>
                     <div>
