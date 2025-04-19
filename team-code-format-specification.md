@@ -34,6 +34,7 @@ Each Pokémon in a team is represented by the following properties:
 | moves       | Array of 4 move identifiers           | Valid move keys            |
 | ability     | The ability identifier                | Valid ability key          |
 | items       | Array of 2 held item identifiers      | Valid item key             |
+| itemtypes   | Array of 2 type identifiers           | Valid type key             |
 | form        | The form index of the Pokémon         | Non-negative Integer       |
 | level       | The Pokémon's level                   | Integer between 1 and 70   |
 | sp          | Array of 5 style point values         | Integers between 0 and 20  |
@@ -47,26 +48,28 @@ Each card is encoded as a binary chunk with the following structure:
 - 16 bits (2 bytes) per value
 - Values are stored as unsigned 16-bit integers in the following order:
   1. Pokémon index 
-  2. Ability index
-  3. Item 1 index
-  4. Item 2 index
-  5. Form index
-  6. Move 1 index
-  7. Move 2 index
-  8. Move 3 index
-  9. Move 4 index
-  10. Level
-  11. Style point - HP
-  12. Style point - Attack and Special Attack
-  13. Style point - Defense
-  14. Style point - Special Defense
-  15. Style point - Speed
+  1. Ability index
+  1. Item 1 index
+  1. Item 2 index
+  1. Item 1 type index
+  1. Item 2 type index
+  1. Form index
+  1. Move 1 index
+  1. Move 2 index
+  1. Move 3 index
+  1. Move 4 index
+  1. Level
+  1. Style point - HP
+  1. Style point - Attack and Special Attack
+  1. Style point - Defense
+  1. Style point - Special Defense
+  1. Style point - Speed
 
 Here, an index refers to the position of an entity in the ordering of Pokémon Tectonic's PBS data files. For PBS data with multiple files, e.g. moves and abilities, consider the `_new` file to be appended directly after the base file, ignoring all other files such as `_cut`. For example, if the index of the last move in `moves.txt` is 283, then the index of the first move in `moves_new.txt` is 284. For Pokémon forms, the form defined in the base `pokemon.txt` file is form 0, while any forms listed in `pokemonforms.txt` count up from 1.
 
 If a value is undefined, it should be encoded as 65535, i.e. -1. It is expected that no list of entities will approach or exceed this number of entries, making this value safe to reserve.
 
-Note that although the vast majority of Pokémon will be holding zero or one items, two slots are still reserved in encoding for the edge case otherwise. In these cases, the second item value will be undefined.
+Note that although the vast majority of Pokémon will be holding zero or one items, two slots are still reserved in encoding for the edge case otherwise. In these cases, the second item value will be undefined. The same is true for item types - though only a very limited selection of items have a type parameter, it is necessary to account for the possibility of such in encoding.
 
 ### 3.3 Encoding Algorithm
 
@@ -112,7 +115,7 @@ The format supports multiple versions. As described in section 3.2, the mapping 
 ### 7.1 Example of an Encoded Team
 
 ```
-3.2.1!AMMB1QB2//8AAAHhAQwBGQK/AEYACgAKAAoACgAK!ASwAqgBZ//8AAAAbBCQD+AAZAEYACgAKAAoACgAK!AnwA+wB+//8AAAHhA2sA8wFQAEYACgAKAAoACgAK!AiQBbwBfAGEAAAOWAlADpwGWAEYACgAKAAoACgAK!ATEAbP////8AAADQAuYAlgEsAEYACgAKAAoACgAK!A5sBoQBV//8AAAEuBBoCDAAbAEYACgAKAAoACgAK
+3.2.1!AMMB1QB2////////AAAB4QEMARkCvwBGAAoACgAKAAoACg==!ASwAqgBZ////////AAAAGwQkA/gAGQBGAAoACgAKAAoACg==!AnwA+wB+////////AAAB4QNrAPMBUABGAAoACgAKAAoACg==!AiQBbwBfAGH/////AAADlgJQA6cBlgBGAAoACgAKAAoACg==!ATEAbAB7//8ADf//AAAA0ALmAJYBLABGAAoACgAKAAoACg==!A5sBoQBV////////AAABLgQaAgwAGwBGAAoACgAKAAoACg==
 ```
 
 ### 7.2 Example of a Decoded Team
@@ -123,6 +126,7 @@ The format supports multiple versions. As described in section 3.2, the mapping 
         "pokemon": "ESPEON",
         "ability": "OVERTHINKING",
         "items": ["EJECTPACK"],
+        "itemtypes": [],
         "form": 0,
         "moves": ["PSYCHIC", "CONFUSERAY", "SHADOWBALL", "MIASMA"],
         "level": 70,
@@ -132,6 +136,7 @@ The format supports multiple versions. As described in section 3.2, the mapping 
         "pokemon": "DELCATTY",
         "ability": "ABOVEITALL",
         "items": ["LEFTOVERS"],
+        "itemtypes": [],
         "form": 0,
         "moves": ["FAKEOUT", "BLACKOUT", "HYPOTHERMIATE", "EXTREMESPEED"],
         "level": 70,
@@ -141,6 +146,7 @@ The format supports multiple versions. As described in section 3.2, the mapping 
         "pokemon": "VOLCARONA",
         "ability": "DAWNFALL",
         "items": ["WILDCARD"],
+        "itemtypes": [],
         "form": 0,
         "moves": ["PSYCHIC", "SMOLDERRAVE", "BUGBUZZ", "HEATWAVE"],
         "level": 70,
@@ -150,6 +156,7 @@ The format supports multiple versions. As described in section 3.2, the mapping 
         "pokemon": "LILLIGANT",
         "ability": "HERBALIST",
         "items": ["AGILITYHERB", "INTELLECTHERB"],
+        "itemtypes": [],
         "form": 0,
         "moves": ["BLOSSOM", "MOONBLAST", "PUFFBALL", "PETALDANCE"],
         "level": 70,
@@ -158,7 +165,8 @@ The format supports multiple versions. As described in section 3.2, the mapping 
     {
         "pokemon": "AGGRON",
         "ability": "ROCKHEAD",
-        "items": [],
+        "items": ["CRYSTALVEIL"],
+        "itemtypes": ["ELECTRIC"],
         "form": 0,
         "moves": ["EARTHQUAKE", "BEDROCKBREAKER", "SUPERPOWER", "HEAVYSLAM"],
         "level": 70,
@@ -168,6 +176,7 @@ The format supports multiple versions. As described in section 3.2, the mapping 
         "pokemon": "NIBELONG",
         "ability": "LONGODDS",
         "items": ["LOADEDDICE"],
+        "itemtypes": [],
         "form": 0,
         "moves": ["IRONHEAD", "SACREDLOTS", "DRAGONDANCE", "FAKEOUT"],
         "level": 70,
