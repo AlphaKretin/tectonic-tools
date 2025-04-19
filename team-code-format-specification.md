@@ -9,7 +9,7 @@ This document specifies the data format used for serializing and deserializing P
 
 ## 2. Format Overview
 
-The team data format represents a collection of Pokémon as a version-tagged, delimiter-separated series of base64-encoded binary chunks. Each chunk represents a single team member with its associated properties.
+The team code format represents a collection of Pokémon as a version-tagged, delimiter-separated series of base64-encoded binary chunks. Each chunk represents a single team member with its associated properties.
 
 ### 2.1 High-Level Structure
 
@@ -49,27 +49,27 @@ Each card is encoded as a binary chunk with the following structure:
 - Values are stored as unsigned 16-bit integers in the following order:
   1. Pokémon index 
   1. Ability index
-  1. Item 1 index
-  1. Item 2 index
-  1. Item 1 type index
-  1. Item 2 type index
   1. Form index
-  1. Move 1 index
-  1. Move 2 index
-  1. Move 3 index
-  1. Move 4 index
   1. Level
   1. Style point - HP
   1. Style point - Attack and Special Attack
   1. Style point - Defense
   1. Style point - Special Defense
   1. Style point - Speed
+  1. Move 1 index
+  1. Move 2 index
+  1. Move 3 index
+  1. Move 4 index
+  1. Item 1 index
+  1. Item 2 index
+  1. Item 1 type index
+  1. Item 2 type index
 
 Here, an index refers to the position of an entity in the ordering of Pokémon Tectonic's PBS data files. For PBS data with multiple files, e.g. moves and abilities, consider the `_new` file to be appended directly after the base file, ignoring all other files such as `_cut`. For example, if the index of the last move in `moves.txt` is 283, then the index of the first move in `moves_new.txt` is 284. For Pokémon forms, the form defined in the base `pokemon.txt` file is form 0, while any forms listed in `pokemonforms.txt` count up from 1.
 
 If a value is undefined, it should be encoded as 65535, i.e. -1. It is expected that no list of entities will approach or exceed this number of entries, making this value safe to reserve.
 
-Note that although the vast majority of Pokémon will be holding zero or one items, two slots are still reserved in encoding for the edge case otherwise. In these cases, the second item value will be undefined. The same is true for item types - though only a very limited selection of items have a type parameter, it is necessary to account for the possibility of such in encoding.
+Note that the vast majority of Pokémon will only hold one item, and the vast majority of items have no associated type. However, the format must account for the rare exceptions. To avoid bloating codes with repeated undefined values, a chunk can end early if all remaining data is undefined. For example, if a Pokémon has 3 moves and no items, it can stop after the Move 3 index. However, if a Pokemon has 1 item, but that item has a type, the item 2 index must still be explicitly included as undefined.
 
 ### 3.3 Encoding Algorithm
 
@@ -115,7 +115,7 @@ The format supports multiple versions. As described in section 3.2, the mapping 
 ### 7.1 Example of an Encoded Team
 
 ```
-3.2.1!AMMB1QB2////////AAAB4QEMARkCvwBGAAoACgAKAAoACg==!ASwAqgBZ////////AAAAGwQkA/gAGQBGAAoACgAKAAoACg==!AnwA+wB+////////AAAB4QNrAPMBUABGAAoACgAKAAoACg==!AiQBbwBfAGH/////AAADlgJQA6cBlgBGAAoACgAKAAoACg==!ATEAbAB7//8ADf//AAAA0ALmAJYBLABGAAoACgAKAAoACg==!A5sBoQBV////////AAABLgQaAgwAGwBGAAoACgAKAAoACg==
+3.2.1!AMMB1QAAAEYACgAKAAoACgAKAeEBDAEZAr8Adg==!ASwAqgAAAEYACgAKAAoACgAKABsEJAP4ABkAWQ==!AnwA+wAAAEYACgAKAAoACgAKAeEDawDzAVAAfg==!AiQBbwAAAEYACgAKAAoACgAKA5YCUAOnAZYAXwBh!ATEAbAAAAEYACgAKAAoACgAKANAC5gCWASwAe///AA0=!A5sBoQAAAEYACgAKAAoACgAKAS4EGgIMABsAVQ==
 ```
 
 ### 7.2 Example of a Decoded Team
