@@ -179,4 +179,4 @@ The format supports multiple versions. As described in section 3.2, the mapping 
 
 ## 8. References
 
-This specification is derived from the implementation in the `teamExport.ts` file, which provides the encoding and decoding functionality for the team data format.
+This specification is derived from the implementation in the `teamExport.ts` file, which provides the encoding and decoding functionality for the team code format.
