@@ -17,7 +17,7 @@ export default function MoveDisplay({
     form: number;
     moveKey: "level" | "tutor";
 }) {
-    const [selectedMove, setSelectedMove] = useState<Move>(nullMove);
+    const [selectedMove, setSelectedMove] = useState<Move<unknown>>(nullMove);
     const [selectedCategory, setSelectedCategory] = useState<MoveCategory>("Physical");
     const moves =
         moveKey === "level"

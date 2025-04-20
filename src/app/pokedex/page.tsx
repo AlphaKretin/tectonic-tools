@@ -213,7 +213,7 @@ const Home: NextPage = () => {
         setSelectedPokemon(pokemon);
     };
 
-    const handleMoveClick = (move: Move) => {
+    const handleMoveClick = (move: Move<unknown>) => {
         handleAddFilter(allMovesFilter, move.name.toLowerCase());
         setActiveTab("Pokemon");
     };

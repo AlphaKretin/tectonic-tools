@@ -8,13 +8,13 @@ import InputLabel from "@/components/InputLabel";
 import TypeBadge from "@/components/TypeBadge";
 import { ReactNode } from "react";
 
-export interface MoveData {
-    move: Move;
-    customVar: number;
+export interface MoveData<T> {
+    move: Move<T>;
+    customVar: T;
     criticalHit: boolean;
 }
 
-function getMoveCategory(move: Move, userData: PartyPokemon) {
+function getMoveCategory(move: Move<unknown>, userData: PartyPokemon) {
     if (move.category !== "Adaptive") {
         return move.category;
     }
@@ -22,30 +22,45 @@ function getMoveCategory(move: Move, userData: PartyPokemon) {
     return "Adaptive (" + trueCategory + ")";
 }
 
-export default function MoveCard({
+export default function MoveCard<T>({
     data,
     updateMoveData,
     userData,
     targetData,
 }: {
-    data: MoveData;
-    updateMoveData: (move: MoveData) => void;
+    data: MoveData<T>;
+    updateMoveData: (move: MoveData<T>) => void;
     userData: PartyPokemon;
     targetData: PartyPokemon;
 }): ReactNode {
-    function updateMove(move: Move) {
+    function updateMove(move: Move<T>) {
         const newData = { ...data, move };
         updateMoveData(newData);
     }
 
-    // function updateCustomVar(customVar: number) {
-    //     const newData = { ...data, customVar };
-    //     updateMoveData(newData);
-    // }
+    function updateCustomVar(customVar: T) {
+        const newData = { ...data, customVar };
+        updateMoveData(newData);
+    }
 
     function updateCriticalHit(criticalHit: boolean) {
         const newData = { ...data, criticalHit };
         updateMoveData(newData);
+    }
+
+    function getCustomVarInput(data: MoveData<T>, updateCustomVar: (customVar: T) => void): ReactNode {
+        if (typeof data.customVar === "number") {
+            <div className="flex items-center space-x-2">
+                <InputLabel>{data.move.customVarName}</InputLabel>
+                <input
+                    type="number"
+                    className="w-full px-4 py-2 rounded-md bg-gray-700 border border-gray-600 text-gray-200 focus:ring-blue-500 focus:border-blue-500 text-center"
+                    value={data.customVar}
+                    onChange={(e) => updateCustomVar(parseInt(e.target.value) as T)}
+                />
+            </div>;
+        }
+        return <span>Input for type {typeof data.customVar} not yet implemented.</span>;
     }
 
     return (
@@ -75,7 +90,7 @@ export default function MoveCard({
             )}
             {!isNull(data.move) && (
                 <div className="bg-gray-700 p-4 rounded-lg border border-gray-600">
-                    {/* {moveData.move.getInput(moveData.customVar, updateCustomVar)} */}
+                    {data.move.needsInput && getCustomVarInput(data, updateCustomVar)}
                     <Checkbox
                         checked={data.criticalHit}
                         disabled={targetData.volatileStatusEffects.Jinx}
@@ -88,7 +103,7 @@ export default function MoveCard({
                         <div className="text-right text-gray-400">Type:</div>
                         <TypeBadge type1={data.move.type} />
                         <div className="text-right text-gray-400">Power:</div>
-                        <div className="text-left text-gray-200">{data.move.getPower(userData)}</div>
+                        <div className="text-left text-gray-200">{data.move.getPower(userData, data.customVar)}</div>
                         <div className="text-right text-gray-400">Category:</div>
                         <div className="text-left text-gray-200">{getMoveCategory(data.move, userData)}</div>
                     </div>

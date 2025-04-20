@@ -21,7 +21,7 @@ export interface BattleState {
 }
 
 export function calculateDamage(
-    move: MoveData,
+    move: MoveData<unknown>,
     user: PartyPokemon,
     target: PartyPokemon,
     battleState: BattleState
@@ -38,7 +38,7 @@ export function calculateDamage(
     const type = move.move.getType(); // TODO: implement moves that can change type
 
     // Calculate base power of move
-    const baseDmg = move.move.getPower(user);
+    const baseDmg = move.move.getPower(user, move.customVar);
 
     // In vanilla Tectonic, critical hit determination happens here
     // However, for calculation, it's determined by the UI
@@ -65,7 +65,7 @@ export function calculateDamage(
 }
 
 function calculateDamageForHit(
-    move: MoveData,
+    move: MoveData<unknown>,
     user: PartyPokemon,
     target: PartyPokemon,
     type: PokemonType,
@@ -131,7 +131,11 @@ function calcBasicDamage(
     return Math.floor(2.0 + (levelMultiplier * baseDamage * userAttackingStat) / targetDefendingStat / 50.0);
 }
 
-function damageCalcStats(move: MoveData, userStats: PartyPokemon, targetStats: PartyPokemon): [number, number] {
+function damageCalcStats(
+    move: MoveData<unknown>,
+    userStats: PartyPokemon,
+    targetStats: PartyPokemon
+): [number, number] {
     let trueCategory: "Physical" | "Special";
     if (move.move.category === "Adaptive") {
         if (userStats.stats.attack >= userStats.stats.spatk) {
@@ -320,7 +324,7 @@ function damageCalcStats(move: MoveData, userStats: PartyPokemon, targetStats: P
 // }
 
 function pbCalcStatusesDamageMultipliers(
-    move: MoveData,
+    move: MoveData<unknown>,
     user: PartyPokemon,
     target: PartyPokemon,
     multipliers: DamageMultipliers
@@ -653,7 +657,7 @@ interface DamageMultipliers {
 }
 
 function calcDamageMultipliers(
-    move: MoveData,
+    move: MoveData<unknown>,
     user: PartyPokemon,
     target: PartyPokemon,
     battleState: BattleState,

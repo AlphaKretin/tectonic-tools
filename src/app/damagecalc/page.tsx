@@ -27,7 +27,7 @@ const nullMoveData = { move: nullMove, criticalHit: false, customVar: 0 };
 const PokemonDamageCalculator: NextPage = () => {
     const [playerPokemon, setPlayerPokemon] = useState<PartyPokemon>(new PartyPokemon());
 
-    const [playerMove, setPlayerMove] = useState<MoveData>(nullMoveData);
+    const [playerMove, setPlayerMove] = useState<MoveData<unknown>>(nullMoveData);
 
     const [opponentPokemon, setOpponentPokemon] = useState<PartyPokemon>(new PartyPokemon());
 
@@ -48,7 +48,7 @@ const PokemonDamageCalculator: NextPage = () => {
         setOpponentPokemon(new PartyPokemon({ ...opponentPokemon, ...card }));
     }
 
-    function updateMoveData(data: MoveData) {
+    function updateMoveData(data: MoveData<unknown>) {
         setPlayerMove(data);
     }
 

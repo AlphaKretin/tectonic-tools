@@ -7,7 +7,7 @@ import Image from "next/image";
 
 interface PokemonEvolutionProps {
     pokemon: Record<string, Pokemon>;
-    moves: Record<string, Move>;
+    moves: Record<string, Move<unknown>>;
     items: Record<string, Item>;
     node: NTreeNode<LoadedEvolution>;
     index: number;

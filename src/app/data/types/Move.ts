@@ -1,4 +1,3 @@
-import { Dispatch, ReactNode, SetStateAction } from "react";
 import { LoadedMove } from "../loading/moves";
 import { StatusEffect } from "../statusEffects";
 import { types } from "../types";
@@ -30,7 +29,7 @@ export type MoveTarget =
 
 const spreadTargets: MoveTarget[] = ["AllBattlers", "AllNearFoes", "AllNearOthers", "BothSides", "FoeSide"];
 
-export class Move {
+export class Move<T> {
     id: string;
     name: string;
     description: string;
@@ -40,6 +39,8 @@ export class Move {
     pp: number;
     category: MoveCategory;
     target: MoveTarget;
+    customVarName: string = "";
+    needsInput: boolean = false;
     constructor(loadedMove: LoadedMove) {
         this.id = loadedMove.key;
         this.name = loadedMove.name;
@@ -65,7 +66,7 @@ export class Move {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getPower(user: PartyPokemon): number {
+    public getPower(user: PartyPokemon, customVar: T): number {
         // TODO: Implement BP variance for relevant moves
         return this.bp;
     }
@@ -73,12 +74,6 @@ export class Move {
     // to be extended by subclasses
     public getType(): PokemonType {
         return this.type;
-    }
-
-    // to be extended by subclasses
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getInput(customMoveVar: number, setCustomMoveVar: Dispatch<SetStateAction<number>>): ReactNode {
-        return <></>;
     }
 
     // to be extended by subclasses

@@ -70,9 +70,9 @@ export class Pokemon {
     type2?: PokemonType;
     stats: Stats;
     abilities: Ability[];
-    levelMoves: [number, Move][];
-    lineMoves: Move[];
-    tutorMoves: Move[];
+    levelMoves: [number, Move<unknown>][];
+    lineMoves: Move<unknown>[];
+    tutorMoves: Move<unknown>[];
     tribes: Tribe[];
     height: number;
     weight: number;
@@ -120,7 +120,7 @@ export class Pokemon {
         this.forms = this.forms.concat(forms);
     }
 
-    public allMoves(currentForm: number = 0): Move[] {
+    public allMoves(currentForm: number = 0): Move<unknown>[] {
         const flatLevelMoves = this.getLevelMoves(currentForm).map((m) => m[1]);
         return uniq(flatLevelMoves.concat(this.lineMoves, this.tutorMoves));
     }

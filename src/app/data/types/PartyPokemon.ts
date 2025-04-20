@@ -13,7 +13,7 @@ import { PokemonType } from "./PokemonType";
 
 export class PartyPokemon {
     species: Pokemon;
-    moves: Move[];
+    moves: Move<unknown>[];
     ability: Ability;
     items: Item[];
     itemTypes: PokemonType[];
