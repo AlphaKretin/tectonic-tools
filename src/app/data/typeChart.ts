@@ -8,7 +8,7 @@ export const typeChart = loadedChart;
 
 interface AttackerData {
     type: PokemonType;
-    move?: Move<unknown>;
+    move?: Move;
     ability?: Ability;
 }
 

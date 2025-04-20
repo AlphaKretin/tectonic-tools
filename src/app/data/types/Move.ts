@@ -29,7 +29,7 @@ export type MoveTarget =
 
 const spreadTargets: MoveTarget[] = ["AllBattlers", "AllNearFoes", "AllNearOthers", "BothSides", "FoeSide"];
 
-export class Move<T> {
+export class Move {
     id: string;
     name: string;
     description: string;
@@ -39,7 +39,8 @@ export class Move<T> {
     pp: number;
     category: MoveCategory;
     target: MoveTarget;
-    customVarName: string = "";
+    customVarName?: string;
+    customVarType?: string;
     needsInput: boolean = false;
     constructor(loadedMove: LoadedMove) {
         this.id = loadedMove.key;
@@ -66,7 +67,7 @@ export class Move<T> {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getPower(user: PartyPokemon, customVar: T): number {
+    public getPower(user: PartyPokemon, customVar: unknown): number {
         // TODO: Implement BP variance for relevant moves
         return this.bp;
     }

@@ -22,12 +22,12 @@ import { isNull } from "../data/util";
 import MoveCard, { MoveData } from "./components/MoveCard";
 import { calculateDamage, DamageResult } from "./damageCalc";
 
-const nullMoveData = { move: nullMove, criticalHit: false, customVar: 0 };
+const nullMoveData = { move: nullMove, criticalHit: false, customVar: undefined };
 
 const PokemonDamageCalculator: NextPage = () => {
     const [playerPokemon, setPlayerPokemon] = useState<PartyPokemon>(new PartyPokemon());
 
-    const [playerMove, setPlayerMove] = useState<MoveData<unknown>>(nullMoveData);
+    const [playerMove, setPlayerMove] = useState<MoveData>(nullMoveData);
 
     const [opponentPokemon, setOpponentPokemon] = useState<PartyPokemon>(new PartyPokemon());
 
@@ -48,7 +48,7 @@ const PokemonDamageCalculator: NextPage = () => {
         setOpponentPokemon(new PartyPokemon({ ...opponentPokemon, ...card }));
     }
 
-    function updateMoveData(data: MoveData<unknown>) {
+    function updateMoveData(data: MoveData) {
         setPlayerMove(data);
     }
 

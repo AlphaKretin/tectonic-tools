@@ -3,8 +3,9 @@ import { PartyPokemon } from "../types/PartyPokemon";
 
 export const desperationMoves = ["FLAIL"];
 
-export class DesperationMove extends Move<number> {
+export class DesperationMove extends Move {
     customVarName: string = "HP";
+    customVarType: string = "number";
     needsInput: boolean = true;
     public getPower(user: PartyPokemon, hp: number): number {
         hp = Math.max(hp, 1);

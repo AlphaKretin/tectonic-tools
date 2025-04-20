@@ -6,7 +6,7 @@ import { MultiHitMove, multiHitMoves } from "./moves/MultiHitMove";
 import { StackingMove, stackingMoves } from "./moves/StackingMove";
 import { Move } from "./types/Move";
 
-function loadMove(move: LoadedMove): Move<unknown> {
+function loadMove(move: LoadedMove): Move {
     if (move.key in multiHitMoves) {
         const hits = multiHitMoves[move.key as keyof typeof multiHitMoves];
         return new MultiHitMove({ ...move, ...hits });
@@ -23,11 +23,11 @@ function loadMove(move: LoadedMove): Move<unknown> {
     return new Move(move);
 }
 
-export const moves: Record<string, Move<unknown>> = Object.fromEntries(
+export const moves: Record<string, Move> = Object.fromEntries(
     Object.entries(loadedMoves).map(([id, move]) => [id, loadMove(move)])
 );
 
-export const nullMove: Move<unknown> = new Move({
+export const nullMove: Move = new Move({
     key: "",
     name: "",
     description: "",

@@ -17,7 +17,7 @@ interface LoadedMultiHitMove extends LoadedMove {
     maxHits: number;
 }
 
-export class MultiHitMove extends Move<unknown> {
+export class MultiHitMove extends Move {
     minHits: number;
     maxHits: number;
     constructor(move: LoadedMultiHitMove) {

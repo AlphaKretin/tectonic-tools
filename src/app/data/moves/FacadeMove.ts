@@ -4,7 +4,7 @@ import { PartyPokemon } from "../types/PartyPokemon";
 
 export const facadeMoves = ["FACADE"];
 
-export class FacadeMove extends Move<unknown> {
+export class FacadeMove extends Move {
     public getPower(user: PartyPokemon): number {
         if (user.statusEffect !== "None") {
             return this.bp * 2;

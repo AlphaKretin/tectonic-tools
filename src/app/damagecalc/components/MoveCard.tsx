@@ -8,13 +8,13 @@ import InputLabel from "@/components/InputLabel";
 import TypeBadge from "@/components/TypeBadge";
 import { ReactNode } from "react";
 
-export interface MoveData<T> {
-    move: Move<T>;
-    customVar: T;
+export interface MoveData {
+    move: Move;
+    customVar: unknown;
     criticalHit: boolean;
 }
 
-function getMoveCategory(move: Move<unknown>, userData: PartyPokemon) {
+function getMoveCategory(move: Move, userData: PartyPokemon) {
     if (move.category !== "Adaptive") {
         return move.category;
     }
@@ -22,23 +22,23 @@ function getMoveCategory(move: Move<unknown>, userData: PartyPokemon) {
     return "Adaptive (" + trueCategory + ")";
 }
 
-export default function MoveCard<T>({
+export default function MoveCard({
     data,
     updateMoveData,
     userData,
     targetData,
 }: {
-    data: MoveData<T>;
-    updateMoveData: (move: MoveData<T>) => void;
+    data: MoveData;
+    updateMoveData: (move: MoveData) => void;
     userData: PartyPokemon;
     targetData: PartyPokemon;
 }): ReactNode {
-    function updateMove(move: Move<T>) {
+    function updateMove(move: Move) {
         const newData = { ...data, move };
         updateMoveData(newData);
     }
 
-    function updateCustomVar(customVar: T) {
+    function updateCustomVar(customVar: unknown) {
         const newData = { ...data, customVar };
         updateMoveData(newData);
     }
@@ -48,19 +48,24 @@ export default function MoveCard<T>({
         updateMoveData(newData);
     }
 
-    function getCustomVarInput(data: MoveData<T>, updateCustomVar: (customVar: T) => void): ReactNode {
-        if (typeof data.customVar === "number") {
-            <div className="flex items-center space-x-2">
-                <InputLabel>{data.move.customVarName}</InputLabel>
-                <input
-                    type="number"
-                    className="w-full px-4 py-2 rounded-md bg-gray-700 border border-gray-600 text-gray-200 focus:ring-blue-500 focus:border-blue-500 text-center"
-                    value={data.customVar}
-                    onChange={(e) => updateCustomVar(parseInt(e.target.value) as T)}
-                />
-            </div>;
+    function getCustomVarInput(data: MoveData, updateCustomVar: (customVar: unknown) => void): ReactNode {
+        if (data.move.customVarType === "number") {
+            if (data.customVar === undefined) {
+                data.customVar = 0;
+            }
+            return (
+                <div className="flex items-center space-x-2">
+                    <InputLabel>{data.move.customVarName}</InputLabel>
+                    <input
+                        type="number"
+                        className="w-full px-4 py-2 rounded-md bg-gray-700 border border-gray-600 text-gray-200 focus:ring-blue-500 focus:border-blue-500 text-center"
+                        value={data.customVar as number}
+                        onChange={(e) => updateCustomVar(parseInt(e.target.value))}
+                    />
+                </div>
+            );
         }
-        return <span>Input for type {typeof data.customVar} not yet implemented.</span>;
+        return <span>Input for type {data.move.customVarType === "number"} not yet implemented.</span>;
     }
 
     return (

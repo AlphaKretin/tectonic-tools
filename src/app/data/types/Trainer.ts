@@ -15,7 +15,7 @@ export interface TrainerPokemon {
     sp: StylePoints;
     level: number;
     nickname?: string;
-    moves: Move<unknown>[];
+    moves: Move[];
     ability: Ability;
     items: Item[];
     itemTypes: PokemonType[];

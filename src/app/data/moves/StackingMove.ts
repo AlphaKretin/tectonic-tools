@@ -4,8 +4,9 @@ import { PartyPokemon } from "../types/PartyPokemon";
 
 export const stackingMoves = ["ECHOEDVOICE"];
 
-export class StackingMove extends Move<number> {
-    customVarName: string = "turns";
+export class StackingMove extends Move {
+    customVarName: string = "Turns";
+    customVarType: string = "number";
     needsInput: boolean = true;
     constructor(move: LoadedMove) {
         super(move);
