@@ -3,7 +3,7 @@ import { StatusEffect } from "../statusEffects";
 import { types } from "../types";
 import { isNull } from "../util";
 import { PartyPokemon } from "./PartyPokemon";
-import { Pokemon } from "./Pokemon";
+import { Pokemon, Stat } from "./Pokemon";
 import { PokemonType } from "./PokemonType";
 
 export const moveCategories = ["Physical", "Special", "Status", "Adaptive"] as const;
@@ -67,13 +67,14 @@ export class Move {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getPower(user: PartyPokemon, customVar: unknown): number {
+    public getPower(user: PartyPokemon, target: PartyPokemon, customVar: unknown): number {
         // TODO: Implement BP variance for relevant moves
         return this.bp;
     }
 
     // to be extended by subclasses
-    public getType(): PokemonType {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    public getType(user: PartyPokemon): PokemonType {
         return this.type;
     }
 
@@ -81,5 +82,30 @@ export class Move {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public ignoreStatus(effect: StatusEffect): boolean {
         return false;
+    }
+
+    public getAttackingStat(category: "Physical" | "Special"): Stat {
+        return category === "Physical" ? "attack" : "spatk";
+    }
+
+    public ignoresScreens(): boolean {
+        return false;
+    }
+
+    public getDamageCategory(user: PartyPokemon): "Physical" | "Special" {
+        let trueCategory: "Physical" | "Special";
+        if (this.category === "Adaptive") {
+            if (user.stats.attack >= user.stats.spatk) {
+                trueCategory = "Physical";
+            } else {
+                trueCategory = "Special";
+            }
+        } else if (this.category === "Status") {
+            // lazy typeguard
+            throw new Error("Status moves shouldn't be selectable!");
+        } else {
+            trueCategory = this.category;
+        }
+        return trueCategory;
     }
 }

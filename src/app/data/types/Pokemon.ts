@@ -22,6 +22,8 @@ export interface Stats {
     spdef: number;
 }
 
+export type Stat = keyof Stats;
+
 export const blankStats: Stats = {
     hp: 0,
     attack: 0,

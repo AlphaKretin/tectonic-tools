@@ -21,7 +21,7 @@ import { nullType, types } from "@/app/data/types";
 import { Ability } from "@/app/data/types/Ability";
 import { Item } from "@/app/data/types/Item";
 import { PartyPokemon } from "@/app/data/types/PartyPokemon";
-import { Stats, StylePoints } from "@/app/data/types/Pokemon";
+import { Stat, StylePoints } from "@/app/data/types/Pokemon";
 import { isNull, negativeMod, safeKeys } from "@/app/data/util";
 import Dropdown from "@/components/DropDown";
 import TypeBadge from "@/components/TypeBadge";
@@ -132,7 +132,7 @@ export default function PokemonCard({
         update({ stylePoints: newSP });
     }
 
-    function updateStatSteps(stat: keyof Stats, value: number) {
+    function updateStatSteps(stat: Stat, value: number) {
         value = Math.max(value, MIN_STEP);
         value = Math.min(value, MAX_STEP);
         const newSteps = { ...data.statSteps, [stat]: value };
@@ -226,7 +226,7 @@ export default function PokemonCard({
                                 </div>
                                 <div className="w-12 flex justify-center">
                                     {data.moves[moveIndex].isAttackingMove() && (
-                                        <TypeBadge type1={data.moves[moveIndex].type} />
+                                        <TypeBadge type1={data.moves[moveIndex].getType(data)} />
                                     )}
                                 </div>
                             </div>

@@ -2,7 +2,7 @@ import { StatusEffect } from "../statusEffects";
 import { Move } from "../types/Move";
 import { PartyPokemon } from "../types/PartyPokemon";
 
-export const facadeMoves = ["FACADE"];
+export const facadeMoveCodes = ["DoubleDamageUserStatused"];
 
 export class FacadeMove extends Move {
     public getPower(user: PartyPokemon): number {

@@ -2,7 +2,7 @@ import { LoadedMove } from "../loading/moves";
 import { Move } from "../types/Move";
 import { PartyPokemon } from "../types/PartyPokemon";
 
-export const stackingMoves = ["ECHOEDVOICE"];
+export const stackingMoveCodes = ["EchoedVoice"];
 
 export class StackingMove extends Move {
     customVarName: string = "Turns";
@@ -12,7 +12,7 @@ export class StackingMove extends Move {
         super(move);
     }
 
-    public getPower(_: PartyPokemon, turns: number): number {
+    public getPower(_: PartyPokemon, __: PartyPokemon, turns: number): number {
         return this.bp * Math.pow(2, turns);
     }
 }

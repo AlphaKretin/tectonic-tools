@@ -24,6 +24,10 @@ import { calculateDamage, DamageResult } from "./damageCalc";
 
 const nullMoveData = { move: nullMove, criticalHit: false, customVar: undefined };
 
+const battleBooleans = ["Multi Battle", "Aurora Veil", "Reflect", "Light Screen"] as const;
+type BattleBoolean = (typeof battleBooleans)[number];
+export type BattleState = Record<BattleBoolean, boolean>;
+
 const PokemonDamageCalculator: NextPage = () => {
     const [playerPokemon, setPlayerPokemon] = useState<PartyPokemon>(new PartyPokemon());
 
@@ -34,7 +38,9 @@ const PokemonDamageCalculator: NextPage = () => {
     const [playerTeam, setPlayerTeam] = useState<Trainer>(nullTrainer);
     const [opposingTrainer, setOpposingTrainer] = useState<Trainer>(nullTrainer);
 
-    const [multiBattle, setMultiBattle] = useState<boolean>(false);
+    const [battleState, setBattleState] = useState<BattleState>(
+        Object.fromEntries(battleBooleans.map((b) => [b, false])) as BattleState
+    );
 
     const [teamCode, setTeamCode] = useState<string>("");
 
@@ -50,6 +56,11 @@ const PokemonDamageCalculator: NextPage = () => {
 
     function updateMoveData(data: MoveData) {
         setPlayerMove(data);
+    }
+
+    function handleBattleState(state: BattleBoolean, value: boolean) {
+        const newState = { ...battleState, [state]: value };
+        setBattleState(newState);
     }
 
     const setPokemon = {
@@ -119,10 +130,6 @@ const PokemonDamageCalculator: NextPage = () => {
     function isReadyToCalculate() {
         return !isNull(playerPokemon.species) && !isNull(opponentPokemon.species) && !isNull(playerMove.move);
     }
-
-    const battleState = {
-        multiBattle,
-    };
 
     const damageResult = calculateDamage(playerMove, playerPokemon, opponentPokemon, battleState);
 
@@ -347,10 +354,16 @@ const PokemonDamageCalculator: NextPage = () => {
                                         </div>
                                     )}
                                     <ColumnHeader colour="text-purple-400">Field Status</ColumnHeader>
-                                    <div className="mt-6">
-                                        <Checkbox checked={multiBattle} onChange={() => setMultiBattle(!multiBattle)}>
-                                            Multi Battle
-                                        </Checkbox>
+                                    <div className="mt-6 grid grid-cols-2 gap-4">
+                                        {battleBooleans.map((b) => (
+                                            <Checkbox
+                                                key={b}
+                                                checked={battleState[b]}
+                                                onChange={() => handleBattleState(b, !battleState[b])}
+                                            >
+                                                {b}
+                                            </Checkbox>
+                                        ))}
                                     </div>
                                     <button
                                         onClick={() => swapPokemon()}

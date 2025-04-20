@@ -4,7 +4,7 @@ import { moves, nullMove } from "./moves";
 import { nullPokemon, pokemon } from "./pokemon";
 import { nullType, types } from "./types";
 import { PartyPokemon } from "./types/PartyPokemon";
-import { Stats, StylePoints } from "./types/Pokemon";
+import { Stat, StylePoints } from "./types/Pokemon";
 import { version, VersionMap, versionMaps } from "./versions";
 
 export const MIN_LEVEL = 1;
@@ -15,7 +15,7 @@ export const MAX_SP = 20;
 export const MIN_STEP = -12;
 export const MAX_STEP = +12;
 
-export function styleFromStat(stat: keyof Stats): keyof StylePoints {
+export function styleFromStat(stat: Stat): keyof StylePoints {
     if (stat === "attack" || stat === "spatk") {
         return "attacks";
     }
