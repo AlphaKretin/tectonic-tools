@@ -43,9 +43,9 @@ export class Trainer {
             // if no moves defined, autofill learnset
             if (monMoves.filter((m) => !isNull(m)).length === 0) {
                 const newMoves = [];
-                const signatureMove = mon.moves.find((m) => m in getSignatureMoves());
+                const signatureMove = pokemon[mon.id].levelMoves.find(([, move]) => move.id in getSignatureMoves());
                 if (signatureMove) {
-                    newMoves.push(moves[signatureMove]);
+                    newMoves.push(moves[signatureMove[1].id]);
                 }
                 // don't auto-learn moves past level 50
                 const maxLevel = Math.min(mon.level, 50);
@@ -53,7 +53,7 @@ export class Trainer {
                     .filter(
                         ([level, move]) =>
                             level <= maxLevel && // get moves learnable up to current level
-                            move.id !== signatureMove && // skip signatures to avoid duplication
+                            (!signatureMove || move.id !== signatureMove[1].id) && // skip signatures to avoid duplication
                             level !== 0 // skip evolution moves to avoid duplication
                     )
                     .sort((a, b) => b[0] - a[0]);
