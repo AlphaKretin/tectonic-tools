@@ -2,8 +2,10 @@ import { items, nullItem } from "../items";
 import { LoadedTrainer } from "../loading/trainers";
 import { moves, nullMove } from "../moves";
 import { pokemon } from "../pokemon";
+import { getSignatureMoves } from "../signatures";
 import { trainerTypes } from "../trainerTypes";
 import { nullType, types } from "../types";
+import { isNull } from "../util";
 import { Ability } from "./Ability";
 import { Item } from "./Item";
 import { Move } from "./Move";
@@ -31,6 +33,37 @@ export class Trainer {
     pokemon: TrainerPokemon[];
     constructor(loadedTrainer: LoadedTrainer) {
         const trainerMons: TrainerPokemon[] = loadedTrainer.pokemon.map((mon) => {
+            // for some reason a mapping approach consistently returned blanks instead of nulls
+            let monMoves = [
+                moves[mon.moves[0]] || nullMove,
+                moves[mon.moves[1]] || nullMove,
+                moves[mon.moves[2]] || nullMove,
+                moves[mon.moves[3]] || nullMove,
+            ];
+            // if no moves defined, autofill learnset
+            if (monMoves.filter((m) => !isNull(m)).length === 0) {
+                const newMoves = [];
+                const signatureMove = mon.moves.find((m) => m in getSignatureMoves());
+                if (signatureMove) {
+                    newMoves.push(moves[signatureMove]);
+                }
+                const movesUpToLevel = pokemon[mon.id].levelMoves
+                    .filter(
+                        ([level, move]) =>
+                            level <= mon.level && // get moves learnable up to current level
+                            move.id !== signatureMove && // skip signatures to avoid duplication
+                            level !== 0 // skip evolution moves to avoid duplication
+                    )
+                    .sort((a, b) => b[0] - a[0]);
+                while (newMoves.length < 4 && movesUpToLevel.length > 0) {
+                    const nextMove = movesUpToLevel.shift();
+                    if (nextMove) newMoves.push(nextMove[1]);
+                }
+                while (newMoves.length < 4) {
+                    newMoves.push(nullMove);
+                }
+                monMoves = newMoves;
+            }
             const abilityIndex = mon.abilityIndex || 0;
             return {
                 ...mon,
@@ -41,14 +74,7 @@ export class Trainer {
                         ? defaultStylePoints
                         : { hp: mon.sp[0], attacks: mon.sp[1], defense: mon.sp[2], speed: mon.sp[3], spdef: mon.sp[5] },
                 ability: pokemon[mon.id].abilities[abilityIndex],
-                // TODO: autopopulate default moveset for level if moves undefined
-                // for some reason a mapping approach consistently returned blanks instead of nulls
-                moves: [
-                    moves[mon.moves[0]] || nullMove,
-                    moves[mon.moves[1]] || nullMove,
-                    moves[mon.moves[2]] || nullMove,
-                    moves[mon.moves[3]] || nullMove,
-                ],
+                moves: monMoves,
                 items: [items[mon.items[0]] || nullItem, items[mon.items[1]] || nullItem],
                 itemTypes: [types[mon.itemTypes[0]] || nullType, types[mon.itemTypes[1]] || nullType],
             };
