@@ -47,10 +47,12 @@ export class Trainer {
                 if (signatureMove) {
                     newMoves.push(moves[signatureMove]);
                 }
+                // don't auto-learn moves past level 50
+                const maxLevel = Math.min(mon.level, 50);
                 const movesUpToLevel = pokemon[mon.id].levelMoves
                     .filter(
                         ([level, move]) =>
-                            level <= mon.level && // get moves learnable up to current level
+                            level <= maxLevel && // get moves learnable up to current level
                             move.id !== signatureMove && // skip signatures to avoid duplication
                             level !== 0 // skip evolution moves to avoid duplication
                     )
@@ -62,7 +64,7 @@ export class Trainer {
                 while (newMoves.length < 4) {
                     newMoves.push(nullMove);
                 }
-                monMoves = newMoves;
+                monMoves = newMoves.reverse();
             }
             const abilityIndex = mon.abilityIndex || 0;
             return {
