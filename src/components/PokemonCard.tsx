@@ -189,7 +189,7 @@ export default function PokemonCard({
                             {data.species.name +
                                 (data.species.getFormName(data.form) ? " " + data.species.getFormName(data.form) : "")}
                         </p>
-                        <TypeBadge type1={data.species.getType1(data.form)} type2={data.species.getType2(data.form)} />
+                        <TypeBadge type1={data.types.type1} type2={data.types.type2} />
                     </div>
                     <div className="text-center">
                         <h3 className="font-semibold text-gray-800 dark:text-gray-100">Level</h3>
@@ -326,7 +326,7 @@ export default function PokemonCard({
                                         </div>
                                     )
                             )}
-                            {data.items.some((i) => i instanceof TypeChangingItem && i.canChangeType(data.species)) && (
+                            {data.items.some((i) => i instanceof TypeChangingItem && i.canChangeType(data)) && (
                                 <div className="flex items-center space-x-2">
                                     <Dropdown
                                         value={data.itemType.id}

@@ -380,8 +380,8 @@ const TeamBuilder: NextPage = () => {
                                                         ? calcTypeMatchup(
                                                               { type },
                                                               {
-                                                                  type1: c.species.getType1(c.form),
-                                                                  type2: c.species.getType2(c.form),
+                                                                  type1: c.types.type1,
+                                                                  type2: c.types.type2,
                                                                   ability: c.ability,
                                                               }
                                                           )

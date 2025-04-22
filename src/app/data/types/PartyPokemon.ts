@@ -1,10 +1,12 @@
 import { nullAbility } from "../abilities";
+import { TypeChangingItem } from "../items/TypeChangingItem";
 import { nullMove } from "../moves";
 import { nullPokemon } from "../pokemon";
 import { calculateHP, calculateStat } from "../stats";
 import { StatusEffect, VolatileStatusEffect, volatileStatusEffects } from "../statusEffects";
 import { MAX_LEVEL } from "../teamExport";
 import { nullType } from "../types";
+import { isNull } from "../util";
 import { Ability } from "./Ability";
 import { Item } from "./Item";
 import { Move } from "./Move";
@@ -80,5 +82,12 @@ export class PartyPokemon {
             ),
         };
         return calculatedStats;
+    }
+
+    get types(): { type1: PokemonType; type2?: PokemonType } {
+        if (this.items.some((i) => i instanceof TypeChangingItem && i.canChangeType(this)) && !isNull(this.itemType)) {
+            return { type1: this.itemType };
+        }
+        return { type1: this.species.getType1(this.form), type2: this.species.getType2(this.form) };
     }
 }

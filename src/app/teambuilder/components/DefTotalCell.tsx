@@ -23,10 +23,7 @@ export default function DefTotalCell({
         (c) =>
             !isNull(c.species) &&
             compare(
-                calcTypeMatchup(
-                    { type },
-                    { type1: c.species.getType1(c.form), type2: c.species.getType2(c.form), ability: c.ability }
-                ),
+                calcTypeMatchup({ type }, { type1: c.types.type1, type2: c.types.type2, ability: c.ability }),
                 total
             )
     ).length;
