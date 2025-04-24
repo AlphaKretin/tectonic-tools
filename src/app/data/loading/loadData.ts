@@ -9,7 +9,7 @@ import { parseForms } from "./forms";
 import { parseItems } from "./items";
 import { parseMoves } from "./moves";
 import { LoadedPokemon, parsePokemon, parsePokemonLegacy, propagatePokemonData } from "./pokemon";
-import { parseTrainers } from "./trainers";
+import { parseTrainers, propagateTrainerData } from "./trainers";
 import { parseTrainerTypes } from "./trainerTypes";
 import { parseTribes, parseTribesLegacy } from "./tribes";
 import { buildTypeChart, TypeChart } from "./typeChart";
@@ -163,7 +163,7 @@ async function loadData(dev: boolean = false): Promise<void> {
     const forms = parseForms([tectonicFiles[8]]);
     const typeChart = buildTypeChart(types);
     const trainerTypes = standardFilesParser([tectonicFiles[9]], parseTrainerTypes);
-    const trainers = standardFilesParser([tectonicFiles[10]], parseTrainers);
+    const trainers = propagateTrainerData(standardFilesParser([tectonicFiles[10]], parseTrainers));
     const encounters = parseEncounters(tectonicFiles[11]);
 
     const currentVersion = { version };

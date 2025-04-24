@@ -108,3 +108,33 @@ export function parseTrainers(pairs: KVPair[]): LoadedTrainer {
 
     return obj;
 }
+
+// propagate trainer data
+export function propagateTrainerData(trainers: Record<string, LoadedTrainer>) {
+    for (const trainerId in trainers) {
+        if (trainers[trainerId].extendsVersion !== undefined) {
+            const key =
+                trainers[trainerId].class +
+                "," +
+                trainers[trainerId].name +
+                (trainers[trainerId].extendsVersion ? "," + trainers[trainerId].extendsVersion : "");
+            const extendedTrainer = trainers[key];
+            if (!extendedTrainer) {
+                throw new Error("Undefined extended trainer " + key + "!");
+            }
+            trainers[trainerId].flags = extendedTrainer.flags.concat(trainers[trainerId].flags);
+            const updatedPokemon = [...extendedTrainer.pokemon];
+            for (const pokemon of trainers[trainerId].pokemon) {
+                const extendedPokemonIndex = extendedTrainer.pokemon.findIndex((p) => p.id === pokemon.id);
+                if (extendedPokemonIndex === undefined) {
+                    updatedPokemon.push(pokemon);
+                } else {
+                    const newPokemon = { ...extendedTrainer.pokemon[extendedPokemonIndex], ...pokemon };
+                    updatedPokemon[extendedPokemonIndex] = newPokemon;
+                }
+            }
+            trainers[trainerId].pokemon = updatedPokemon;
+        }
+    }
+    return trainers;
+}
