@@ -1,16 +1,9 @@
 import { MultiHitMove } from "../data/moves/MultiHitMove";
-import { StatusEffect } from "../data/statusEffects";
 import { calcTypeMatchup } from "../data/typeChart";
-import { Move } from "../data/types/Move";
-import { Pokemon, Stats } from "../data/types/Pokemon";
-import { PokemonType } from "../data/types/PokemonType";
-
-export interface PokemonStats {
-    level: number;
-    status: StatusEffect;
-    stats: Stats;
-    form: number;
-}
+import { PartyPokemon } from "../data/types/PartyPokemon";
+import { Stat } from "../data/types/Pokemon";
+import { MoveData } from "./components/MoveCard";
+import { BattleState } from "./page";
 
 export interface DamageResult {
     damage: number;
@@ -23,20 +16,13 @@ export interface DamageResult {
     maxPercentage?: number;
 }
 
-export interface BattleState {
-    multiBattle: boolean;
-    criticalHit: boolean;
-}
-
 export function calculateDamage(
-    move: Move,
-    user: Pokemon,
-    userStats: PokemonStats,
-    target: Pokemon,
-    targetStats: PokemonStats,
+    move: MoveData,
+    user: PartyPokemon,
+    target: PartyPokemon,
     battleState: BattleState
 ): DamageResult {
-    if (move.category === "Status") return { damage: 0, percentage: 0, hits: 0, typeEffectMult: 0 };
+    if (move.move.category === "Status") return { damage: 0, percentage: 0, hits: 0, typeEffectMult: 0 };
 
     // TODO: Handle abilities
     // if (target.damageState.disguise) {
@@ -44,31 +30,19 @@ export function calculateDamage(
     //     return;
     // }
 
-    // Get the move's type
-    const type = move.getType(); // TODO: implement moves that can change type
-
     // Calculate base power of move
-    const baseDmg = move.getPower(userStats);
+    const baseDmg = move.move.getPower(user, target, move.customVar);
 
     // In vanilla Tectonic, critical hit determination happens here
     // However, for calculation, it's determined by the UI
 
     // Calculate the actual damage dealt, and assign it to the damage state for tracking
-    const [damage, typeEffectMult] = calculateDamageForHit(
-        move,
-        user,
-        userStats,
-        target,
-        targetStats,
-        type,
-        baseDmg,
-        battleState
-    );
-    const percentage = damage / targetStats.stats.hp;
+    const [damage, typeEffectMult] = calculateDamageForHit(move, user, target, baseDmg, battleState);
+    const percentage = damage / target.stats.hp;
     const hits = Math.ceil(1 / percentage);
-    if (move instanceof MultiHitMove) {
-        const minTotal = damage * move.minHits;
-        const maxTotal = damage * move.maxHits;
+    if (move.move instanceof MultiHitMove) {
+        const minTotal = damage * move.move.minHits;
+        const maxTotal = damage * move.move.maxHits;
         return {
             damage,
             percentage,
@@ -76,39 +50,28 @@ export function calculateDamage(
             typeEffectMult,
             minTotal,
             maxTotal,
-            minPercentage: minTotal / targetStats.stats.hp,
-            maxPercentage: maxTotal / targetStats.stats.hp,
+            minPercentage: minTotal / target.stats.hp,
+            maxPercentage: maxTotal / target.stats.hp,
         };
     }
     return { damage, percentage, hits, typeEffectMult };
 }
 
 function calculateDamageForHit(
-    move: Move,
-    user: Pokemon,
-    userStats: PokemonStats,
-    target: Pokemon,
-    targetStats: PokemonStats,
-    type: PokemonType,
+    move: MoveData,
+    user: PartyPokemon,
+    target: PartyPokemon,
     baseDmg: number,
     battleState: BattleState
 ): [number, number] {
     // Get the relevant attacking and defending stat values (after steps)
-    const [attack, defense] = damageCalcStats(move, userStats, targetStats);
+    const [attack, defense] = damageCalcStats(move, user, target);
 
     // Calculate all multiplier effects
-    const [multipliers, typeEffectMult] = calcDamageMultipliers(
-        move,
-        user,
-        userStats,
-        target,
-        targetStats,
-        battleState,
-        type
-    );
+    const [multipliers, typeEffectMult] = calcDamageMultipliers(move, user, target, battleState);
 
     // Main damage calculation
-    let finalCalculatedDamage = calcDamageWithMultipliers(baseDmg, attack, defense, userStats.level, multipliers);
+    let finalCalculatedDamage = calcDamageWithMultipliers(baseDmg, attack, defense, user.level, multipliers);
     finalCalculatedDamage = Math.max(Math.round(finalCalculatedDamage * multipliers.final_damage_multiplier), 1);
     finalCalculatedDamage = flatDamageReductions(finalCalculatedDamage);
 
@@ -160,25 +123,13 @@ function calcBasicDamage(
     return Math.floor(2.0 + (levelMultiplier * baseDamage * userAttackingStat) / targetDefendingStat / 50.0);
 }
 
-function damageCalcStats(move: Move, userStats: PokemonStats, targetStats: PokemonStats): [number, number] {
-    let trueCategory: "Physical" | "Special";
-    if (move.category === "Adaptive") {
-        if (userStats.stats.attack >= userStats.stats.spatk) {
-            trueCategory = "Physical";
-        } else {
-            trueCategory = "Special";
-        }
-    } else if (move.category === "Status") {
-        // lazy typeguard
-        throw new Error("Status moves shouldn't be selectable!");
-    } else {
-        trueCategory = move.category;
-    }
+function damageCalcStats(move: MoveData, userStats: PartyPokemon, targetStats: PartyPokemon): [number, number] {
     // Calculate category for adaptive moves
+    const trueCategory = move.move.getDamageCategory(userStats);
     // Calculate user's attack stat
     // TODO: implement moves like foul play or body press
     const attacking_stat_holder = userStats;
-    const attacking_stat: keyof Stats = trueCategory === "Physical" ? "attack" : "spatk";
+    const attacking_stat: Stat = move.move.getAttackingStat(trueCategory);
 
     // TODO: implement abilities and weather
     // if (user.shouldAbilityApply("MALICIOUSGLOW", aiCheck) && battle.moonGlowing()) {
@@ -194,7 +145,7 @@ function damageCalcStats(move: Move, userStats: PokemonStats, targetStats: Pokem
 
     // Calculate target's defense stat
     const defending_stat_holder = targetStats;
-    const defending_stat: keyof Stats = trueCategory === "Physical" ? "defense" : "spdef";
+    const defending_stat: Stat = trueCategory === "Physical" ? "defense" : "spdef";
     // TODO: implement stat steps
     // let defense_step = defending_stat_holder.steps[defending_stat];
     // if (defense_step > 0 &&
@@ -349,18 +300,18 @@ function damageCalcStats(move: Move, userStats: PokemonStats, targetStats: Pokem
 // }
 
 function pbCalcStatusesDamageMultipliers(
-    move: Move,
-    user: PokemonStats,
-    target: PokemonStats,
+    move: MoveData,
+    user: PartyPokemon,
+    target: PartyPokemon,
     multipliers: DamageMultipliers
 ): DamageMultipliers {
     // TODO: Handle abilities
     // const toil = battle.pbCheckOpposingAbility("TOILANDTROUBLE", user.index);
     // Burn
     if (
-        user.status === "Burn" &&
-        move.category === "Physical" &&
-        !move.ignoreStatus("Burn")
+        user.statusEffect === "Burn" &&
+        move.move.category === "Physical" &&
+        !move.move.ignoreStatus("Burn")
         //!user.shouldAbilityApply("BURNHEAL", checkingForAI)
     ) {
         let damageReduction = 1.0 / 3.0;
@@ -384,9 +335,9 @@ function pbCalcStatusesDamageMultipliers(
     }
     // Frostbite
     if (
-        user.status === "Frostbite" &&
-        move.category === "Special" &&
-        !move.ignoreStatus("Frostbite")
+        user.statusEffect === "Frostbite" &&
+        move.move.category === "Special" &&
+        !move.move.ignoreStatus("Frostbite")
         //!user.shouldAbilityApply("FROSTHEAL", checkingForAI)
     ) {
         let damageReduction = 1.0 / 3.0;
@@ -406,7 +357,7 @@ function pbCalcStatusesDamageMultipliers(
         multipliers.final_damage_multiplier *= 1.0 - damageReduction;
     }
     // Numb
-    if (user.status === "Numb") {
+    if (user.statusEffect === "Numb") {
         let damageReduction = 1.0 / 4.0;
         // if (user.boss() && AVATAR_DILUTED_STATUS_CONDITIONS) {
         //     damageReduction = 3.0 / 20.0;
@@ -425,7 +376,7 @@ function pbCalcStatusesDamageMultipliers(
     }
     // Dizzy
     if (
-        target.status === "Dizzy"
+        target.statusEffect === "Dizzy"
         //!target.shouldAbilityApply(["MARVELSKIN", "MARVELSCALE"], checkingForAI)
     ) {
         const damageIncrease = 1.0 / 4.0;
@@ -442,7 +393,7 @@ function pbCalcStatusesDamageMultipliers(
         // Waterlog
     }
     if (
-        target.status === "Waterlog"
+        target.statusEffect === "Waterlog"
         //!target.shouldAbilityApply(["MARVELSKIN", "MARVELSCALE"], checkingForAI)
     ) {
         const damageIncrease = 1.0 / 4.0;
@@ -459,77 +410,78 @@ function pbCalcStatusesDamageMultipliers(
     }
 
     // Fracture
-    if (user.status === "Fracture") {
+    if (user.volatileStatusEffects["Fracture"]) {
         multipliers.final_damage_multiplier *= 0.66;
     }
     return multipliers;
 }
 
-// function pbCalcProtectionsDamageMultipliers(
-//     user: any,
-//     target: any,
-//     multipliers: any,
-//     checkingForAI: boolean = false
-// ): void {
-//     // Aurora Veil, Reflect, Light Screen
-//     if (!ignoresReflect() && !target.damageState.critical && !user.ignoreScreens(checkingForAI)) {
-//         if (target.pbOwnSide.effectActive("AuroraVeil")) {
-//             if (battle.pbSideBattlerCount(target) > 1) {
-//                 multipliers.final_damage_multiplier *= 2 / 3.0;
-//             } else {
-//                 multipliers.final_damage_multiplier *= 0.5;
-//             }
-//         } else if (target.pbOwnSide.effectActive("Reflect") && physicalMove()) {
-//             if (battle.pbSideBattlerCount(target) > 1) {
-//                 multipliers.final_damage_multiplier *= 2 / 3.0;
-//             } else {
-//                 multipliers.final_damage_multiplier *= 0.5;
-//             }
-//         } else if (target.pbOwnSide.effectActive("LightScreen") && specialMove()) {
-//             if (battle.pbSideBattlerCount(target) > 1) {
-//                 multipliers.final_damage_multiplier *= 2 / 3.0;
-//             } else {
-//                 multipliers.final_damage_multiplier *= 0.5;
-//             }
-//         } else if (target.pbOwnSide.effectActive("DiamondField")) {
-//             if (battle.pbSideBattlerCount(target) > 1) {
-//                 multipliers.final_damage_multiplier *= 3 / 4.0;
-//             } else {
-//                 multipliers.final_damage_multiplier *= 2 / 3.0;
-//             }
-//         }
+function pbCalcProtectionsDamageMultipliers(
+    move: MoveData,
+    user: PartyPokemon,
+    target: PartyPokemon,
+    battleState: BattleState,
+    multipliers: DamageMultipliers
+): DamageMultipliers {
+    // Aurora Veil, Reflect, Light Screen
+    // TODO: Abilities that ignore screens?
+    if (!move.move.ignoresScreens() && !move.criticalHit /* && !user.ignoreScreens(checkingForAI)*/) {
+        if (battleState["Aurora Veil"]) {
+            if (battleState["Multi Battle"]) {
+                multipliers.final_damage_multiplier *= 2 / 3.0;
+            } else {
+                multipliers.final_damage_multiplier *= 0.5;
+            }
+        } else if (battleState.Reflect && move.move.getDamageCategory(user) === "Physical") {
+            if (battleState["Multi Battle"]) {
+                multipliers.final_damage_multiplier *= 2 / 3.0;
+            } else {
+                multipliers.final_damage_multiplier *= 0.5;
+            }
+        } else if (battleState["Light Screen"] && move.move.getDamageCategory(user) === "Special") {
+            if (battleState["Multi Battle"]) {
+                multipliers.final_damage_multiplier *= 2 / 3.0;
+            } else {
+                multipliers.final_damage_multiplier *= 0.5;
+            }
+            // } else if (target.pbOwnSide.effectActive("DiamondField")) {
+            //     if (battle.pbSideBattlerCount(target) > 1) {
+            //         multipliers.final_damage_multiplier *= 3 / 4.0;
+            //     } else {
+            //         multipliers.final_damage_multiplier *= 2 / 3.0;
+            //     }
+        }
 
-//         // Repulsion Field
-//         if (baseDamage >= 100 && target.pbOwnSide.effectActive("RepulsionField")) {
-//             if (battle.pbSideBattlerCount(target) > 1) {
-//                 multipliers.final_damage_multiplier *= 2 / 3.0;
-//             } else {
-//                 multipliers.final_damage_multiplier *= 0.5;
-//             }
-//         }
-//     }
-//     // Partial protection moves
-//     if (target.effectActive(["StunningCurl", "RootShelter", "VenomGuard"])) {
-//         multipliers.final_damage_multiplier *= 0.5;
-//     }
-//     if (target.effectActive("EmpoweredDetect")) {
-//         multipliers.final_damage_multiplier *= 0.5;
-//     }
-//     if (target.pbOwnSide.effectActive("Bulwark")) {
-//         multipliers.final_damage_multiplier *= 0.5;
-//     }
-//     // For when bosses are partway piercing protection
-//     if (target.damageState.partiallyProtected) {
-//         multipliers.final_damage_multiplier *= 0.5;
-//     }
-// }
+        // // Repulsion Field
+        // if (baseDamage >= 100 && target.pbOwnSide.effectActive("RepulsionField")) {
+        //     if (battle.pbSideBattlerCount(target) > 1) {
+        //         multipliers.final_damage_multiplier *= 2 / 3.0;
+        //     } else {
+        //         multipliers.final_damage_multiplier *= 0.5;
+        //     }
+        // }
+    }
+    // Partial protection moves
+    // if (target.effectActive(["StunningCurl", "RootShelter", "VenomGuard"])) {
+    //     multipliers.final_damage_multiplier *= 0.5;
+    // }
+    // if (target.effectActive("EmpoweredDetect")) {
+    //     multipliers.final_damage_multiplier *= 0.5;
+    // }
+    // if (target.pbOwnSide.effectActive("Bulwark")) {
+    //     multipliers.final_damage_multiplier *= 0.5;
+    // }
+    // For when bosses are partway piercing protection
+    // if (target.damageState.partiallyProtected) {
+    //     multipliers.final_damage_multiplier *= 0.5;
+    // }
+    return multipliers;
+}
 
 function pbCalcTypeBasedDamageMultipliers(
-    user: Pokemon,
-    userStats: PokemonStats,
-    target: Pokemon,
-    targetStats: PokemonStats,
-    type: PokemonType,
+    move: MoveData,
+    user: PartyPokemon,
+    target: PartyPokemon,
     multipliers: DamageMultipliers
 ): [DamageMultipliers, number] {
     let stabActive = false;
@@ -543,7 +495,8 @@ function pbCalcTypeBasedDamageMultipliers(
     //     });
     //     stabActive = anyPartyMemberHasType;
     // } else {
-    stabActive = type && (user.getType1(userStats.form) === type || user.getType2(userStats.form) === type);
+    const type = move.move.getType(user);
+    stabActive = type && (user.species.getType1(user.form) === type || user.species.getType2(user.form) === type);
     //}
     // TODO: Handle curses
     // stabActive = stabActive && !(user.pbOwnedByPlayer() && battle.curses.includes("DULLED"));
@@ -563,11 +516,10 @@ function pbCalcTypeBasedDamageMultipliers(
     }
 
     // Type effectiveness
-    // TODO: Handle moves that modify type
-    // const typeMod = target.typeMod(type, target, this, checkingForAI);
+    // variable type moves are handled here in Tectonic, but on the data level here
     const effectiveness = calcTypeMatchup(
-        { type },
-        { type1: target.getType1(targetStats.form), type2: target.getType2(targetStats.form) }
+        { type, move: move.move },
+        { type1: target.types.type1, type2: target.types.type2 }
     );
     multipliers.final_damage_multiplier *= effectiveness;
 
@@ -684,13 +636,10 @@ interface DamageMultipliers {
 }
 
 function calcDamageMultipliers(
-    move: Move,
-    user: Pokemon,
-    userStats: PokemonStats,
-    target: Pokemon,
-    targetStats: PokemonStats,
-    battleState: BattleState,
-    type: PokemonType
+    move: MoveData,
+    user: PartyPokemon,
+    target: PartyPokemon,
+    battleState: BattleState
 ): [DamageMultipliers, number] {
     let multipliers: DamageMultipliers = {
         attack_multiplier: 1,
@@ -702,10 +651,10 @@ function calcDamageMultipliers(
     // multipliers = pbCalcAbilityDamageMultipliers(user, target, type, baseDmg, multipliers);
     // TODO: Handle weather
     // multipliers = pbCalcWeatherDamageMultipliers(user, target, type, multipliers);
-    multipliers = pbCalcStatusesDamageMultipliers(move, userStats, targetStats, multipliers);
+    multipliers = pbCalcStatusesDamageMultipliers(move, user, target, multipliers);
     // TODO: Handle Protect-esque moves
-    // multipliers = pbCalcProtectionsDamageMultipliers(user, target, multipliers);
-    const typeResult = pbCalcTypeBasedDamageMultipliers(user, userStats, target, targetStats, type, multipliers);
+    multipliers = pbCalcProtectionsDamageMultipliers(move, user, target, battleState, multipliers);
+    const typeResult = pbCalcTypeBasedDamageMultipliers(move, user, target, multipliers);
     multipliers = typeResult[0];
     const typeEffectMult = typeResult[1];
     // TODO: Handle tribes
@@ -756,7 +705,7 @@ function calcDamageMultipliers(
     // }
 
     // Multi-targeting attacks
-    if (move.isSpread() && battleState.multiBattle) {
+    if (move.move.isSpread() && battleState["Multi Battle"]) {
         // TODO: Handle abilities
         // if (user.shouldAbilityApply("RESONANT", aiCheck)) {
         //     multipliers.final_damage_multiplier *= 1.25;
@@ -771,7 +720,7 @@ function calcDamageMultipliers(
     // multipliers.base_damage_multiplier *= Math.max(0, 1.0 - target.dmgResist);
 
     // Critical hits
-    if (battleState.criticalHit) {
+    if (move.criticalHit) {
         // TODO: Implement moves with increased critical hit damage
         multipliers.final_damage_multiplier *= 1.5;
     }

@@ -1,44 +1,47 @@
 "use client";
 
 import Dropdown from "@/components/DropDown";
+import { FilterInput } from "@/components/FilterInput";
+import { AVAILABLE_FILTERS, PokemonFilterType } from "@/components/filters";
 import InlineLink from "@/components/InlineLink";
 import InternalLink from "@/components/InternalLink";
 import TypeBadge from "@/components/TypeBadge";
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import PokemonCard from "../../components/PokemonCard";
 import { abilities, nullAbility } from "../data/abilities";
 import { items, nullItem } from "../data/items";
 import { moves, nullMove } from "../data/moves";
 import { nullPokemon, pokemon } from "../data/pokemon";
-import { CardData, decodeTeam, encodeTeam, MAX_LEVEL, SavedCardData } from "../data/teamExport";
+import { decodeTeam, encodeTeam, MAX_LEVEL, SavedPartyPokemon } from "../data/teamExport";
 import { tribes } from "../data/tribes";
 import { calcTypeMatchup } from "../data/typeChart";
-import { types } from "../data/types";
-import { defaultStylePoints } from "../data/types/Pokemon";
+import { nullType, types } from "../data/types";
+import { PartyPokemon } from "../data/types/PartyPokemon";
 import { isNull } from "../data/util";
 import TypeChartCell from "../pokedex/components/TypeChartCell";
 import AtkTotalCell from "./components/AtkTotalCell";
 import DefTotalCell from "./components/DefTotalCell";
-import PokemonCard from "./components/PokemonCard";
 import TableHeader from "./components/TableHeader";
 
-const nullCard: CardData = {
-    pokemon: nullPokemon,
-    moves: Array(4).fill(nullMove),
-    ability: nullAbility,
-    item: nullItem,
-    form: 0,
-    level: 70,
-    stylePoints: defaultStylePoints,
-};
-
 const TeamBuilder: NextPage = () => {
-    const [cards, setCards] = useState<CardData[]>(Array(6).fill(nullCard));
+    const [cards, setCards] = useState<PartyPokemon[]>(Array(6).fill(new PartyPokemon()));
     const [teamName, setTeamName] = useState<string>("");
     const [savedTeams, setSavedTeams] = useState<string[]>([]);
     const [loadedTeam, setLoadedTeam] = useState<string>("");
     const [teamCode, setTeamCode] = useState<string>("");
+
+    const [filters, setFilters] = useState<PokemonFilterType[]>([]);
+    const [currentFilter, setCurrentFilter] = useState<PokemonFilterType>(AVAILABLE_FILTERS[0]);
+
+    const handleAddFilter = (filter: PokemonFilterType, value: string) => {
+        setFilters((prev) => [...prev, { ...filter, value }]);
+    };
+
+    const removeFilter = (index: number) => {
+        setFilters((prev) => prev.filter((_, i) => i !== index));
+    };
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -46,9 +49,9 @@ const TeamBuilder: NextPage = () => {
         }
     }, []);
 
-    function updateCards(index: number, card: CardData) {
+    function updateCards(index: number, card: Partial<PartyPokemon>) {
         const newCards = [...cards];
-        newCards[index] = card;
+        newCards[index] = new PartyPokemon({ ...cards[index], ...card });
         setCards(newCards);
     }
 
@@ -58,12 +61,12 @@ const TeamBuilder: NextPage = () => {
     const tribeCounts = Object.fromEntries(Object.values(tribes).map((t) => [t.id, 0]));
     for (const card of cards) {
         // count as all tribes if wild card equipped
-        if (card.item.id === "WILDCARD") {
+        if (card.items.some((i) => i.id === "WILDCARD")) {
             for (const tribe in tribes) {
                 tribeCounts[tribe]++;
             }
         } else {
-            for (const tribe of card.pokemon.tribes) {
+            for (const tribe of card.species.tribes) {
                 tribeCounts[tribe.id]++;
             }
         }
@@ -74,12 +77,13 @@ const TeamBuilder: NextPage = () => {
         .sort((a, b) => tribeCounts[b] - tribeCounts[a]);
 
     function saveTeamToData() {
-        const savedCards: SavedCardData[] = cards.map((c) => {
+        const savedCards: SavedPartyPokemon[] = cards.map((c) => {
             return {
-                pokemon: c.pokemon.id,
+                pokemon: c.species.id,
                 moves: c.moves.map((m) => m.id),
                 ability: c.ability.id,
-                item: c.item.id,
+                items: c.items.map((i) => i.id),
+                itemType: c.itemType.id,
                 form: c.form,
                 level: c.level,
                 sp: [
@@ -103,43 +107,28 @@ const TeamBuilder: NextPage = () => {
         const json = JSON.stringify(savedCards);
         localStorage.setItem(teamName, json);
         setSavedTeams(Object.keys(localStorage));
-        alert("Character saved successfully!");
+        alert("Team saved successfully!");
     }
 
     function exportTeam() {
-        const savedCards: SavedCardData[] = cards.map((card) => ({
-            pokemon: card.pokemon.id,
-            ability: card.ability.id,
-            item: card.item.id,
-            form: card.form,
-            moves: card.moves.map((m) => m.id),
-            level: card.level,
-            sp: [
-                card.stylePoints.hp,
-                card.stylePoints.attacks,
-                card.stylePoints.defense,
-                card.stylePoints.spdef,
-                card.stylePoints.speed,
-            ],
-        }));
-
-        const code = encodeTeam(savedCards);
+        const code = encodeTeam(cards);
         setTeamCode(code);
         navigator.clipboard.writeText(code);
         alert(`Team copied to clipboard!`);
     }
 
-    function loadTeamFromData(data: SavedCardData[]) {
+    function loadTeamFromData(data: SavedPartyPokemon[]) {
         setCards(
             data.map((c) => {
                 // fall back to defaults for newly added fields
                 const level = c.level || MAX_LEVEL;
                 const sp = c.sp || [10, 10, 10, 10, 10];
-                return {
-                    pokemon: pokemon[c.pokemon] || nullPokemon,
+                return new PartyPokemon({
+                    species: pokemon[c.pokemon] || nullPokemon,
                     moves: c.moves.map((m) => moves[m] || nullMove),
                     ability: abilities[c.ability] || nullAbility,
-                    item: items[c.item] || nullItem,
+                    items: c.items.map((i) => items[i] || nullItem),
+                    itemType: c.itemType ? types[c.itemType] || nullType : nullType,
                     form: c.form,
                     level: level,
                     stylePoints: {
@@ -149,7 +138,7 @@ const TeamBuilder: NextPage = () => {
                         spdef: sp[3],
                         speed: sp[4],
                     },
-                };
+                });
             })
         );
     }
@@ -163,7 +152,7 @@ const TeamBuilder: NextPage = () => {
         const savedCardsJson = localStorage.getItem(name);
         if (savedCardsJson) {
             try {
-                const savedCards = JSON.parse(savedCardsJson) as SavedCardData[];
+                const savedCards = JSON.parse(savedCardsJson) as SavedPartyPokemon[];
                 loadTeamFromData(savedCards);
             } catch (e) {
                 console.error(e);
@@ -174,14 +163,23 @@ const TeamBuilder: NextPage = () => {
 
     function importTeam() {
         try {
-            const loadedCards = decodeTeam(teamCode);
-            setCards(loadedCards);
+            setCards(decodeTeam(teamCode));
             alert("Team imported successfully!");
         } catch (error) {
             console.error("Import error:", error);
             alert("Invalid team code! Please check and try again.");
         }
     }
+
+    const mons = Object.values(pokemon);
+    const filteredPokemon = useMemo(() => {
+        const filtered = mons.filter((mon) => {
+            return filters.every((filter) => {
+                return filter.apply(mon, filter.value);
+            });
+        });
+        return filtered;
+    }, [filters, mons]);
 
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
@@ -203,6 +201,13 @@ const TeamBuilder: NextPage = () => {
                     <p>
                         <InternalLink url="../">Return to homepage</InternalLink>
                     </p>
+                    <FilterInput
+                        currentFilter={currentFilter}
+                        filters={filters}
+                        onAddFilter={handleAddFilter}
+                        removeFilter={removeFilter}
+                        setCurrentFilter={setCurrentFilter}
+                    />
                     <div className="flex flex-row justify-center items-center gap-4 mt-6">
                         <input
                             type="text"
@@ -249,7 +254,17 @@ const TeamBuilder: NextPage = () => {
                     </div>
                     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 w-full">
                         {Array.from({ length: 6 }).map((_, index) => (
-                            <PokemonCard key={index} data={cards[index]} update={(c) => updateCards(index, c)} />
+                            <div
+                                key={index}
+                                className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 flex flex-col items-center w-60"
+                            >
+                                <PokemonCard
+                                    pokemonList={filteredPokemon}
+                                    data={cards[index]}
+                                    update={(c) => updateCards(index, c)}
+                                    battle={false}
+                                />
+                            </div>
                         ))}
                     </div>
 
@@ -343,12 +358,12 @@ const TeamBuilder: NextPage = () => {
                                                     </div>
                                                 </td>
                                                 {cards.map((c, index) => {
-                                                    const mult = !isNull(c.pokemon)
+                                                    const mult = !isNull(c.species)
                                                         ? calcTypeMatchup(
                                                               { type },
                                                               {
-                                                                  type1: c.pokemon.getType1(c.form),
-                                                                  type2: c.pokemon.getType2(c.form),
+                                                                  type1: c.types.type1,
+                                                                  type2: c.types.type2,
                                                                   ability: c.ability,
                                                               }
                                                           )
@@ -407,12 +422,12 @@ const TeamBuilder: NextPage = () => {
                                                 </td>
                                                 {cards.map((c, index) => {
                                                     const realMoves = c.moves.filter((m) => !isNull(m));
-                                                    const mult = !isNull(c.pokemon)
+                                                    const mult = !isNull(c.species)
                                                         ? Math.max(
                                                               ...realMoves.map((m) =>
                                                                   calcTypeMatchup(
                                                                       {
-                                                                          type: m.type,
+                                                                          type: m.getType(c),
                                                                           move: m,
                                                                           ability: c.ability,
                                                                       },

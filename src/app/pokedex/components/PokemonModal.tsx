@@ -410,27 +410,27 @@ const PokemonModal: React.FC<PokemonModalProps> = ({ allMons, pokemon: mon, hand
                                     {currentPokemon.evolutionTree.isLeaf() ? (
                                         <p className="text-gray-600 dark:text-gray-300">Does not evolve.</p>
                                     ) : (
-                                        <table className="mx-auto">
-                                            <tbody>
-                                                {currentPokemon.evolutionTree.asBranches().map((branch, index) => (
-                                                    <tr key={index}>
-                                                        {branch.map((node, index) => (
-                                                            <td key={index}>
-                                                                <PokemonEvolution
-                                                                    key={index}
-                                                                    pokemon={allMons}
-                                                                    moves={moves}
-                                                                    items={items}
-                                                                    node={node}
-                                                                    index={index}
-                                                                    onClick={handlePokemonClick}
-                                                                />
-                                                            </td>
-                                                        ))}
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
+                                        <div className="w-fit mx-auto">
+                                            {currentPokemon.evolutionTree.asBranches().map((branch, index) => (
+                                                <div
+                                                    key={index}
+                                                    className="flex"
+                                                    style={{ justifyContent: "space-around", alignItems: "center" }}
+                                                >
+                                                    {branch.map((node, index) => (
+                                                        <PokemonEvolution
+                                                            key={index}
+                                                            pokemon={allMons}
+                                                            moves={moves}
+                                                            items={items}
+                                                            node={node}
+                                                            index={index}
+                                                            onClick={handlePokemonClick}
+                                                        />
+                                                    ))}
+                                                </div>
+                                            ))}
+                                        </div>
                                     )}
                                 </div>
                             </div>

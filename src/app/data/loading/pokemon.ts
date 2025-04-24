@@ -14,6 +14,27 @@ export class LoadedEvolution {
     }
 }
 
+// unfortunately this is currently hardcoded in Tectonic
+function formSpecificMoves(species: string) {
+    if (species === "ROTOM") {
+        return [
+            undefined,
+            "OVERHEAT", // Heat, Microwave
+            "HYDROPUMP", // Wash, Washing Machine
+            "BLIZZARD", // Frost, Refrigerator
+            "AIRSLASH", // Fan
+            "LEAFSTORM", // Mow, Lawnmower
+        ];
+    }
+    if (species === "URSHIFU") {
+        return ["WICKEDBLOW", "SURGINGSTRIKES"];
+    }
+    if (species === "NECROZMA") {
+        return [undefined, "SUNSTEELSTRIKE", "MOONGEISTBEAM"];
+    }
+    return [];
+}
+
 export interface LoadedPokemon extends LoadedData {
     name: string;
     dexNum: number;
@@ -33,6 +54,7 @@ export interface LoadedPokemon extends LoadedData {
     levelMoves: [number, string][];
     lineMoves: string[];
     tutorMoves: string[];
+    formSpecificMoves: Array<string | undefined>;
     tribes: string[];
     evolutions: LoadedEvolution[];
     kind: string;
@@ -61,6 +83,7 @@ export function parsePokemonLegacy(pairs: KVPair[]): LoadedPokemon {
         levelMoves: [], // Key of move name and value of level
         lineMoves: [], // Note that only the first evo has this in PBS
         tutorMoves: [], // Not every mon has these
+        formSpecificMoves: [],
         tribes: [],
         evolutions: [],
         wildItems: [],
@@ -81,6 +104,7 @@ export function parsePokemonLegacy(pairs: KVPair[]): LoadedPokemon {
                 break;
             case "InternalName":
                 obj.key = pair.value;
+                obj.formSpecificMoves = formSpecificMoves(pair.value);
                 break;
             case "Type1":
                 obj.type1 = pair.value;
@@ -170,6 +194,7 @@ export function parsePokemon(pairs: KVPair[]): LoadedPokemon {
         levelMoves: [], // Array of level, move pairs
         lineMoves: [], // Note that only the first evo has this in PBS
         tutorMoves: [], // Not every mon has these
+        formSpecificMoves: [],
         tribes: [],
         evolutions: [],
         wildItems: [],
@@ -181,6 +206,7 @@ export function parsePokemon(pairs: KVPair[]): LoadedPokemon {
         switch (pair.key) {
             case "Bracketvalue":
                 obj.key = pair.value;
+                obj.formSpecificMoves = formSpecificMoves(pair.value);
                 break;
             case "Name":
                 obj.name = pair.value;
@@ -302,16 +328,27 @@ export function propagatePokemonData(
             const evoPath = getEvoPath(pokemon[pokemon[id].firstEvolution], pokemon[id]);
             pokemon[id].tribes = evoPath.reverse().find((evo) => evo.tribes.length > 0)?.tribes ?? [];
         }
-        if (pokemon[id].lineMoves.length === 0) {
+        if (oldVersion && pokemon[id].lineMoves.length === 0) {
             const evoPath = getEvoPath(pokemon[pokemon[id].firstEvolution], pokemon[id]);
             pokemon[id].lineMoves = evoPath.reverse().find((evo) => evo.lineMoves.length > 0)?.lineMoves ?? [];
+        }
+        // propagate line moves additively on new version - this system replaces the tutormoves list
+        if (!oldVersion) {
+            const evoPath = getEvoPath(pokemon[pokemon[id].firstEvolution], pokemon[id]);
+            const evoIndex = evoPath.findIndex((p) => p.key === id);
+            const prevEvo = evoPath[evoIndex - 1];
+            if (prevEvo) {
+                pokemon[id].lineMoves = prevEvo.lineMoves.concat(pokemon[id].lineMoves);
+            }
         }
         // level moves should not be propagated if first evo or using old pokemon.txt format
         if (!oldVersion && pokemon[id].firstEvolution !== id) {
             const evoPath = getEvoPath(pokemon[pokemon[id].firstEvolution], pokemon[id]);
             const prevEvoLevelMoves = evoPath.reverse().find((evo) => evo.key !== id)?.levelMoves;
             if (prevEvoLevelMoves) {
-                pokemon[id].levelMoves = uniq(pokemon[id].levelMoves.concat(prevEvoLevelMoves));
+                pokemon[id].levelMoves = uniq(pokemon[id].levelMoves.concat(prevEvoLevelMoves)).sort(
+                    ([la], [lb]) => la - lb
+                );
             }
         }
     }

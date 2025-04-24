@@ -6,7 +6,14 @@ import { Pokemon } from "./types/Pokemon";
 
 export const pokemon: Record<string, Pokemon> = {};
 const loadData: Record<string, LoadedPokemon> = {};
-Object.entries(loadedPokemon).forEach(([id, mon]) => (loadData[id] = mon as LoadedPokemon)); // force type to resolve json ambiguity on mixed array
+Object.entries(loadedPokemon).forEach(([id, mon]) => {
+    // force type to resolve json ambiguity on mixed array
+    const typedMon = {
+        ...mon,
+        levelMoves: (mon.levelMoves as [number, string][]).map((move) => [move[0], move[1]]),
+    } as LoadedPokemon;
+    loadData[id] = typedMon;
+});
 
 function buildEvoTree(curNode: NTreeNode<LoadedEvolution>, cur: LoadedPokemon) {
     for (const evo of cur.evolutions) {
@@ -40,6 +47,7 @@ export const nullPokemon = new Pokemon(
         levelMoves: [],
         lineMoves: [],
         tutorMoves: [],
+        formSpecificMoves: [],
         tribes: [],
         evolutions: [],
         height: 0,

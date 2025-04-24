@@ -2,12 +2,13 @@
 
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
+import { uniq } from "../util";
 import { parseAbilities } from "./abilities";
 import { parseEncounters } from "./encounters";
 import { parseForms } from "./forms";
 import { parseItems } from "./items";
 import { parseMoves } from "./moves";
-import { parsePokemon, parsePokemonLegacy, propagatePokemonData } from "./pokemon";
+import { LoadedPokemon, parsePokemon, parsePokemonLegacy, propagatePokemonData } from "./pokemon";
 import { parseTrainers } from "./trainers";
 import { parseTrainerTypes } from "./trainerTypes";
 import { parseTribes, parseTribesLegacy } from "./tribes";
@@ -167,18 +168,45 @@ async function loadData(dev: boolean = false): Promise<void> {
 
     const currentVersion = { version };
 
+    const heldItems = Object.keys(items).filter((k) => items[k].pocket === 5);
+
+    function pokemonAllMoves(pokemon: LoadedPokemon) {
+        let moves: Array<string | undefined> = [];
+        // in Tectonic, we first push egg moves here, but that is a leftover from Pokemon Essentials defaults I think
+
+        // TODO: Double check how this worked before the removal of tutormoves. Currently assuming.
+        // On dev, when it's empty, this will do nothing and be fine
+        moves = moves.concat(pokemon.tutorMoves);
+        moves = moves.concat(pokemon.lineMoves);
+        moves = moves.concat(pokemon.formSpecificMoves);
+        moves = moves.concat(pokemon.levelMoves.map((m) => m[1]));
+        moves = uniq(moves);
+        const finalMoves: string[] = moves.filter((m) => m !== undefined);
+        return finalMoves;
+    }
+
+    const pokemonMoveKeys = Object.fromEntries(Object.values(pokemon).map((p) => [p.key, pokemonAllMoves(p)]));
+    const pokemonMoveIndices = Object.fromEntries(
+        Object.keys(pokemonMoveKeys).map((k) => [
+            k,
+            Object.fromEntries(pokemonMoveKeys[k].map((m, index) => [m, index])),
+        ])
+    );
+
     const indices = {
-        pokemon: Object.fromEntries(Object.keys(pokemon).map((id, i) => [id, i])),
-        ability: Object.fromEntries(Object.keys(abilities).map((id, i) => [id, i])),
-        item: Object.fromEntries(Object.keys(items).map((id, i) => [id, i])),
-        move: Object.fromEntries(Object.keys(moves).map((id, i) => [id, i])),
+        item: Object.fromEntries(heldItems.map((id, i) => [id, i])),
+        type: Object.fromEntries(Object.keys(types).map((id, i) => [id, i])),
+        move: pokemonMoveIndices,
     };
 
+    const pokemonKeys: string[] = [];
+    Object.values(pokemon).forEach((p) => (pokemonKeys[p.dexNum] = p.key));
+
     const keys = {
-        pokemon: Object.keys(pokemon),
-        ability: Object.keys(abilities),
-        item: Object.keys(items),
-        move: Object.keys(moves),
+        pokemon: pokemonKeys,
+        item: heldItems,
+        type: Object.keys(types),
+        move: pokemonMoveKeys,
     };
 
     const versions = await dataRead("versions.json");

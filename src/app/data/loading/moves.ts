@@ -8,6 +8,7 @@ export interface LoadedMove extends LoadedData {
     accuracy: number;
     pp: number;
     target: string;
+    functionCode: string;
     effectChance?: number;
     priority?: number;
     description: string;
@@ -20,6 +21,7 @@ export function parseMoves(pairs: KVPair[]): LoadedMove {
         name: "",
         type: "",
         category: "",
+        functionCode: "",
         power: 0,
         accuracy: 0,
         pp: 0,
@@ -52,6 +54,9 @@ export function parseMoves(pairs: KVPair[]): LoadedMove {
                 break;
             case "Target":
                 obj.target = pair.value;
+                break;
+            case "FunctionCode":
+                obj.functionCode = pair.value;
                 break;
             case "EffectChance":
                 obj.effectChance = parseInt(pair.value);

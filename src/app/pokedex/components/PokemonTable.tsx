@@ -33,9 +33,7 @@ const PokemonTable: React.FC<PokemonTableProps> = ({ mons, onRowClick }) => {
                         <tr
                             key={pokemon.id}
                             onClick={() => onRowClick(pokemon)}
-                            className={`hover:bg-blue-50 dark:hover:bg-blue-900 cursor-pointer transition-colors ${getTypeGradient(
-                                pokemon
-                            )}`}
+                            className={`cursor-pointer ${getTypeGradient(pokemon)}`}
                         >
                             <TableCell>
                                 <Image
@@ -43,7 +41,7 @@ const PokemonTable: React.FC<PokemonTableProps> = ({ mons, onRowClick }) => {
                                     alt={pokemon.name}
                                     width={50}
                                     height={50}
-                                    className="rounded-full"
+                                    className="rounded-full invertIgnore"
                                 />
                             </TableCell>
                             <TableCell>{pokemon.dex}</TableCell>

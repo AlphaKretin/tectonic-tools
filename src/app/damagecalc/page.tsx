@@ -1,213 +1,102 @@
 "use client";
 
+import { FilterInput } from "@/components/FilterInput";
+import { AVAILABLE_FILTERS, PokemonFilterType } from "@/components/filters";
 import InlineLink from "@/components/InlineLink";
 import InternalLink from "@/components/InternalLink";
-import TypeBadge from "@/components/TypeBadge";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import { ReactNode, useState } from "react";
+import { ReactNode, useMemo, useState } from "react";
 import Checkbox from "../../components/Checkbox";
 import Column from "../../components/Column";
 import ColumnBody from "../../components/ColumnBody";
 import ColumnHeader from "../../components/ColumnHeader";
 import Dropdown from "../../components/DropDown";
 import InputLabel from "../../components/InputLabel";
-import { moves, nullMove } from "../data/moves";
-import { nullPokemon, pokemon } from "../data/pokemon";
-import { calculateHP, calculateStat } from "../data/stats";
-import { StatusEffect, statusEffects } from "../data/statusEffects";
-import {
-    decodeTeam,
-    MAX_LEVEL,
-    MAX_SP,
-    MAX_STEP,
-    MIN_LEVEL,
-    MIN_SP,
-    MIN_STEP,
-    STYLE_POINT_CAP,
-    styleFromStat,
-} from "../data/teamExport";
+import PokemonCard from "../../components/PokemonCard";
+import { nullMove } from "../data/moves";
+import { pokemon } from "../data/pokemon";
+import { decodeTeam } from "../data/teamExport";
 import { nullTrainer, trainers } from "../data/trainers";
-import { Move } from "../data/types/Move";
-import { blankStats, defaultStylePoints, Pokemon, Stats, StylePoints } from "../data/types/Pokemon";
+import { PartyPokemon } from "../data/types/PartyPokemon";
 import { Trainer } from "../data/types/Trainer";
-import { isNull, negativeMod, safeKeys } from "../data/util";
-import { calculateDamage, DamageResult, PokemonStats } from "./damageCalc";
+import { isNull } from "../data/util";
+import MoveCard, { MoveData } from "./components/MoveCard";
+import { calculateDamage, DamageResult } from "./damageCalc";
+
+const nullMoveData = { move: nullMove, criticalHit: false, customVar: undefined };
+
+const battleBooleans = ["Multi Battle", "Aurora Veil", "Reflect", "Light Screen"] as const;
+type BattleBoolean = (typeof battleBooleans)[number];
+export type BattleState = Record<BattleBoolean, boolean>;
 
 const PokemonDamageCalculator: NextPage = () => {
-    const [playerPokemon, setPlayerPokemon] = useState<Pokemon>(nullPokemon);
-    const [playerLevel, setPlayerLevel] = useState<number>(70);
-    const [playerStylePoints, setPlayerStylePoints] = useState<StylePoints>(defaultStylePoints);
-    const [playerStatSteps, setPlayerStatSteps] = useState<Stats>(blankStats);
-    const [playerCalculatedStats, setPlayerCalculatedStats] = useState<Stats>(blankStats);
-    const [playerStatusEffect, setPlayerStatusEffect] = useState<StatusEffect>("None");
-    const [playerForm, setPlayerForm] = useState<number>(0);
+    const [playerPokemon, setPlayerPokemon] = useState<PartyPokemon>(new PartyPokemon());
 
-    const [playerMove, setPlayerMove] = useState<Move>(nullMove);
-    const [customMoveVar, setCustomMoveVar] = useState<number>(0);
-    const [criticalHit, setCriticalHit] = useState<boolean>(false);
+    const [playerMove, setPlayerMove] = useState<MoveData>(nullMoveData);
 
-    const [opponentPokemon, setOpponentPokemon] = useState<Pokemon>(nullPokemon);
-    const [opponentLevel, setOpponentLevel] = useState<number>(70);
-    const [opponentStylePoints, setOpponentStylePoints] = useState<StylePoints>(defaultStylePoints);
-    const [opponentStatSteps, setOpponentStatSteps] = useState<Stats>(blankStats);
-    const [opponentCalculatedStats, setOpponentCalculatedStats] = useState<Stats>(blankStats);
-    const [opponentStatusEffect, setOpponentStatusEffect] = useState<StatusEffect>("None");
-    const [opponentForm, setOpponentForm] = useState<number>(0);
+    const [opponentPokemon, setOpponentPokemon] = useState<PartyPokemon>(new PartyPokemon());
 
     const [playerTeam, setPlayerTeam] = useState<Trainer>(nullTrainer);
     const [opposingTrainer, setOpposingTrainer] = useState<Trainer>(nullTrainer);
 
-    const [multiBattle, setMultiBattle] = useState<boolean>(false);
+    const [battleState, setBattleState] = useState<BattleState>(
+        Object.fromEntries(battleBooleans.map((b) => [b, false])) as BattleState
+    );
 
     const [teamCode, setTeamCode] = useState<string>("");
 
+    const [filters, setFilters] = useState<PokemonFilterType[]>([]);
+
+    const [currentFilter, setCurrentFilter] = useState<PokemonFilterType>(AVAILABLE_FILTERS[0]);
+
+    const handleAddFilter = (filter: PokemonFilterType, value: string) => {
+        setFilters((prev) => [...prev, { ...filter, value }]);
+    };
+
+    const removeFilter = (index: number) => {
+        setFilters((prev) => prev.filter((_, i) => i !== index));
+    };
+
+    const mons = Object.values(pokemon);
+    const filteredPokemon = useMemo(() => {
+        const filtered = mons.filter((mon) => {
+            return filters.every((filter) => {
+                return filter.apply(mon, filter.value);
+            });
+        });
+        return filtered;
+    }, [filters, mons]);
+
     type Side = "player" | "opponent";
 
-    const getPokemon = {
-        player: playerPokemon,
-        opponent: opponentPokemon,
-    };
+    function updatePlayerPokemon(card: Partial<PartyPokemon>) {
+        setPlayerPokemon(new PartyPokemon({ ...playerPokemon, ...card }));
+    }
+
+    function updateOpponentPokemon(card: Partial<PartyPokemon>) {
+        setOpponentPokemon(new PartyPokemon({ ...opponentPokemon, ...card }));
+    }
+
+    function updateMoveData(data: MoveData) {
+        setPlayerMove(data);
+    }
+
+    function handleBattleState(state: BattleBoolean, value: boolean) {
+        const newState = { ...battleState, [state]: value };
+        setBattleState(newState);
+    }
 
     const setPokemon = {
         player: setPlayerPokemon,
         opponent: setOpponentPokemon,
     };
 
-    const getLevel = {
-        player: playerLevel,
-        opponent: opponentLevel,
-    };
-
-    const setLevel = {
-        player: setPlayerLevel,
-        opponent: setOpponentLevel,
-    };
-
-    const getStylePoints = {
-        player: playerStylePoints,
-        opponent: opponentStylePoints,
-    };
-
-    const setStylePoints = {
-        player: setPlayerStylePoints,
-        opponent: setOpponentStylePoints,
-    };
-
-    const getStatSteps = {
-        player: playerStatSteps,
-        opponent: opponentStatSteps,
-    };
-
-    const setStatSteps = {
-        player: setPlayerStatSteps,
-        opponent: setOpponentStatSteps,
-    };
-
-    const getCalculatedStats = {
-        player: playerCalculatedStats,
-        opponent: opponentCalculatedStats,
-    };
-
-    const setCalculatedStats = {
-        player: setPlayerCalculatedStats,
-        opponent: setOpponentCalculatedStats,
-    };
-
-    const getStatusEffect = {
-        player: playerStatusEffect,
-        opponent: opponentStatusEffect,
-    };
-
-    const setStatusEffect = {
-        player: setPlayerStatusEffect,
-        opponent: setOpponentStatusEffect,
-    };
-
-    const getForm = {
-        player: playerForm,
-        opponent: opponentForm,
-    };
-
-    const setForm = {
-        player: setPlayerForm,
-        opponent: setOpponentForm,
-    };
-
     const getTrainer = {
         player: playerTeam,
         opponent: opposingTrainer,
     };
-
-    function recalculateStats(
-        baseStats: Stats,
-        level: number,
-        stylePoints: StylePoints,
-        statSteps: Stats,
-        effect: StatusEffect,
-        side: Side
-    ) {
-        let speed = calculateStat(baseStats.speed, level, stylePoints.speed, statSteps.speed);
-        if (effect === "Numb") {
-            speed = Math.round(speed / 2);
-        }
-
-        // ignore negative attack steps if critical
-        let attackStep = statSteps.attack;
-        let spAtkStep = statSteps.spatk;
-        if (side === "player" && criticalHit) {
-            attackStep = Math.max(attackStep, 0);
-            spAtkStep = Math.max(spAtkStep, 0);
-        }
-
-        // ignore positive defense steps if critical
-        let defStep = statSteps.defense;
-        let spDefStep = statSteps.spdef;
-        if (side === "opponent" && criticalHit) {
-            defStep = Math.min(defStep, 0);
-            spDefStep = Math.min(spDefStep, 0);
-        }
-
-        const newStats: Stats = {
-            hp: calculateHP(baseStats.hp, level, stylePoints.hp),
-            attack: calculateStat(baseStats.attack, level, stylePoints.attacks, attackStep),
-            defense: calculateStat(baseStats.defense, level, stylePoints.defense, defStep),
-            spatk: calculateStat(baseStats.spatk, level, stylePoints.attacks, spAtkStep),
-            spdef: calculateStat(baseStats.spdef, level, stylePoints.spdef, spDefStep),
-            speed,
-        };
-        setCalculatedStats[side](newStats);
-    }
-
-    function handleLoadingPokemon(pokemon: Pokemon, side: Side) {
-        if (!isNull(pokemon)) {
-            setPokemon[side](pokemon);
-            setForm[side](0);
-            const baseStats = pokemon.getStats(0);
-            const level = getLevel[side];
-            const stylePoints = getStylePoints[side];
-            const statSteps = getStatSteps[side];
-            const effect = getStatusEffect[side];
-            recalculateStats(baseStats, level, stylePoints, statSteps, effect, side);
-            if (side === "player") {
-                setPlayerMove(nullMove);
-            }
-        }
-    }
-
-    function handleLoadingForm(form: number, side: Side) {
-        setForm[side](form);
-        const baseStats = getPokemon[side].getStats(form);
-        const level = getLevel[side];
-        const stylePoints = getStylePoints[side];
-        const statSteps = getStatSteps[side];
-        const effect = getStatusEffect[side];
-        recalculateStats(baseStats, level, stylePoints, statSteps, effect, side);
-        if (side === "player") {
-            setPlayerMove(nullMove);
-        }
-    }
 
     function importTeam() {
         const teamCards = decodeTeam(teamCode);
@@ -219,9 +108,10 @@ const PokemonDamageCalculator: NextPage = () => {
             flags: [],
             pokemon: teamCards.map((c) => {
                 return {
-                    id: c.pokemon.id,
+                    id: c.species.id,
                     level: c.level,
-                    items: [c.item.id],
+                    items: c.items.map((i) => i.id),
+                    itemType: c.itemType.id,
                     moves: c.moves.map((m) => m.id),
                     sp: [
                         c.stylePoints.hp,
@@ -249,337 +139,33 @@ const PokemonDamageCalculator: NextPage = () => {
             return;
         }
         const pokemon = getTrainer[side].pokemon[index];
-        setPokemon[side](pokemon.pokemon);
-        setLevel[side](pokemon.level);
-        setStylePoints[side](pokemon.sp);
-        setStatSteps[side](blankStats);
-        setStatusEffect[side]("None");
-        recalculateStats(pokemon.pokemon.stats, pokemon.level, pokemon.sp, blankStats, "None", side);
+        setPokemon[side](
+            new PartyPokemon({
+                species: pokemon.pokemon,
+                level: pokemon.level,
+                stylePoints: pokemon.sp,
+                moves: pokemon.moves,
+                items: pokemon.items,
+                itemType: pokemon.itemType,
+                ability: pokemon.ability,
+            })
+        );
     }
 
     function isReadyToCalculate() {
-        return !isNull(playerPokemon) && !isNull(opponentPokemon) && !isNull(playerMove);
+        return !isNull(playerPokemon.species) && !isNull(opponentPokemon.species) && !isNull(playerMove.move);
     }
 
-    function handleLevel(level: number, side: Side) {
-        level = Math.max(level, MIN_LEVEL);
-        level = Math.min(level, MAX_LEVEL);
-        setLevel[side](level);
-        const baseStats = getPokemon[side].getStats(getForm[side]);
-        const stylePoints = getStylePoints[side];
-        const statSteps = getStatSteps[side];
-        const effect = getStatusEffect[side];
-        recalculateStats(baseStats, level, stylePoints, statSteps, effect, side);
-    }
-
-    function handleStylePoints(styleName: keyof StylePoints, stylePoint: number, side: Side) {
-        stylePoint = Math.max(stylePoint, MIN_SP);
-        stylePoint = Math.min(stylePoint, MAX_SP);
-        const stylePoints = { ...getStylePoints[side], [styleName]: stylePoint };
-        const spSum = Object.values(stylePoints).reduce((total, sp) => total + sp, 0);
-        if (spSum > STYLE_POINT_CAP) {
-            alert("You can only have a maximum of 50 total style points!");
-            return;
-        }
-        setStylePoints[side](stylePoints);
-        const baseStats = getPokemon[side].getStats(getForm[side]);
-        const level = getLevel[side];
-        const statSteps = getStatSteps[side];
-        const effect = getStatusEffect[side];
-        recalculateStats(baseStats, level, stylePoints, statSteps, effect, side);
-    }
-
-    function handleStatSteps(statName: keyof Stats, stat: number, side: Side) {
-        stat = Math.max(stat, MIN_STEP);
-        stat = Math.min(stat, MAX_STEP);
-        const newSteps = { ...getStatSteps[side], [statName]: stat };
-        setStatSteps[side](newSteps);
-        const baseStats = getPokemon[side].getStats(getForm[side]);
-        const level = getLevel[side];
-        const stylePoints = getStylePoints[side];
-        const effect = getStatusEffect[side];
-        recalculateStats(baseStats, level, stylePoints, newSteps, effect, side);
-    }
-
-    function handleStatusEffect(effect: StatusEffect, side: Side) {
-        setStatusEffect[side](effect);
-        const stylePoints = getStylePoints[side];
-        const baseStats = getPokemon[side].getStats(getForm[side]);
-        const statSteps = getStatSteps[side];
-        const level = getLevel[side];
-        recalculateStats(baseStats, level, stylePoints, statSteps, effect, side);
-        if (effect === "Jinx" && side === "player") {
-            setCriticalHit(true);
-        }
-    }
-
-    function handleCriticalHit(crit: boolean) {
-        if (getStatusEffect["opponent"] === "Jinx") {
-            crit = true;
-        }
-        setCriticalHit(crit);
-        const sides: Side[] = ["player", "opponent"];
-        for (const side of sides) {
-            const baseStats = getPokemon[side].getStats(getForm[side]);
-            const level = getLevel[side];
-            const stylePoints = getStylePoints[side];
-            const statSteps = getStatSteps[side];
-            const effect = getStatusEffect[side];
-            recalculateStats(baseStats, level, stylePoints, statSteps, effect, side);
-        }
-    }
-
-    function getMoveCategory(move: Move) {
-        if (move.category !== "Adaptive") {
-            return move.category;
-        }
-        const trueCategory = playerCalculatedStats.attack >= playerCalculatedStats.spatk ? "Physical" : "Special";
-        return "Adaptive (" + trueCategory + ")";
-    }
-
-    const playerPokemonStats: PokemonStats = {
-        stats: playerCalculatedStats,
-        level: playerLevel,
-        status: playerStatusEffect,
-        form: playerForm,
-    };
-    const opponentPokemonStats: PokemonStats = {
-        stats: opponentCalculatedStats,
-        level: opponentLevel,
-        status: opponentStatusEffect,
-        form: opponentForm,
-    };
-
-    const battleState = {
-        multiBattle,
-        criticalHit,
-    };
-
-    const damageResult = calculateDamage(
-        playerMove,
-        playerPokemon,
-        playerPokemonStats,
-        opponentPokemon,
-        opponentPokemonStats,
-        battleState
-    );
+    const damageResult = calculateDamage(playerMove, playerPokemon, opponentPokemon, battleState);
 
     function swapPokemon() {
         const mon1 = playerPokemon;
-        const level1 = playerLevel;
-        const sp1 = playerStylePoints;
-        const steps1 = playerStatSteps;
-        const stats1 = playerCalculatedStats;
-        const status1 = playerStatusEffect;
-        const form1 = playerForm;
-
         const mon2 = opponentPokemon;
-        const level2 = opponentLevel;
-        const sp2 = opponentStylePoints;
-        const steps2 = opponentStatSteps;
-        const stats2 = opponentCalculatedStats;
-        const status2 = opponentStatusEffect;
-        const form2 = opponentForm;
 
         setPlayerPokemon(mon2);
-        setPlayerLevel(level2);
-        setPlayerStylePoints(sp2);
-        setPlayerStatSteps(steps2);
-        setPlayerCalculatedStats(stats2);
-        setPlayerStatusEffect(status2);
-        setPlayerForm(form2);
-        setPlayerMove(nullMove);
+        setPlayerMove(nullMoveData);
 
         setOpponentPokemon(mon1);
-        setOpponentLevel(level1);
-        setOpponentStylePoints(sp1);
-        setOpponentStatSteps(steps1);
-        setOpponentCalculatedStats(stats1);
-        setOpponentStatusEffect(status1);
-        setOpponentForm(form1);
-    }
-
-    function pokemonSelect(side: Side) {
-        return (
-            <>
-                {!isNull(getPokemon[side]) && (
-                    <div className="flex justify-center mb-4">
-                        {
-                            // this is a stupid solution but it didn't work if i had the ternary in the className
-                            side === "player" ? (
-                                <Image
-                                    src={getPokemon[side].getImage(getForm[side])}
-                                    alt={getPokemon[side].name}
-                                    height="160"
-                                    width="160"
-                                    className="w-24 h-24 scale-x-[-1]"
-                                />
-                            ) : (
-                                <Image
-                                    src={getPokemon[side].getImage(getForm[side])}
-                                    alt={getPokemon[side].name}
-                                    height="160"
-                                    width="160"
-                                    className="w-24 h-24"
-                                />
-                            )
-                        }
-                    </div>
-                )}
-                <div className="flex justify-between items-center">
-                    {getPokemon[side].forms.length > 1 && (
-                        <button
-                            onClick={() =>
-                                handleLoadingForm(negativeMod(getForm[side] - 1, getPokemon[side].forms.length), side)
-                            }
-                            className="text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100"
-                        >
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M15 19l-7-7 7-7"
-                                />
-                            </svg>
-                        </button>
-                    )}
-                    <div className="text-center flex-grow">
-                        <InputLabel>Pokémon</InputLabel>
-                    </div>
-                    {getPokemon[side].forms.length > 1 && (
-                        <button
-                            onClick={() => handleLoadingForm((getForm[side] + 1) % getPokemon[side].forms.length, side)}
-                            className="text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100"
-                        >
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </svg>
-                        </button>
-                    )}
-                </div>
-
-                <Dropdown
-                    value={getPokemon[side].id}
-                    onChange={(e) => handleLoadingPokemon(pokemon[e.target.value] || nullPokemon, side)}
-                >
-                    <option value="" className="bg-gray-800">
-                        Select Pokémon
-                    </option>
-                    {Object.values(pokemon).map((p) => (
-                        <option key={p.id} value={p.id} className="bg-gray-800">
-                            {p.name}
-                        </option>
-                    ))}
-                </Dropdown>
-            </>
-        );
-    }
-
-    function pokemonStats(side: Side) {
-        return !isNull(getPokemon[side]) ? (
-            <div className={`space-y-6`}>
-                {/* Pokemon type */}
-                <div className="text-center">
-                    <TypeBadge
-                        type1={getPokemon[side].getType1(getForm[side])}
-                        type2={getPokemon[side].getType2(getForm[side])}
-                    />
-                </div>
-
-                {/* Level input */}
-                <div className="text-center">
-                    <InputLabel>Level</InputLabel>
-                    <input
-                        type="number"
-                        min={MIN_LEVEL}
-                        max={MAX_LEVEL}
-                        className="w-full px-4 py-2 rounded-md bg-gray-700 border border-gray-600 text-gray-200 focus:ring-blue-500 focus:border-blue-500 text-center"
-                        value={getLevel[side]}
-                        onChange={(e) => handleLevel(parseInt(e.target.value) || MIN_LEVEL, side)}
-                    />
-                </div>
-
-                {/* Status input */}
-                <div className="text-center">
-                    <InputLabel>Status Effect</InputLabel>
-                    <Dropdown
-                        value={getStatusEffect[side]}
-                        onChange={(e) => handleStatusEffect(e.target.value as StatusEffect, side)}
-                    >
-                        <option value="None" className="bg-gray-800">
-                            None
-                        </option>
-                        {Object.values(statusEffects).map((s) => (
-                            <option key={s} value={s} className="bg-gray-800">
-                                {s}
-                            </option>
-                        ))}
-                    </Dropdown>
-                </div>
-
-                {/* Stats */}
-                <div>
-                    <h3 className="text-sm font-medium text-gray-300 mb-3 text-center">Stats</h3>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Stat</th>
-                                <th>Value</th>
-                                <th>SP</th>
-                                <th>Steps</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {safeKeys(getPokemon[side].getStats(getForm[side])).map((statName) => {
-                                const styleName = styleFromStat(statName);
-                                return (
-                                    <tr key={statName}>
-                                        <td className="text-gray-300 w-16 text-right">{statName.toUpperCase()}</td>
-                                        <td className="text-gray-400 w-12 text-center">
-                                            {getCalculatedStats[side][statName]}
-                                        </td>
-                                        <td>
-                                            <input
-                                                type="number"
-                                                min={MIN_SP}
-                                                max={MAX_SP}
-                                                className="w-16 px-2 py-1 rounded-md bg-gray-700 border border-gray-600 text-gray-200 focus:ring-blue-500 focus:border-blue-500 text-center"
-                                                value={getStylePoints[side][styleName]}
-                                                onChange={(e) =>
-                                                    handleStylePoints(
-                                                        styleName,
-                                                        parseInt(e.target.value) || MIN_SP,
-                                                        side
-                                                    )
-                                                }
-                                            />
-                                        </td>
-                                        <td>
-                                            {statName !== "hp" && (
-                                                <input
-                                                    type="number"
-                                                    min={MIN_STEP}
-                                                    max={MAX_STEP}
-                                                    className="w-16 px-2 py-1 rounded-md bg-gray-700 border border-gray-600 text-gray-200 focus:ring-blue-500 focus:border-blue-500 text-center"
-                                                    value={getStatSteps[side][statName]}
-                                                    onChange={(e) =>
-                                                        handleStatSteps(statName, parseInt(e.target.value) || 0, side)
-                                                    }
-                                                />
-                                            )}
-                                        </td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        ) : (
-            ""
-        );
     }
 
     function printDamageNumbers(damageResult: DamageResult): ReactNode {
@@ -680,7 +266,13 @@ const PokemonDamageCalculator: NextPage = () => {
                             <InternalLink url="../">Return to homepage</InternalLink>
                         </p>
                     </div>
-
+                    <FilterInput
+                        currentFilter={currentFilter}
+                        filters={filters}
+                        onAddFilter={handleAddFilter}
+                        removeFilter={removeFilter}
+                        setCurrentFilter={setCurrentFilter}
+                    />
                     {/* Calculator container */}
                     <div className="flex justify-center">
                         <div className="w-full max-w-8xl bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-700">
@@ -742,68 +334,19 @@ const PokemonDamageCalculator: NextPage = () => {
                                 <Column>
                                     <ColumnHeader colour="text-blue-400">Attacking Pokémon</ColumnHeader>
                                     <ColumnBody>
-                                        {pokemonSelect("player")}
-                                        {pokemonStats("player")}
+                                        <PokemonCard
+                                            pokemonList={filteredPokemon}
+                                            data={playerPokemon}
+                                            update={updatePlayerPokemon}
+                                            battle={true}
+                                        />
                                         {/* Move selection */}
-                                        {!isNull(playerPokemon) && (
-                                            <div className="text-center">
-                                                <InputLabel>Move</InputLabel>
-                                                <Dropdown
-                                                    value={playerMove.id}
-                                                    onChange={(e) =>
-                                                        setPlayerMove(moves[e.target.value] || nullPokemon)
-                                                    }
-                                                >
-                                                    <option value="" className="bg-gray-800">
-                                                        Select Move
-                                                    </option>
-                                                    {playerPokemon
-                                                        .allMoves(getForm["player"])
-                                                        .filter((m) => m.bp > 0)
-                                                        .map((m) => (
-                                                            <option
-                                                                key={m.id}
-                                                                value={m.id}
-                                                                className={`bg-gray-800 ${
-                                                                    m.isSTAB(playerPokemon)
-                                                                        ? "font-bold text-blue-400"
-                                                                        : ""
-                                                                }`}
-                                                            >
-                                                                {m.name}
-                                                            </option>
-                                                        ))}
-                                                </Dropdown>
-                                            </div>
-                                        )}
-                                        {/* Move details */}
-                                        {!isNull(playerMove) && (
-                                            <div className="bg-gray-700 p-4 rounded-lg border border-gray-600">
-                                                {playerMove.getInput(customMoveVar, setCustomMoveVar)}
-                                                <Checkbox
-                                                    checked={criticalHit}
-                                                    disabled={getStatusEffect["opponent"] === "Jinx"}
-                                                    onChange={() => handleCriticalHit(!criticalHit)}
-                                                >
-                                                    Critical Hit
-                                                </Checkbox>
-                                                <h3 className="text-sm font-medium text-gray-300 mb-3 text-center">
-                                                    Move Details
-                                                </h3>
-                                                <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-                                                    <div className="text-right text-gray-400">Type:</div>
-                                                    <TypeBadge type1={playerMove.type} />
-                                                    <div className="text-right text-gray-400">Power:</div>
-                                                    <div className="text-left text-gray-200">
-                                                        {playerMove.getPower(playerPokemonStats)}
-                                                    </div>
-                                                    <div className="text-right text-gray-400">Category:</div>
-                                                    <div className="text-left text-gray-200">
-                                                        {getMoveCategory(playerMove)}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )}
+                                        <MoveCard
+                                            data={playerMove}
+                                            userData={playerPokemon}
+                                            targetData={opponentPokemon}
+                                            updateMoveData={updateMoveData}
+                                        />
                                     </ColumnBody>
                                 </Column>
 
@@ -847,10 +390,16 @@ const PokemonDamageCalculator: NextPage = () => {
                                         </div>
                                     )}
                                     <ColumnHeader colour="text-purple-400">Field Status</ColumnHeader>
-                                    <div className="mt-6">
-                                        <Checkbox checked={multiBattle} onChange={() => setMultiBattle(!multiBattle)}>
-                                            Multi Battle
-                                        </Checkbox>
+                                    <div className="mt-6 grid grid-cols-2 gap-4">
+                                        {battleBooleans.map((b) => (
+                                            <Checkbox
+                                                key={b}
+                                                checked={battleState[b]}
+                                                onChange={() => handleBattleState(b, !battleState[b])}
+                                            >
+                                                {b}
+                                            </Checkbox>
+                                        ))}
                                     </div>
                                     <button
                                         onClick={() => swapPokemon()}
@@ -864,9 +413,12 @@ const PokemonDamageCalculator: NextPage = () => {
                                 <Column>
                                     <ColumnHeader colour="text-red-400">Defending Pokémon</ColumnHeader>
                                     <ColumnBody>
-                                        {pokemonSelect("opponent")}
-
-                                        {pokemonStats("opponent")}
+                                        <PokemonCard
+                                            pokemonList={filteredPokemon}
+                                            data={opponentPokemon}
+                                            update={updateOpponentPokemon}
+                                            battle={true}
+                                        />
                                     </ColumnBody>
                                 </Column>
 

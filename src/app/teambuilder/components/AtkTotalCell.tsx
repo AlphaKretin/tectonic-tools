@@ -1,5 +1,5 @@
-import { CardData } from "@/app/data/teamExport";
 import { calcTypeMatchup } from "@/app/data/typeChart";
+import { PartyPokemon } from "@/app/data/types/PartyPokemon";
 import { PokemonType } from "@/app/data/types/PokemonType";
 import { isNull } from "@/app/data/util";
 
@@ -15,13 +15,13 @@ export default function AtkTotalCell({
     type,
     total,
 }: {
-    cards: CardData[];
+    cards: PartyPokemon[];
     type: PokemonType;
     total: "nve" | "se";
 }): React.ReactNode {
     const num = cards.filter((c) => {
         const realMoves = c.moves.filter((m) => !isNull(m));
-        const mult = !isNull(c.pokemon)
+        const mult = !isNull(c.species)
             ? Math.max(
                   ...realMoves.map((m) =>
                       calcTypeMatchup(

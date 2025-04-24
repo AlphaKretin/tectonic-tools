@@ -1,5 +1,5 @@
-import { CardData } from "@/app/data/teamExport";
 import { calcTypeMatchup } from "@/app/data/typeChart";
+import { PartyPokemon } from "@/app/data/types/PartyPokemon";
 import { PokemonType } from "@/app/data/types/PokemonType";
 import { isNull } from "@/app/data/util";
 
@@ -15,18 +15,15 @@ export default function DefTotalCell({
     type,
     total,
 }: {
-    cards: CardData[];
+    cards: PartyPokemon[];
     type: PokemonType;
     total: "weak" | "strong";
 }): React.ReactNode {
     const num = cards.filter(
         (c) =>
-            !isNull(c.pokemon) &&
+            !isNull(c.species) &&
             compare(
-                calcTypeMatchup(
-                    { type },
-                    { type1: c.pokemon.getType1(c.form), type2: c.pokemon.getType2(c.form), ability: c.ability }
-                ),
+                calcTypeMatchup({ type }, { type1: c.types.type1, type2: c.types.type2, ability: c.ability }),
                 total
             )
     ).length;

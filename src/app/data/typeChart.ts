@@ -1,4 +1,5 @@
 import loadedChart from "public/data/typechart.json";
+import { ExtraTypeMove } from "./moves/ExtraTypeMove";
 import { types } from "./types";
 import { Ability } from "./types/Ability";
 import { Move } from "./types/Move";
@@ -64,6 +65,7 @@ const isAlsoTypeAbilities = [
     { ability: "RUSTWRACK", type1: "STEEL" },
     { ability: "SLUGGISH", type1: "BUG" },
 ];
+// TODO: Convert to move subclass checking function code
 const doubleDealtMoves = [
     { move: "HONORLESSSTING", type1: "FIGHTING" },
     { move: "SLAY", type1: "DRAGON" },
@@ -140,6 +142,11 @@ export function calcTypeMatchup(atk: AttackerData, def: DefenderData) {
                 doubleDealtMatch.type1 == thirdType)
         ) {
             atkMoveCalc = 0;
+        }
+        if (atkMove instanceof ExtraTypeMove) {
+            // should not recur by a depth of more than 1, since move is no longer defined
+            const extraTypeCalc = calcTypeMatchup({ type: atkMove.extraType }, def);
+            atkMoveCalc *= extraTypeCalc;
         }
     }
 
