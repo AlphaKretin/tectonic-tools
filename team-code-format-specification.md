@@ -50,13 +50,15 @@ Each Pokémon in a team is represented by the following properties:
 | species     | The Pokémon species                         | Valid Pokémon Pokédex number |
 | moves       | Array of up to 4 move identifiers           | Valid move indices           |
 | ability     | The ability identifier                      | Valid ability index          |
-| items       | Array of up to 2 held item identifiers      | Valid item indices           |
+| items       | Array of up to 2 held item identifiers      | Valid held item indices      |
 | itemType    | Type modifier for the first item            | Valid type index             |
 | form        | The form identifier of the Pokémon          | Valid form ID                |
 | level       | The Pokémon's level                         | Integer between 1 and 70     |
 | stylePoints | Object containing 5 style point values      | Integers between 0 and 20    |
 
-Item and type indices refers to the position of an entity in the ordering of Pokémon Tectonic's `items.text` and `moves.txt` PBS data files.
+Type indices refer to the position of a type in the ordering of Pokémon Tectonic's `types.txt` PBS data files. All similar indices start at 0.
+
+Item indices refer to the position of an item in the ordering of Pokémon Tectonic's `items.txt` PBS data files, *after* filtering down to only items for which the Pocket field is equal to 5. For example, in version 3.3.0-dev, the index of the Air Balloon is 0.
 
 Ability indices refer to which of a Pokémon two legal abilities it can have. If a Pokémon only has one legal ability, either value (0 or 1) is valid, and refer to the same ability.
 
