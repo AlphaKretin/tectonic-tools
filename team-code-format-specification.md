@@ -192,7 +192,7 @@ However, certain values should never be undefined. A Pokémon's ability index sh
 ### 10.1 Example of an Encoded Team
 
 ```
-BEMYgdDEjKUpSgQhDCcbgfEtjKUpSgJRnG0RQsp9jKUpSgSggA4TBKoljKUpShKwsEgtAMFxMoylKUokcJxeDSMEM5yMpSlKAhIMjQA
+BEMYgdDEjKUpSiQhDCcAG4HxLYylKUoiUZxtABFCyn2MpSlKJKCADgATBKoljKUpSjKwsEgtAADBcTKMpSlKJHCcXg0jBDOcjKUpSiISDI0AAA
 ```
 
 ### 10.2 Example of a Decoded Team
