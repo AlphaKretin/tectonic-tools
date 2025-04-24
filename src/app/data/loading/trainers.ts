@@ -127,6 +127,7 @@ export function propagateTrainerData(trainers: Record<string, LoadedTrainer>) {
             for (const pokemon of trainers[trainerId].pokemon) {
                 const extendedPokemonIndex = extendedTrainer.pokemon.findIndex((p) => p.id === pokemon.id);
                 if (extendedPokemonIndex === undefined) {
+                if (extendedPokemonIndex === -1) {
                     updatedPokemon.push(pokemon);
                 } else {
                     const newPokemon = { ...extendedTrainer.pokemon[extendedPokemonIndex], ...pokemon };
