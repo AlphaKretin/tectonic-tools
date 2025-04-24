@@ -126,11 +126,23 @@ export function propagateTrainerData(trainers: Record<string, LoadedTrainer>) {
             const updatedPokemon = [...extendedTrainer.pokemon];
             for (const pokemon of trainers[trainerId].pokemon) {
                 const extendedPokemonIndex = extendedTrainer.pokemon.findIndex((p) => p.id === pokemon.id);
-                if (extendedPokemonIndex === undefined) {
                 if (extendedPokemonIndex === -1) {
                     updatedPokemon.push(pokemon);
                 } else {
-                    const newPokemon = { ...extendedTrainer.pokemon[extendedPokemonIndex], ...pokemon };
+                    const newPokemon = { ...extendedTrainer.pokemon[extendedPokemonIndex] };
+                    newPokemon.abilityIndex = pokemon.abilityIndex;
+                    if (pokemon.itemType) {
+                        newPokemon.itemType = pokemon.itemType;
+                    }
+                    if (pokemon.items.length > 0) {
+                        newPokemon.items = pokemon.items;
+                    }
+                    if (pokemon.moves.length > 0) {
+                        newPokemon.moves = pokemon.moves;
+                    }
+                    if (pokemon.sp.length > 0) {
+                        newPokemon.sp = pokemon.sp;
+                    }
                     updatedPokemon[extendedPokemonIndex] = newPokemon;
                 }
             }
