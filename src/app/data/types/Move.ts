@@ -97,7 +97,8 @@ export class Move {
         return false;
     }
 
-    public getDamageCategory(move: MoveData, user: PartyPokemon): "Physical" | "Special" {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    public getDamageCategory(move: MoveData, user: PartyPokemon, target: PartyPokemon): "Physical" | "Special" {
         let trueCategory: "Physical" | "Special";
         if (this.category === "Adaptive") {
             if (user.getStats(move, "player").attack >= user.getStats(move, "player").spatk) {

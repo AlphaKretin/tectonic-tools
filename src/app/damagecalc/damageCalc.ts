@@ -127,7 +127,7 @@ function calcBasicDamage(
 
 function damageCalcStats(move: MoveData, userStats: PartyPokemon, targetStats: PartyPokemon): [number, number] {
     // Calculate category for adaptive moves
-    const trueCategory = move.move.getDamageCategory(move, userStats);
+    const trueCategory = move.move.getDamageCategory(move, userStats, targetStats);
     // Calculate user's attack stat
     // TODO: implement moves like foul play or body press
     const attacking_stat_holder = userStats;
@@ -435,13 +435,13 @@ function pbCalcProtectionsDamageMultipliers(
             } else {
                 multipliers.final_damage_multiplier *= 0.5;
             }
-        } else if (battleState.Reflect && move.move.getDamageCategory(move, user) === "Physical") {
+        } else if (battleState.Reflect && move.move.getDamageCategory(move, user, target) === "Physical") {
             if (battleState["Multi Battle"]) {
                 multipliers.final_damage_multiplier *= 2 / 3.0;
             } else {
                 multipliers.final_damage_multiplier *= 0.5;
             }
-        } else if (battleState["Light Screen"] && move.move.getDamageCategory(move, user) === "Special") {
+        } else if (battleState["Light Screen"] && move.move.getDamageCategory(move, user, target) === "Special") {
             if (battleState["Multi Battle"]) {
                 multipliers.final_damage_multiplier *= 2 / 3.0;
             } else {
