@@ -13,6 +13,7 @@ import { MultiHitMove } from "./moves/MultiHitMove";
 import { PunishStatusMove } from "./moves/PunishStatusMove";
 import { SpitUpMove } from "./moves/SpitUpMove";
 import { StackingMove } from "./moves/StackingMove";
+import { SuperAdaptiveMove } from "./moves/SuperAdaptiveMove";
 import { VariableTypeMove, variableTypeMoves } from "./moves/TypeFromItemMove";
 import { WeightScalingMove } from "./moves/WeightScalingMove";
 import { Move } from "./types/Move";
@@ -31,6 +32,7 @@ const moveSubclasses = [
     PunishStatusMove,
     SpitUpMove,
     StackingMove,
+    SuperAdaptiveMove,
     // VariableTypeMove is handled separately
     WeightScalingMove,
 ];
