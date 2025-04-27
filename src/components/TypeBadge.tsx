@@ -1,4 +1,5 @@
 import { PokemonType } from "@/app/data/types/PokemonType";
+import { isNull } from "@/app/data/util";
 import { getTypeColorClass } from "./colours";
 
 export enum TypeBadgeElementEnum {
@@ -29,7 +30,8 @@ export default function TypeBadge({ types, useShort, element }: TypeBadgeProps) 
         return useShort ? type.getShortName() : type.name;
     }
 
-    const defTypes = types.filter((type) => type != undefined);
+    // have to manually assert type here because Array.filter doesn't typeguard properly :(
+    const defTypes = types.filter((type) => !isNull(type)) as PokemonType[];
     switch (element) {
         case TypeBadgeElementEnum.TABLE_HEADER:
             return <th className={`${getClasses(defTypes[0]!)} w-12`}>{getText(defTypes[0]!)}</th>;

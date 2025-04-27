@@ -92,7 +92,7 @@ export function calcTypeMatchup(atk: AttackerData, def: DefenderData) {
 
     let defType2Calc = 1.0;
     let defAbilityCalc = 1.0;
-    if (def.type2 !== undefined) {
+    if (!isNull(def.type2)) {
         const defType2 = def.type2;
         defType2Calc = typeChart[atkType.index][defType2.index];
         // certain moves pierce ground immunity
@@ -101,7 +101,7 @@ export function calcTypeMatchup(atk: AttackerData, def: DefenderData) {
         }
     }
     const defAbility = def.ability;
-    if (defAbility !== undefined) {
+    if (!isNull(defAbility)) {
         const immunityMatch = immunityAbilities.find((x) => x.ability == defAbility.id);
         const halfMatch = halfDmgAbilities.find((x) => x.ability == defAbility.id);
         const doubleMatch = doubleTakenAbilities.find((x) => x.ability == defAbility.id);
@@ -139,7 +139,7 @@ export function calcTypeMatchup(atk: AttackerData, def: DefenderData) {
     let atkAbilityCalc = 1.0;
     let atkMoveCalc = 1;
     const atkAbility = atk.ability;
-    if (atkAbility !== undefined) {
+    if (!isNull(atkAbility)) {
         if (atkAbility.flags.includes("MoldBreaking")) {
             defAbilityCalc = 1.0;
         } else if (atkAbility.id == "BREAKTHROUGH") {
@@ -175,7 +175,7 @@ export function calcTypeMatchup(atk: AttackerData, def: DefenderData) {
 
 export function calcBestMoveMatchup(mon: PartyPokemon, def: DefenderData): number {
     const calcs = mon.moves
-        .filter((m) => m != undefined && !isNull(m) && m.isAttackingMove())
+        .filter((m) => !isNull(m) && m.isAttackingMove())
         .map((m) => calcTypeMatchup({ type: m.type, move: m, ability: mon.ability }, def));
     return calcs.length > 0 ? Math.max(...calcs) : 1;
 }
