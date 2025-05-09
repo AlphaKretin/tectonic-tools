@@ -4,9 +4,9 @@ export default function StatRow({ name, value, scale }: { name: string; value: n
 
     return (
         <tr key={name}>
-            <td>{name}</td>
-            <td>{value}</td>
-            <td className="w-full">
+            <td className="text-right">{name}</td>
+            <td className="px-3">{value}</td>
+            <td>
                 <div
                     className={`h-4 rounded-md bg-blue-500 transition-all duration-300`}
                     style={{

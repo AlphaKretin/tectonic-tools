@@ -5,8 +5,8 @@ export default function EStatRow({ name, pokemon, form }: { name: "PEHP" | "SEHP
 
     return (
         <tr key={name} className="italic">
-            <td>{name}</td>
-            <td>{ehpValue}</td>
+            <td className="text-right">{name}</td>
+            <td className="px-3">{ehpValue}</td>
             <td></td>
         </tr>
     );

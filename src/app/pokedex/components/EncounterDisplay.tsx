@@ -1,14 +1,15 @@
 import { EncounterMap, EncounterTable } from "@/app/data/tectonic/Encounter";
 import { Pokemon } from "@/app/data/tectonic/Pokemon";
+import { TectonicData } from "@/app/data/tectonic/TectonicData";
 
-function printEncChance(table: EncounterTable, currentPokemon: Pokemon) {
-    const encs = table.encounters;
-    const currentEnc = encs.find((e) => e.pokemon === currentPokemon.id);
+function printEncChance(table: EncounterTable, monId: string) {
+    const currentEnc = table.encounters.find((e) => e.pokemon === monId);
     if (!currentEnc) {
         return "Error";
     }
+
     const currentWeight = currentEnc.weight;
-    const totalWeight = encs.reduce((sum, enc) => sum + enc.weight, 0);
+    const totalWeight = table.encounters.reduce((sum, enc) => sum + enc.weight, 0);
     return ((currentWeight / totalWeight) * 100).toFixed(0) + "%";
 }
 
@@ -48,29 +49,59 @@ function getNameForEncounterType(encounterType: string) {
     return "Unknown";
 }
 
-export default function EncounterDisplay({ encounters, pokemon }: { encounters: EncounterMap[]; pokemon: Pokemon }) {
+export default function EncounterDisplay({ pokemon }: { pokemon: Pokemon }) {
+    const encounters: [string, EncounterMap[]][] = [];
+    encounters.push([
+        pokemon.id,
+        Object.values(TectonicData.encounters).filter((e) =>
+            e.tables.some((t) => t.encounters.some((enc) => enc.pokemon === pokemon.id))
+        ),
+    ]);
+
+    pokemon.getEvoNode().callParents((node) => {
+        const newEncounters = Object.values(TectonicData.encounters).filter((e) =>
+            e.tables.some((t) => t.encounters.some((enc) => enc.pokemon === node.getData().pokemon))
+        );
+        if (newEncounters.length > 0) {
+            encounters.push([node.getData().pokemon, newEncounters]);
+        }
+    });
+
+    const thClass = "border py-2 bg-white dark:bg-gray-700";
+    const tbClass = "border py-2 bg-white dark:bg-violet-400/40";
+
     return (
-        <div>
-            {encounters.length > 0 ? (
-                <div>
-                    {encounters.map((area, index) => (
-                        <div key={index} className="mb-4">
-                            <h4 className="font-semibold text-gray-800 dark:text-gray-100">{area.name}</h4>
-                            {area.tables
-                                .filter((t) => t.encounters.some((e) => e.pokemon === pokemon.id))
-                                .map((t) => (
-                                    <p key={t.type}>
-                                        {t.type === "Special"
-                                            ? "Other"
-                                            : getNameForEncounterType(t.type) + " (" + printEncChance(t, pokemon) + ")"}
-                                    </p>
-                                ))}
-                        </div>
-                    ))}
-                </div>
-            ) : (
-                <></>
-            )}
-        </div>
+        encounters.length > 0 && (
+            <table className="table-auto w-full text-center">
+                <thead>
+                    <tr>
+                        <th className={thClass}>Pokemon</th>
+                        <th className={thClass}>Location</th>
+                        <th className={thClass}>Zone</th>
+                        <th className={thClass}>Chance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {encounters.map(([mon, ecMaps]) =>
+                        ecMaps.map((ecMap) =>
+                            ecMap.tables
+                                .filter((t) => t.encounters.some((e) => e.pokemon === mon))
+                                .map((t, index) => (
+                                    <tr key={index}>
+                                        <td className={`${tbClass} font-semibold`}>{TectonicData.pokemon[mon].name}</td>
+                                        <td className={tbClass}>{ecMap.name}</td>
+                                        <td className={tbClass}>
+                                            {t.type == "Special" ? "Other" : getNameForEncounterType(t.type)}
+                                        </td>
+                                        <td className={tbClass}>
+                                            {t.type == "Special" ? "Other" : printEncChance(t, mon)}
+                                        </td>
+                                    </tr>
+                                ))
+                        )
+                    )}
+                </tbody>
+            </table>
+        )
     );
 }
