@@ -228,7 +228,7 @@ async function loadData(dev: boolean = false): Promise<void> {
             dev
         ),
         await handleFiles(
-            ["PBS/items.txt"],
+            ["PBS/items.txt", "PBS/items_machine.txt"],
             (f: string[]) => (loadedData.items = parseStandardFile(version, LoadedItem, LoadedItem.populateMap, f)),
             dev
         ),

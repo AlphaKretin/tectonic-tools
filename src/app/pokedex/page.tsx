@@ -1,6 +1,7 @@
 "use client";
 
 import { getTypeColorClass } from "@/components/colours";
+import FilterOptionButton from "@/components/FilterOptionButton";
 import {
     abilityNameFilter,
     allMovesFilter,
@@ -14,7 +15,6 @@ import InternalLink from "@/components/InternalLink";
 import TypeBadge, { TypeBadgeElementEnum } from "@/components/TypeBadge";
 import type { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { FilterInput } from "../../components/FilterInput";
 import { Ability } from "../data/tectonic/Ability";
@@ -23,6 +23,7 @@ import { Move } from "../data/tectonic/Move";
 import { Pokemon } from "../data/tectonic/Pokemon";
 import { TectonicData } from "../data/tectonic/TectonicData";
 import { Tribe } from "../data/tectonic/Tribe";
+import { uniq } from "../data/util";
 import PokemonModal from "./components/PokemonModal";
 import PokemonTable from "./components/PokemonTable";
 import TabContent from "./components/TabContent";
@@ -37,12 +38,32 @@ export interface PokemonTableProps {
 
 const tabNames = ["Pokemon", "Moves", "Abilities", "Items", "Tribes", "Type Chart"];
 
+const itemMons: Record<string, Array<Pokemon>> = {};
+Object.values(TectonicData.pokemon).forEach((x) =>
+    x.items.forEach((i) => {
+        if (!(i.id in itemMons)) {
+            itemMons[i.id] = [];
+        }
+
+        itemMons[i.id].push(x);
+    })
+);
+const itemDisplayData = Object.values(TectonicData.items)
+    .map((i) => {
+        return {
+            item: i,
+            wildMons: i.id in itemMons ? uniq(itemMons[i.id]) : [],
+            moveData: i.isTM && i.move ? TectonicData.moves[i.move] : undefined,
+        };
+    })
+    .filter((i) => i.item.isTM || i.item.isHeldItem || i.wildMons.length > 0);
+
 const Home: NextPage = () => {
     const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
     const [filters, setFilters] = useState<PokemonFilterType[]>([]);
     const [activeTab, setActiveTab] = useState<string>("Pokemon");
-
     const [currentFilter, setCurrentFilter] = useState<PokemonFilterType>(AVAILABLE_FILTERS[0]);
+    const [itemFilter, setItemFilter] = useState<string | undefined>();
 
     const handleAddFilter = (filter: PokemonFilterType, value: string) => {
         setFilters((prev) => [...prev, { ...filter, value }]);
@@ -93,11 +114,6 @@ const Home: NextPage = () => {
         handleAddFilter(tribesFilter, tribe.name.toLowerCase());
         setActiveTab("Pokemon");
     };
-
-    // filter for items that can be found on wild pokemon
-    const validItems = Object.values(TectonicData.items).filter((i) =>
-        Object.values(TectonicData.pokemon).some((p) => p.items.some((pi) => pi.name === i.name))
-    );
 
     const realTypes = Object.values(TectonicData.types).filter((t) => t.isRealType);
     return (
@@ -227,23 +243,69 @@ const Home: NextPage = () => {
                                         <></>
                                     </TableHeader>
                                     <TableHeader>Name</TableHeader>
+                                    <TableHeader>
+                                        <FilterOptionButton
+                                            isSelected={itemFilter == "Held"}
+                                            padding="px-2 py-1"
+                                            onClick={() => setItemFilter(itemFilter === "Held" ? undefined : "Held")}
+                                        >
+                                            Held
+                                        </FilterOptionButton>
+                                    </TableHeader>
+                                    <TableHeader>
+                                        <FilterOptionButton
+                                            isSelected={itemFilter == "Wild"}
+                                            padding="px-2 py-1"
+                                            onClick={() => setItemFilter(itemFilter === "Wild" ? undefined : "Wild")}
+                                        >
+                                            Wild Pokemon
+                                        </FilterOptionButton>
+                                    </TableHeader>
                                     <TableHeader>Effect</TableHeader>
                                 </tr>
                             </thead>
                             <tbody>
-                                {validItems.map((i) => (
-                                    <tr
-                                        key={i.id}
-                                        onClick={() => handleItemClick(i)}
-                                        className={`hover:bg-blue-50 dark:hover:bg-blue-900 cursor-pointer`}
-                                    >
-                                        <TableCell>
-                                            <Image alt={i.name} src={i.getImage()} width={50} height={50} />
-                                        </TableCell>
-                                        <TableCell>{i.name}</TableCell>
-                                        <TableCell>{i.description}</TableCell>
-                                    </tr>
-                                ))}
+                                {itemDisplayData
+                                    .filter((i) =>
+                                        itemFilter === "Held"
+                                            ? i.item.isHeldItem
+                                            : itemFilter == "Wild"
+                                            ? i.wildMons.length > 0
+                                            : true
+                                    )
+                                    .map((i) => (
+                                        <tr
+                                            key={i.item.id}
+                                            onClick={() => (i.wildMons.length > 0 ? handleItemClick(i.item) : () => {})}
+                                            className={`hover:bg-blue-50 dark:hover:bg-blue-900 ${
+                                                i.wildMons.length > 0 ? "cursor-pointer" : "cursor-text"
+                                            }`}
+                                        >
+                                            <TableCell>
+                                                <img
+                                                    alt={i.item.name}
+                                                    src={i.item.image}
+                                                    onError={(img) => {
+                                                        if (img.currentTarget.src != Item.IMG_NOT_FOUND) {
+                                                            img.currentTarget.src = Item.IMG_NOT_FOUND;
+                                                        }
+                                                    }}
+                                                    width={50}
+                                                    height={50}
+                                                />
+                                            </TableCell>
+                                            <TableCell>{i.item.name}</TableCell>
+                                            <TableCell>
+                                                <span className="text-2xl">{i.item.isHeldItem ? "\u2713" : ""}</span>
+                                            </TableCell>
+                                            <TableCell>
+                                                <div className="w-50 whitespace-break-spaces">
+                                                    {i.wildMons.map((x) => x.name).join(", ")}
+                                                </div>
+                                            </TableCell>
+                                            <TableCell>{i.item.description}</TableCell>
+                                        </tr>
+                                    ))}
                             </tbody>
                         </table>
                     </div>

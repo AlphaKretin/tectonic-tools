@@ -110,7 +110,7 @@ const PokemonEvolution: React.FC<PokemonEvolutionProps> = ({ node, onClick }) =>
                         <></>
                     ) : (
                         <Image
-                            src={TectonicData.items[evoDisplay.itemImg].getImage()}
+                            src={TectonicData.items[evoDisplay.itemImg].image}
                             alt={evoDisplay.itemImg}
                             height="48"
                             width="48"

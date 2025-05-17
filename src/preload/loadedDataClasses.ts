@@ -154,8 +154,9 @@ export class LoadedMove extends LoadedData<LoadedMove> {
 export class LoadedItem extends LoadedData<LoadedItem> {
     name: string = "";
     description: string = "";
-    pocket: number = 0;
+    pocket: number = 0; // 5 = held items, 4 = tms
     flags: string[] = [];
+    move?: string; // Used by Tms
 
     static populateMap: Record<string, (version: string, self: LoadedItem, value: string) => void> = {};
     static {
@@ -164,6 +165,7 @@ export class LoadedItem extends LoadedData<LoadedItem> {
         this.populateMap["Description"] = (_, self, value) => (self.description = value);
         this.populateMap["Pocket"] = (_, self, value) => (self.pocket = parseInt(value));
         this.populateMap["Flags"] = (_, self, value) => (self.flags = value.split(","));
+        this.populateMap["Move"] = (_, self, value) => (self.move = value);
     }
 }
 

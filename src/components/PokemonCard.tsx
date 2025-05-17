@@ -331,7 +331,7 @@ export default function PokemonCard({
                                                     {!isNull(data.items[i]) && (
                                                         <Image
                                                             alt={data.items[i].name}
-                                                            src={data.items[i].getImage()}
+                                                            src={data.items[i].image}
                                                             width={50}
                                                             height={50}
                                                         />

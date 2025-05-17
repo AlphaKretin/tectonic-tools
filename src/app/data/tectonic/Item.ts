@@ -4,6 +4,7 @@ import { LoadedItem } from "@/preload/loadedDataClasses";
 import { BattleState } from "../battleState";
 import { PartyPokemon } from "../types/PartyPokemon";
 import { Stats } from "./Pokemon";
+import { TectonicData } from "./TectonicData";
 
 export class Item {
     id: string = "";
@@ -11,8 +12,19 @@ export class Item {
     description: string = "";
     pocket: number = 0;
     flags: string[] = [];
+    move?: string; // Used by TMs
+    image: string = "";
+
+    get isHeldItem() {
+        return this.pocket == 5;
+    }
+
+    get isTM() {
+        return this.pocket == 4;
+    }
 
     static NULL: Item = null!;
+    static IMG_NOT_FOUND = "Items/NOTFOUND.png";
 
     constructor(loaded?: LoadedItem) {
         if (!loaded) return;
@@ -22,10 +34,15 @@ export class Item {
         this.description = loaded.description;
         this.pocket = loaded.pocket;
         this.flags = loaded.flags;
-    }
+        this.move = loaded.move;
+        this.image = `/Items/${this.id}.png`;
 
-    public getImage() {
-        return `/Items/${this.id}.png`;
+        if (this.move && TectonicData.moves[this.move]) {
+            const moveData = TectonicData.moves[this.move];
+            this.name = `TM: ${moveData.name}`;
+            this.description = moveData.description;
+            this.image = this.image.replace(this.id, `${moveData.type.id}MEMORY`);
+        }
     }
 
     // to be modified by subclasses
