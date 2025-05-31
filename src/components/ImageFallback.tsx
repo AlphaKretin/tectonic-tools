@@ -7,11 +7,13 @@ export default function ImageFallback({
     src,
     width,
     height,
+    className,
 }: {
     alt: string;
     src: string;
     width: number;
     height: number;
+    className?: string;
 }): ReactNode {
     const [isError, setError] = useState<boolean>(false);
 
@@ -24,6 +26,7 @@ export default function ImageFallback({
             }}
             width={width}
             height={height}
+            className={className}
         />
     );
 }

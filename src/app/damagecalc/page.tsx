@@ -3,8 +3,7 @@
 import BasicButton from "@/components/BasicButton";
 import { FilterInput } from "@/components/FilterInput";
 import { AVAILABLE_FILTERS, PokemonFilterType } from "@/components/filters";
-import InlineLink from "@/components/InlineLink";
-import InternalLink from "@/components/InternalLink";
+import PageHeader, { PageType } from "@/components/PageHeader";
 import { LoadedTrainer } from "@/preload/loadedDataClasses";
 import type { NextPage } from "next";
 import Head from "next/head";
@@ -198,7 +197,7 @@ const PokemonDamageCalculator: NextPage = () => {
     }
 
     return (
-        <>
+        <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
             <Head>
                 <title>Pokémon Tectonic Damage Calculator</title>
                 <meta
@@ -206,236 +205,232 @@ const PokemonDamageCalculator: NextPage = () => {
                     content="A damage calculator using the modified mechanics of Pokémon Tectonic"
                 />
             </Head>
-            <div className="min-h-screen bg-gray-900 py-8 flex flex-col items-center">
-                <div className="mx-auto px-4">
-                    {/* Centered title */}
-                    <div className="flex flex-col justify-center items-center mb-10 relative">
-                        <h1 className="text-3xl font-bold text-blue-400">Pokémon Tectonic Damage Calculator</h1>
-                        <p>
-                            This tool is a work in progress! The basic functionality is working, but many details are
-                            not yet implemented. See the to-do list and contribute on{" "}
-                            <InlineLink url="https://github.com/AlphaKretin/tectonic-tools">GitHub</InlineLink>.
-                        </p>
-                        <p>
-                            <InternalLink url="../">Return to homepage</InternalLink>
-                        </p>
-                    </div>
-                    <div>
-                        <FilterInput
-                            currentFilter={currentFilter}
-                            filters={filters}
-                            onAddFilter={handleAddFilter}
-                            removeFilter={removeFilter}
-                            setCurrentFilter={setCurrentFilter}
-                        />
-                        <div className="flex flex-row">
-                            <Dropdown
-                                value={filterPokemon.id}
-                                onChange={(e) => setFilterPokemon(TectonicData.pokemon[e.target.value] || Pokemon.NULL)}
-                            >
-                                <option value="">Select Pokémon</option>
-                                {filteredPokemon.map((p) => (
-                                    <option key={p.id} value={p.id}>
-                                        {p.name}
-                                    </option>
-                                ))}
-                            </Dropdown>
-                            <BasicButton onClick={() => addPokemon("player")}>Set Player Pokémon</BasicButton>
-                            <BasicButton onClick={() => addPokemon("opponent")}>Set Opponent Pokémon</BasicButton>
+            <PageHeader currentPage={PageType.Calc} />
+
+            <main className="container mx-auto px-4 pb-6">
+                <div className="min-h-screen bg-gray-900 flex flex-col items-center">
+                    <div className="mx-auto px-4">
+                        <div>
+                            <FilterInput
+                                currentFilter={currentFilter}
+                                filters={filters}
+                                onAddFilter={handleAddFilter}
+                                removeFilter={removeFilter}
+                                setCurrentFilter={setCurrentFilter}
+                            />
+                            <div className="flex flex-row">
+                                <Dropdown
+                                    value={filterPokemon.id}
+                                    onChange={(e) =>
+                                        setFilterPokemon(TectonicData.pokemon[e.target.value] || Pokemon.NULL)
+                                    }
+                                >
+                                    <option value="">Select Pokémon</option>
+                                    {filteredPokemon.map((p) => (
+                                        <option key={p.id} value={p.id}>
+                                            {p.name}
+                                        </option>
+                                    ))}
+                                </Dropdown>
+                                <BasicButton onClick={() => addPokemon("player")}>Set Player Pokémon</BasicButton>
+                                <BasicButton onClick={() => addPokemon("opponent")}>Set Opponent Pokémon</BasicButton>
+                            </div>
                         </div>
-                    </div>
-                    {/* Calculator container */}
-                    <div className="flex justify-center">
-                        <div className="w-full max-w-8xl bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-700">
-                            <div className="flex flex-col md:flex-row">
-                                <Column>
-                                    <ColumnHeader colour="text-blue-400">Your Pokémon</ColumnHeader>
-                                    <ColumnBody>
-                                        <div className="text-center">
-                                            <InputLabel>Team Code</InputLabel>
-                                        </div>
-                                        <input
-                                            type="text"
-                                            placeholder="Team code"
-                                            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                            value={teamCode}
-                                            onChange={(e) => setTeamCode(e.target.value)}
-                                        />
-                                        <BasicButton onClick={importTeam}>Import Team</BasicButton>
-                                        {!isNull(playerTeam) && (
-                                            <>
-                                                <div className="text-center">
-                                                    <InputLabel>Trainer Pokémon</InputLabel>
-                                                </div>
-                                                <div className="space-y-4">
-                                                    {playerTeam.pokemon.map((p, i) => (
-                                                        <div
-                                                            key={i}
-                                                            className="bg-gray-700 p-4 rounded-lg border border-gray-600 flex justify-between items-center"
-                                                        >
-                                                            <div>
-                                                                <p className="text-gray-200 font-medium">
-                                                                    {p.nickname
-                                                                        ? p.nickname + " (" + p.pokemon.name + ")"
-                                                                        : p.pokemon.name}
-                                                                </p>
-                                                                <p className="text-gray-400 text-sm">
-                                                                    Level: {p.level}
-                                                                </p>
-                                                            </div>
-                                                            <BasicButton
-                                                                onClick={() => handleLoadingTrainerPokemon(i, "player")}
+                        {/* Calculator container */}
+                        <div className="flex justify-center">
+                            <div className="w-full max-w-8xl bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-700">
+                                <div className="flex flex-col md:flex-row">
+                                    <Column>
+                                        <ColumnHeader colour="text-blue-400">Your Pokémon</ColumnHeader>
+                                        <ColumnBody>
+                                            <div className="text-center">
+                                                <InputLabel>Team Code</InputLabel>
+                                            </div>
+                                            <input
+                                                type="text"
+                                                placeholder="Team code"
+                                                className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                value={teamCode}
+                                                onChange={(e) => setTeamCode(e.target.value)}
+                                            />
+                                            <BasicButton onClick={importTeam}>Import Team</BasicButton>
+                                            {!isNull(playerTeam) && (
+                                                <>
+                                                    <div className="text-center">
+                                                        <InputLabel>Trainer Pokémon</InputLabel>
+                                                    </div>
+                                                    <div className="space-y-4">
+                                                        {playerTeam.pokemon.map((p, i) => (
+                                                            <div
+                                                                key={i}
+                                                                className="bg-gray-700 p-4 rounded-lg border border-gray-600 flex justify-between items-center"
                                                             >
-                                                                Set Active
-                                                            </BasicButton>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </>
-                                        )}
-                                    </ColumnBody>
-                                </Column>
-                                {/* Player's Pokemon Section */}
-                                <Column>
-                                    <ColumnHeader colour="text-blue-400">Attacking Pokémon</ColumnHeader>
-                                    <ColumnBody>
-                                        <PokemonCard
-                                            data={playerPokemon}
-                                            update={updatePlayerPokemon}
-                                            battle={true}
-                                            battleState={fieldState}
-                                        />
-                                        {/* Move selection */}
-                                        <MoveCard
-                                            data={playerMove}
-                                            userData={playerPokemon}
-                                            targetData={opponentPokemon}
-                                            battleState={fieldState}
-                                            updateMoveData={updateMoveData}
-                                        />
-                                    </ColumnBody>
-                                </Column>
+                                                                <div>
+                                                                    <p className="text-gray-200 font-medium">
+                                                                        {p.nickname
+                                                                            ? p.nickname + " (" + p.pokemon.name + ")"
+                                                                            : p.pokemon.name}
+                                                                    </p>
+                                                                    <p className="text-gray-400 text-sm">
+                                                                        Level: {p.level}
+                                                                    </p>
+                                                                </div>
+                                                                <BasicButton
+                                                                    onClick={() =>
+                                                                        handleLoadingTrainerPokemon(i, "player")
+                                                                    }
+                                                                >
+                                                                    Set Active
+                                                                </BasicButton>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </>
+                                            )}
+                                        </ColumnBody>
+                                    </Column>
+                                    {/* Player's Pokemon Section */}
+                                    <Column>
+                                        <ColumnHeader colour="text-blue-400">Attacking Pokémon</ColumnHeader>
+                                        <ColumnBody>
+                                            <PokemonCard
+                                                data={playerPokemon}
+                                                update={updatePlayerPokemon}
+                                                battle={true}
+                                                battleState={fieldState}
+                                            />
+                                            {/* Move selection */}
+                                            <MoveCard
+                                                data={playerMove}
+                                                userData={playerPokemon}
+                                                targetData={opponentPokemon}
+                                                battleState={fieldState}
+                                                updateMoveData={updateMoveData}
+                                            />
+                                        </ColumnBody>
+                                    </Column>
 
-                                {/* Results Section */}
-                                <Column>
-                                    <ColumnHeader colour="text-purple-400">Damage Calcuation</ColumnHeader>
-                                    {isReadyToCalculate() ? (
-                                        <DamageResultComponent damageResult={damageResult} />
-                                    ) : (
-                                        <div className="text-center text-gray-500 p-8">
-                                            <p>Select Pokémon and moves to see damage calculation</p>
-                                        </div>
-                                    )}
-                                    <ColumnHeader colour="text-purple-400">Field Status</ColumnHeader>
-                                    <div className="mt-6 grid grid-cols-2 gap-4">
-                                        {battleBooleans.map((b) => (
-                                            <Checkbox
-                                                key={b}
-                                                checked={battleBools[b]}
-                                                onChange={() => handleBattleState(b, !battleBools[b])}
-                                            >
-                                                {b}
-                                            </Checkbox>
-                                        ))}
-                                    </div>
-                                    <Dropdown
-                                        value={weather}
-                                        onChange={(e) => setWeather(e.target.value as WeatherCondition)}
-                                    >
-                                        <option value="None">Select Weather</option>
-                                        {weatherConditions.map((w) => (
-                                            <option key={w} value={w}>
-                                                {w}
-                                            </option>
-                                        ))}
-                                    </Dropdown>
-                                    <BasicButton onClick={() => swapPokemon()}>Swap Pokémon</BasicButton>
-                                </Column>
-
-                                {/* Opponent's Pokemon Section */}
-                                <Column>
-                                    <ColumnHeader colour="text-red-400">Defending Pokémon</ColumnHeader>
-                                    <ColumnBody>
-                                        <PokemonCard
-                                            data={opponentPokemon}
-                                            update={updateOpponentPokemon}
-                                            battle={true}
-                                        />
-                                    </ColumnBody>
-                                </Column>
-
-                                {/* Trainer Pokemon Section */}
-                                <Column>
-                                    <ColumnHeader colour="text-red-400">Trainer Pokémon</ColumnHeader>
-                                    <ColumnBody>
-                                        {!isNull(opposingTrainer) && (
-                                            <div className="flex justify-center mb-4">
-                                                <Image
-                                                    src={"/Trainers/" + opposingTrainer.class + ".png"}
-                                                    alt={opposingTrainer.displayName()}
-                                                    height="160"
-                                                    width="160"
-                                                    className="w-24 h-24"
-                                                />
+                                    {/* Results Section */}
+                                    <Column>
+                                        <ColumnHeader colour="text-purple-400">Damage Calcuation</ColumnHeader>
+                                        {isReadyToCalculate() ? (
+                                            <DamageResultComponent damageResult={damageResult} />
+                                        ) : (
+                                            <div className="text-center text-gray-500 p-8">
+                                                <p>Select Pokémon and moves to see damage calculation</p>
                                             </div>
                                         )}
-                                        <div className="text-center">
-                                            <InputLabel>Trainer</InputLabel>
+                                        <ColumnHeader colour="text-purple-400">Field Status</ColumnHeader>
+                                        <div className="mt-6 grid grid-cols-2 gap-4">
+                                            {battleBooleans.map((b) => (
+                                                <Checkbox
+                                                    key={b}
+                                                    checked={battleBools[b]}
+                                                    onChange={() => handleBattleState(b, !battleBools[b])}
+                                                >
+                                                    {b}
+                                                </Checkbox>
+                                            ))}
                                         </div>
                                         <Dropdown
-                                            value={opposingTrainer.id}
-                                            onChange={(e) => handleLoadingTrainer(e.target.value)}
+                                            value={weather}
+                                            onChange={(e) => setWeather(e.target.value as WeatherCondition)}
                                         >
-                                            <option value="" className="bg-gray-800">
-                                                Select Trainer
-                                            </option>
-                                            {Object.values(TectonicData.trainers).map((t) => (
-                                                <option key={t.id} value={t.id} className="bg-gray-800">
-                                                    {t.displayName()}
+                                            <option value="None">Select Weather</option>
+                                            {weatherConditions.map((w) => (
+                                                <option key={w} value={w}>
+                                                    {w}
                                                 </option>
                                             ))}
                                         </Dropdown>
-                                        {!isNull(opposingTrainer) && (
-                                            <>
-                                                <div className="text-center">
-                                                    <InputLabel>Trainer Pokémon</InputLabel>
+                                        <BasicButton onClick={() => swapPokemon()}>Swap Pokémon</BasicButton>
+                                    </Column>
+
+                                    {/* Opponent's Pokemon Section */}
+                                    <Column>
+                                        <ColumnHeader colour="text-red-400">Defending Pokémon</ColumnHeader>
+                                        <ColumnBody>
+                                            <PokemonCard
+                                                data={opponentPokemon}
+                                                update={updateOpponentPokemon}
+                                                battle={true}
+                                            />
+                                        </ColumnBody>
+                                    </Column>
+
+                                    {/* Trainer Pokemon Section */}
+                                    <Column>
+                                        <ColumnHeader colour="text-red-400">Trainer Pokémon</ColumnHeader>
+                                        <ColumnBody>
+                                            {!isNull(opposingTrainer) && (
+                                                <div className="flex justify-center mb-4">
+                                                    <Image
+                                                        src={"/Trainers/" + opposingTrainer.class + ".png"}
+                                                        alt={opposingTrainer.displayName()}
+                                                        height="160"
+                                                        width="160"
+                                                        className="w-24 h-24"
+                                                    />
                                                 </div>
-                                                <div className="space-y-4">
-                                                    {opposingTrainer.pokemon.map((p, i) => (
-                                                        <div
-                                                            key={i}
-                                                            className="bg-gray-700 p-4 rounded-lg border border-gray-600 flex justify-between items-center"
-                                                        >
-                                                            <div>
-                                                                <p className="text-gray-200 font-medium">
-                                                                    {p.nickname
-                                                                        ? p.nickname + " (" + p.pokemon.name + ")"
-                                                                        : p.pokemon.name}
-                                                                </p>
-                                                                <p className="text-gray-400 text-sm">
-                                                                    Level: {p.level}
-                                                                </p>
-                                                            </div>
-                                                            <BasicButton
-                                                                onClick={() =>
-                                                                    handleLoadingTrainerPokemon(i, "opponent")
-                                                                }
+                                            )}
+                                            <div className="text-center">
+                                                <InputLabel>Trainer</InputLabel>
+                                            </div>
+                                            <Dropdown
+                                                value={opposingTrainer.id}
+                                                onChange={(e) => handleLoadingTrainer(e.target.value)}
+                                            >
+                                                <option value="" className="bg-gray-800">
+                                                    Select Trainer
+                                                </option>
+                                                {Object.values(TectonicData.trainers).map((t) => (
+                                                    <option key={t.id} value={t.id} className="bg-gray-800">
+                                                        {t.displayName()}
+                                                    </option>
+                                                ))}
+                                            </Dropdown>
+                                            {!isNull(opposingTrainer) && (
+                                                <>
+                                                    <div className="text-center">
+                                                        <InputLabel>Trainer Pokémon</InputLabel>
+                                                    </div>
+                                                    <div className="space-y-4">
+                                                        {opposingTrainer.pokemon.map((p, i) => (
+                                                            <div
+                                                                key={i}
+                                                                className="bg-gray-700 p-4 rounded-lg border border-gray-600 flex justify-between items-center"
                                                             >
-                                                                Set Active
-                                                            </BasicButton>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </>
-                                        )}
-                                    </ColumnBody>
-                                </Column>
+                                                                <div>
+                                                                    <p className="text-gray-200 font-medium">
+                                                                        {p.nickname
+                                                                            ? p.nickname + " (" + p.pokemon.name + ")"
+                                                                            : p.pokemon.name}
+                                                                    </p>
+                                                                    <p className="text-gray-400 text-sm">
+                                                                        Level: {p.level}
+                                                                    </p>
+                                                                </div>
+                                                                <BasicButton
+                                                                    onClick={() =>
+                                                                        handleLoadingTrainerPokemon(i, "opponent")
+                                                                    }
+                                                                >
+                                                                    Set Active
+                                                                </BasicButton>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </>
+                                            )}
+                                        </ColumnBody>
+                                    </Column>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </>
+            </main>
+        </div>
     );
 };
 

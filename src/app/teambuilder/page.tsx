@@ -4,8 +4,7 @@ import BasicButton from "@/components/BasicButton";
 import Dropdown from "@/components/DropDown";
 import { FilterInput } from "@/components/FilterInput";
 import { AVAILABLE_FILTERS, PokemonFilterType } from "@/components/filters";
-import InlineLink from "@/components/InlineLink";
-import InternalLink from "@/components/InternalLink";
+import PageHeader, { PageType } from "@/components/PageHeader";
 import TypeBadge, { TypeBadgeElementEnum } from "@/components/TypeBadge";
 import type { NextPage } from "next";
 import Head from "next/head";
@@ -223,20 +222,10 @@ const TeamBuilder: NextPage = () => {
                 <title>Pokémon Tectonic Team Builder</title>
                 <meta name="description" content="Analyse team composition for the fangame Pokémon Tectonic" />
             </Head>
+            <PageHeader currentPage={PageType.Builder} />
 
-            <main className="container mx-auto py-8 px-4">
+            <main className="container mx-auto px-4 pb-6">
                 <div className="flex flex-col justify-center items-center mb-10 relative">
-                    <h1 className="text-3xl font-bold text-center mb-8 text-blue-800 dark:text-blue-300">
-                        Pokémon Tectonic Team Builder
-                    </h1>
-                    <p>
-                        This tool is a work in progress! While it&apos;s largely functional, improvements are still
-                        planned. See the to-do list and contribute on{" "}
-                        <InlineLink url="https://github.com/AlphaKretin/tectonic-tools">GitHub</InlineLink>.
-                    </p>
-                    <p>
-                        <InternalLink url="../">Return to homepage</InternalLink>
-                    </p>
                     <div>
                         <FilterInput
                             currentFilter={currentFilter}
