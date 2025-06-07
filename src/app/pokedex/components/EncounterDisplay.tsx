@@ -1,8 +1,8 @@
-import { EncounterMap, EncounterTable } from "@/app/data/tectonic/Encounter";
 import { Pokemon } from "@/app/data/tectonic/Pokemon";
 import { TectonicData } from "@/app/data/tectonic/TectonicData";
+import { LoadedEncounterMap, LoadedEncounterTable } from "@/preload/loadedDataClasses";
 
-function printEncChance(table: EncounterTable, monId: string) {
+function printEncChance(table: LoadedEncounterTable, monId: string) {
     const currentEnc = table.encounters.find((e) => e.pokemon === monId);
     if (!currentEnc) {
         return "Error";
@@ -50,7 +50,7 @@ function getNameForEncounterType(encounterType: string) {
 }
 
 export default function EncounterDisplay({ pokemon }: { pokemon: Pokemon }) {
-    const encounters: [string, EncounterMap[]][] = [];
+    const encounters: [string, LoadedEncounterMap[]][] = [];
     encounters.push([
         pokemon.id,
         Object.values(TectonicData.encounters).filter((e) =>

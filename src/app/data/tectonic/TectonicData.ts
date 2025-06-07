@@ -1,4 +1,4 @@
-import { LoadedData, LoadedDataJson } from "@/preload/loadedDataClasses";
+import { LoadedData, LoadedDataJson, LoadedEncounterMap } from "@/preload/loadedDataClasses";
 import loadedData from "public/data/loadedData.json";
 import { CancelWeatherAbility } from "../abilities/CancelWeatherAbility";
 import { ExtraTypeAbility } from "../abilities/ExtraTypeAbility";
@@ -51,7 +51,6 @@ import { VariableTypeMove } from "../moves/VariableTypeMove";
 import { WeightTargetScalingMove } from "../moves/WeightTargetScalingMove";
 import { WeightUserScalingMove } from "../moves/WeightUserScalingMove";
 import { Ability } from "./Ability";
-import { EncounterMap } from "./Encounter";
 import { Item } from "./Item";
 import { Move } from "./Move";
 import { Pokemon } from "./Pokemon";
@@ -143,7 +142,7 @@ type TectonicDataType = {
     forms: Record<string, Pokemon[]>;
     trainerTypes: Record<string, TrainerType>;
     trainers: Record<string, Trainer>;
-    encounters: Record<string, EncounterMap>;
+    encounters: Record<string, LoadedEncounterMap>;
     typeChart: number[][];
 };
 
@@ -155,9 +154,7 @@ export const TectonicData: TectonicDataType = {
     types: fromLoaded(data.types, PokemonType),
     tribes: fromLoaded(data.tribes, Tribe),
     trainerTypes: fromLoaded(data.trainerTypes, TrainerType),
-    encounters: Object.fromEntries(
-        Object.entries(data.encounters).map(([k, v]) => [k, { ...v, id: v.key.toString() } as EncounterMap])
-    ) as Record<string, EncounterMap>,
+    encounters: Object.fromEntries(Object.entries(data.encounters)),
     typeChart: data.typeChart,
     abilities: {},
     moves: {},

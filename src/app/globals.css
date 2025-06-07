@@ -40,6 +40,8 @@ body {
 }
 
 @theme {
+    --color-selection-yellow: #ffd166;
+
     --color-fire: #e4613e;
     --color-fire-bg: #8a211c;
     --color-water: #3099e1;
