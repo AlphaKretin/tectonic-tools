@@ -6,6 +6,7 @@ import { STABBoostAbility } from "../abilities/STABBoostAbility";
 import { TwoItemAbility } from "../abilities/TwoItemAbility";
 import { TypeilateAbility } from "../abilities/TypeilateAbility";
 import { TypeImmunityAbility } from "../abilities/TypeImmunityAbility";
+import { TypeImmunityWeaknessAbility } from "../abilities/TypeImmunityWeaknessAbility";
 import { TypeResistAbility } from "../abilities/TypeResistAbility";
 import { TypeWeaknessAbility } from "../abilities/TypeWeaknessAbility";
 import { CategoryBoostingItem } from "../items/CategoryBoostingItem";
@@ -115,6 +116,7 @@ const abilitySubclasses = [
     TwoItemAbility,
     TypeilateAbility,
     TypeImmunityAbility,
+    TypeImmunityWeaknessAbility,
     TypeResistAbility,
     TypeWeaknessAbility,
 ];

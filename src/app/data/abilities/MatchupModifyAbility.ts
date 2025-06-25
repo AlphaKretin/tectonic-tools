@@ -5,7 +5,7 @@ export abstract class MatchupModifyAbility extends Ability {
     protected affectedTypes: PokemonType[] = [];
     protected matchup: number = 1;
 
-    private affectsType(type: PokemonType) {
+    protected affectsType(type: PokemonType) {
         return this.affectedTypes.map((t) => t.id).includes(type.id);
     }
 

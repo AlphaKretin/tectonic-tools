@@ -50,6 +50,8 @@ export function calcTypeMatchup(atk: AttackerData, def: DefenderData) {
     if (defAbility !== undefined) {
         if (defAbility instanceof MatchupModifyAbility) {
             defAbilityCalc *= defAbility.modifiedMatchup(atk.type);
+            console.log(defAbility.name);
+            console.log(defAbilityCalc);
             // certain moves pierce ground immunity
             if (defAbilityCalc === 0 && atk.move instanceof HitsFliersMove && atk.type.id === "GROUND") {
                 defAbilityCalc = 1;
