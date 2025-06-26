@@ -9,10 +9,10 @@ interface TypeChartCellProps {
 }
 
 function getColourClassForMult(mult: number): string {
-    if (mult >= 4) {
+    if (mult > 2) {
         return "bg-hyper-effective";
     }
-    if (mult >= 2) {
+    if (mult > 1) {
         return "bg-super-effective";
     }
     if (mult == 0) {
