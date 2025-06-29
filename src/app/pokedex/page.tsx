@@ -29,6 +29,7 @@ import { PokemonType } from "../data/tectonic/PokemonType";
 import { TectonicData } from "../data/tectonic/TectonicData";
 import { Tribe } from "../data/tectonic/Tribe";
 import { uniq } from "../data/util";
+import MoveTable from "./components/MoveTable";
 import PokemonModal from "./components/PokemonModal";
 import PokemonTable from "./components/PokemonTable";
 import TabContent from "./components/TabContent";
@@ -174,7 +175,7 @@ const Home: NextPage = () => {
                     </p>
                 </div>
 
-                <div className="text-center p-1.5 w-max mx-auto sticky top-0 bg-gray-900">
+                <div className="text-center p-1.5 w-max mx-auto bg-gray-900">
                     {tabNames.map((n) => (
                         // not basic button
                         <button
@@ -206,44 +207,12 @@ const Home: NextPage = () => {
                     )}
                 </TabContent>
                 <TabContent tab="Moves" activeTab={activeTab}>
-                    <div className="overflow-x-auto">
-                        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                            <thead className="bg-gray-50 dark:bg-gray-800">
-                                <tr>
-                                    <TableHeader>Name</TableHeader>
-                                    <TableHeader>Type</TableHeader>
-                                    <TableHeader>Category</TableHeader>
-                                    <TableHeader>Power</TableHeader>
-                                    <TableHeader>Acc</TableHeader>
-                                    <TableHeader>PP</TableHeader>
-                                    <TableHeader>Effect</TableHeader>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {Object.values(TectonicData.moves).map((m) => (
-                                    <tr
-                                        key={m.id}
-                                        onClick={() => handleMoveClick(m)}
-                                        className={`cursor-pointer ${getTypeColorClass(m.type, "bg", "bg")}`}
-                                    >
-                                        <TableCell>{m.name}</TableCell>
-                                        <td className="text-center text-gray-500 dark:text-gray-400">
-                                            <TypeBadge
-                                                key={m.type.id}
-                                                types={[m.type]}
-                                                element={TypeBadgeElementEnum.CAPSULE_SINGLE}
-                                            />
-                                        </td>
-                                        <TableCell>{m.category}</TableCell>
-                                        <TableCell>{m.bp}</TableCell>
-                                        <TableCell>{m.accuracy}</TableCell>
-                                        <TableCell>{m.pp}</TableCell>
-                                        <TableCell>{m.description}</TableCell>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+                    <div className="my-2"></div>
+                    <MoveTable
+                        moves={Object.values(TectonicData.moves).map((m) => [0, m])}
+                        showLevel={false}
+                        onMoveClick={handleMoveClick}
+                    />
                 </TabContent>
                 <TabContent tab="Abilities" activeTab={activeTab}>
                     <div className="overflow-x-auto">

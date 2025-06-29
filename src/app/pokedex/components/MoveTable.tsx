@@ -32,7 +32,15 @@ function MoveTargetCell({ move, position, children }: { move: Move; position: bo
     );
 }
 
-export default function MoveTable({ moves, showLevel }: { moves: [number, Move][]; showLevel: boolean }) {
+export default function MoveTable({
+    moves,
+    showLevel,
+    onMoveClick = undefined,
+}: {
+    moves: [number, Move][];
+    showLevel: boolean;
+    onMoveClick?: (m: Move) => void;
+}) {
     const displayableMoveFlags = new Set<string>();
     displayableMoveFlags.add("Sound");
     displayableMoveFlags.add("Punch");
@@ -47,6 +55,10 @@ export default function MoveTable({ moves, showLevel }: { moves: [number, Move][
 
     const [selectedCategory, setSelectedCategory] = useState<MoveCategory | undefined>(undefined);
     const [selectedType, setSelectedType] = useState<PokemonType | undefined>(undefined);
+
+    function getRowClass(i: number, hover: boolean = false) {
+        return `${onMoveClick ? "cursor-pointer" : ""} ${hover ? "bg-blue-900" : i % 2 == 0 ? "" : "bg-gray-700"}`;
+    }
 
     return (
         <div>
@@ -85,7 +97,7 @@ export default function MoveTable({ moves, showLevel }: { moves: [number, Move][
                         </FilterOptionButton>
                     ))}
             </div>
-            <table className="w-full">
+            <table className="w-fit mx-auto">
                 <thead className="sticky top-0 text-gray-900 dark:text-gray-200 bg-blue-200 dark:bg-blue-700">
                     <tr>
                         {showLevel && <TableHeader>Lvl</TableHeader>}
@@ -109,7 +121,18 @@ export default function MoveTable({ moves, showLevel }: { moves: [number, Move][
                         )
                         .map(([level, m], index) => (
                             <Fragment key={index}>
-                                <tr className={index % 2 == 0 ? "" : "bg-gray-50 dark:bg-gray-700"}>
+                                <tr
+                                    className={getRowClass(index)}
+                                    onClick={() => onMoveClick?.(m)}
+                                    onMouseOver={(e) => {
+                                        e.currentTarget.className = getRowClass(index, true);
+                                        e.currentTarget.nextElementSibling!.className = getRowClass(index, true);
+                                    }}
+                                    onMouseOut={(e) => {
+                                        e.currentTarget.className = getRowClass(index);
+                                        e.currentTarget.nextElementSibling!.className = getRowClass(index);
+                                    }}
+                                >
                                     {showLevel && <TableCell>{level == 0 ? "E" : level}</TableCell>}
                                     <TableCell>
                                         <span className={m.isSignature ? "text-yellow-500" : ""}>{m.name}</span>
@@ -191,7 +214,18 @@ export default function MoveTable({ moves, showLevel }: { moves: [number, Move][
                                         </table>
                                     </TableCell>
                                 </tr>
-                                <tr className={index % 2 == 0 ? "" : "bg-gray-50 dark:bg-gray-700"}>
+                                <tr
+                                    className={getRowClass(index)}
+                                    onClick={() => onMoveClick?.(m)}
+                                    onMouseOver={(e) => {
+                                        e.currentTarget.className = getRowClass(index, true);
+                                        e.currentTarget.previousElementSibling!.className = getRowClass(index, true);
+                                    }}
+                                    onMouseOut={(e) => {
+                                        e.currentTarget.className = getRowClass(index);
+                                        e.currentTarget.previousElementSibling!.className = getRowClass(index);
+                                    }}
+                                >
                                     <TableCell span={showLevel ? 10 : 9} padding="px-1 pb-2">
                                         {m.description}
                                     </TableCell>
