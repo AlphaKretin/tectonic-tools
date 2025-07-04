@@ -1,7 +1,7 @@
 import { Pokemon } from "@/app/data/tectonic/Pokemon";
 import { TectonicData } from "@/app/data/tectonic/TectonicData";
 
-export type FilterOperator = "==" | "!=" | ">" | "<" | "includes";
+export type FilterOperator = "includes";
 
 type BaseFilter = {
     label: string; // What users see in the UI

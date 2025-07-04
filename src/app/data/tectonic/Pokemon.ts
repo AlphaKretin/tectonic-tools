@@ -45,6 +45,14 @@ export const defaultStylePoints: StylePoints = {
     speed: 10,
 };
 
+export const zeroStylePoints: StylePoints = {
+    hp: 0,
+    attacks: 0,
+    defense: 0,
+    spdef: 0,
+    speed: 0,
+};
+
 function getterFactory<T extends keyof Pokemon, R>(
     mon: Pokemon,
     key: T,
@@ -86,6 +94,7 @@ export class Pokemon {
     pokedex: string = "";
     forms: Pokemon[] = [];
     items: [Item, number][] = [];
+    uniqueItems: Item[] = [];
     evolutionTree: NTreeNode<PokemonEvolutionTerms> = null!;
 
     static NULL: Pokemon = null!;
@@ -117,6 +126,7 @@ export class Pokemon {
         this.kind = loaded.kind;
         this.pokedex = loaded.pokedex;
         this.items = loaded.wildItems.map((i) => [TectonicData.items[i.item], i.chance]);
+        this.uniqueItems = uniq(this.items.map((x) => x[0]));
         this.evolutionTree = NTreeArrayNode.buildTree(loaded.evolutionTreeArray!);
     }
 
@@ -197,5 +207,9 @@ export class Pokemon {
 
     public getImage(currentForm: number = 0) {
         return "/Pokemon/" + this.id + (currentForm > 0 ? "_" + this.forms[currentForm].formId : "") + ".png";
+    }
+
+    public getIcon(currentForm: number = 0) {
+        return "/PokemonIcons/" + this.id + (currentForm > 0 ? "_" + this.forms[currentForm].formId : "") + ".png";
     }
 }

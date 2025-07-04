@@ -1,5 +1,6 @@
 import { MoveData } from "@/app/damagecalc/components/MoveCard";
 import { Side } from "@/app/damagecalc/damageCalc";
+import { TwoItemAbility } from "../abilities/TwoItemAbility";
 import { StatusEffect, VolatileStatusEffect, volatileStatusEffects } from "../conditions";
 import { TypeChangingItem } from "../items/TypeChangingItem";
 import { IgnoreStatMove } from "../moves/IgnoreStatMove";
@@ -28,7 +29,7 @@ export class PartyPokemon {
     constructor(data?: Partial<PartyPokemon>) {
         this.species = data?.species || Pokemon.NULL;
         this.moves = data?.moves || Array(4).fill(Move.NULL);
-        this.ability = data?.ability || Ability.NULL;
+        this.ability = data?.ability || data?.species?.abilities?.find((a) => a && a != Ability.NULL) || Ability.NULL;
         this.items = data?.items || Array(2).fill(Item.NULL);
         this.itemType = data?.itemType || TectonicData.types["NORMAL"];
         this.form = data?.form || Pokemon.NULL.formId;
@@ -104,5 +105,17 @@ export class PartyPokemon {
             return { type1: this.itemType };
         }
         return { type1: this.species.getType1(this.form), type2: this.species.getType2(this.form) };
+    }
+
+    // Only allow selecting items that maintain the legality constraint
+    public legalItems(index: number): Item[] {
+        if (this.ability instanceof TwoItemAbility) {
+            return TectonicData.heldItems.filter((i) => {
+                const newItems = [...this.items];
+                newItems[index] = i;
+                return (this.ability as TwoItemAbility).validateItems(newItems);
+            });
+        }
+        return TectonicData.heldItems;
     }
 }

@@ -3,8 +3,7 @@
 import BasicButton from "@/components/BasicButton";
 import { FilterInput } from "@/components/FilterInput";
 import { AVAILABLE_FILTERS, PokemonFilterType } from "@/components/filters";
-import InlineLink from "@/components/InlineLink";
-import InternalLink from "@/components/InternalLink";
+import PageHeader, { PageType } from "@/components/PageHeader";
 import { LoadedTrainer } from "@/preload/loadedDataClasses";
 import type { NextPage } from "next";
 import Head from "next/head";
@@ -206,20 +205,10 @@ const PokemonDamageCalculator: NextPage = () => {
                     content="A damage calculator using the modified mechanics of Pokémon Tectonic"
                 />
             </Head>
-            <div className="min-h-screen bg-gray-900 py-8 flex flex-col items-center">
+            <PageHeader currentPage={PageType.Calc} />
+
+            <div className="min-h-screen bg-gray-900 py-2 flex flex-col items-center">
                 <div className="mx-auto px-4">
-                    {/* Centered title */}
-                    <div className="flex flex-col justify-center items-center mb-10 relative">
-                        <h1 className="text-3xl font-bold text-blue-400">Pokémon Tectonic Damage Calculator</h1>
-                        <p>
-                            This tool is a work in progress! The basic functionality is working, but many details are
-                            not yet implemented. See the to-do list and contribute on{" "}
-                            <InlineLink url="https://github.com/AlphaKretin/tectonic-tools">GitHub</InlineLink>.
-                        </p>
-                        <p>
-                            <InternalLink url="../">Return to homepage</InternalLink>
-                        </p>
-                    </div>
                     <div>
                         <FilterInput
                             currentFilter={currentFilter}

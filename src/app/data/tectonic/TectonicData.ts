@@ -1,4 +1,4 @@
-import { LoadedData, LoadedDataJson } from "@/preload/loadedDataClasses";
+import { LoadedData, LoadedDataJson, LoadedEncounterMap } from "@/preload/loadedDataClasses";
 import loadedData from "public/data/loadedData.json";
 import { BaseDamageBoostAbility } from "../abilities/BaseDamageBoostAbility";
 import { CancelWeatherAbility } from "../abilities/CancelWeatherAbility";
@@ -53,7 +53,6 @@ import { VariableTypeMove } from "../moves/VariableTypeMove";
 import { WeightTargetScalingMove } from "../moves/WeightTargetScalingMove";
 import { WeightUserScalingMove } from "../moves/WeightUserScalingMove";
 import { Ability } from "./Ability";
-import { EncounterMap } from "./Encounter";
 import { Item } from "./Item";
 import { Move } from "./Move";
 import { Pokemon } from "./Pokemon";
@@ -144,11 +143,13 @@ type TectonicDataType = {
     items: Record<string, Item>;
     heldItems: Array<Item>;
     pokemon: Record<string, Pokemon>;
+    pokemonList: Pokemon[];
     forms: Record<string, Pokemon[]>;
     trainerTypes: Record<string, TrainerType>;
     trainers: Record<string, Trainer>;
-    encounters: Record<string, EncounterMap>;
+    encounters: Record<string, LoadedEncounterMap>;
     typeChart: number[][];
+    realTypes: PokemonType[];
 };
 
 // Note that the order of operations below is done explicitly.
@@ -159,18 +160,20 @@ export const TectonicData: TectonicDataType = {
     types: fromLoaded(data.types, PokemonType),
     tribes: fromLoaded(data.tribes, Tribe),
     trainerTypes: fromLoaded(data.trainerTypes, TrainerType),
-    encounters: Object.fromEntries(
-        Object.entries(data.encounters).map(([k, v]) => [k, { ...v, id: v.key.toString() } as EncounterMap])
-    ) as Record<string, EncounterMap>,
+    encounters: Object.fromEntries(Object.entries(data.encounters)),
     typeChart: data.typeChart,
     abilities: {},
     moves: {},
     items: {},
     heldItems: [],
     pokemon: {},
+    pokemonList: [],
     forms: {},
     trainers: {},
+    realTypes: [],
 };
+
+TectonicData.realTypes = Object.values(TectonicData.types).filter((t) => t.isRealType);
 
 // Start of janky loading, not seen otherwise to users of this data
 TectonicData.abilities = fromLoadedMapped(data.abilities, (x) => {
@@ -192,6 +195,7 @@ TectonicData.items = fromLoadedMapped(data.items, (x) => {
 Item.NULL = new Item();
 
 TectonicData.pokemon = fromLoaded(data.pokemon, Pokemon);
+TectonicData.pokemonList = Object.values(TectonicData.pokemon);
 Pokemon.NULL = new Pokemon();
 TectonicData.forms = fromLoadedArray(data.forms, Pokemon.loadForm);
 

@@ -38,12 +38,12 @@ interface TypeBadgeProps {
 
 export default function TypeBadge({ types, element }: TypeBadgeProps) {
     function getClasses(type: PokemonType) {
-        return `h-fit text-white text-shadow-xs/100 text-s font-semibold cursor-default 
+        return `h-fit text-white text-shadow-xs/100 text-s font-semibold cursor-default
             ${getTypeColorClass(type, "bg")}`;
     }
 
     function getCapsuleClasses(type: PokemonType) {
-        return `${getClasses(type)} flex pr-2 w-fit rounded-full`;
+        return `${getClasses(type)} flex pr-2 w-fit rounded-full border border-white`;
     }
 
     function getText(type: PokemonType) {

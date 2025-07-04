@@ -28,18 +28,6 @@ import Image from "next/image";
 import Collapsible from "./Collapsible";
 import TypeBadge, { TypeBadgeElementEnum } from "./TypeBadge";
 
-function legalItems(currentItems: Item[], ability: Ability, index: number): Item[] {
-    // only allow selecting items that maintain the legality constraint
-    if (ability instanceof TwoItemAbility) {
-        return TectonicData.heldItems.filter((i) => {
-            const newItems = [...currentItems];
-            newItems[index] = i;
-            return ability.validateItems(newItems);
-        });
-    }
-    return TectonicData.heldItems;
-}
-
 export default function PokemonCard({
     data,
     update,
@@ -148,7 +136,6 @@ export default function PokemonCard({
         update({ statSteps: newSteps });
     }
 
-    const realTypes = Object.values(TectonicData.types).filter((t) => t.isRealType);
     const badgeTypes = [data.types.type1, data.types.type2];
     if (data.ability instanceof ExtraTypeAbility) {
         badgeTypes.push(data.ability.extraType);
@@ -320,7 +307,7 @@ export default function PokemonCard({
                                                     onChange={(e) => updateItem(e.target.value, i)}
                                                 >
                                                     <option value="">Select Item</option>
-                                                    {legalItems(data.items, data.ability, i).map((i) => (
+                                                    {data.legalItems(i).map((i) => (
                                                         <option key={i.id} value={i.id}>
                                                             {i.name}
                                                         </option>
@@ -348,7 +335,7 @@ export default function PokemonCard({
                                             updateItemType(e.target.value);
                                         }}
                                     >
-                                        {realTypes.map((t) => (
+                                        {TectonicData.realTypes.map((t) => (
                                             <option key={t.id} value={t.id} className="bg-gray-800">
                                                 {t.name}
                                             </option>

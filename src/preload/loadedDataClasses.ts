@@ -408,12 +408,16 @@ export class RawEncounterMap {
 export class LoadedEncounter {
     weight: number;
     pokemon: string;
+    form?: number;
     minLevel: number; // Exact level for static encounters
     maxLevel?: number;
 
     constructor(raw: string[]) {
+        const monFormSplit = raw[1].split("_"); // Forms are appended as _FORMID
+
         this.weight = parseInt(raw[0].trim());
-        this.pokemon = raw[1];
+        this.pokemon = monFormSplit[0];
+        this.form = monFormSplit.length > 1 ? parseInt(monFormSplit[1]) : undefined;
         this.minLevel = parseInt(raw[2]);
         if (raw.length > 3) this.maxLevel = parseInt(raw[3]);
     }

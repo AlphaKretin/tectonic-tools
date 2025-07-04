@@ -40,12 +40,14 @@ body {
 }
 
 @theme {
+    --color-yellow-highlight: #ffd166;
+
     --color-fire: #e4613e;
     --color-fire-bg: #8a211c;
     --color-water: #3099e1;
     --color-water-bg: #231d94;
     --color-steel: #74b0cb;
-    --color-steel-bg: #94887d;
+    --color-steel-bg: #49768b;
     --color-rock: #a9a481;
     --color-rock-bg: #60481d;
     --color-psychic: #e96c8c;
@@ -55,11 +57,11 @@ body {
     --color-normal: #828282;
     --color-normal-bg: #715746;
     --color-ice: #47c8c8;
-    --color-ice-bg: #9a9acd;
+    --color-ice-bg: #8787b5;
     --color-ground: #a4733c;
     --color-ground-bg: #6f521e;
     --color-grass: #439837;
-    --color-grass-bg: #57813e;
+    --color-grass-bg: #3a5b28;
     --color-ghost: #6f4570;
     --color-ghost-bg: #473252;
     --color-flying: #74aad0;

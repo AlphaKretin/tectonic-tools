@@ -1,6 +1,6 @@
 import { useState } from "react";
 import BasicButton from "./BasicButton";
-import { AVAILABLE_FILTERS, FilterOperator, PokemonFilterType } from "./filters";
+import { AVAILABLE_FILTERS, PokemonFilterType } from "./filters";
 
 interface FilterInputProps {
     currentFilter: PokemonFilterType;
@@ -23,91 +23,64 @@ export function FilterInput({ currentFilter, filters, onAddFilter, removeFilter,
     };
 
     return (
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-4">
-            <div className="filter-container p-4 border rounded shadow-md bg-white dark:bg-gray-800 dark:border-gray-700">
-                <div className="filter-controls flex items-center gap-4 mb-4">
+        <div className="w-full md:w-200 mx-auto bg-gray-800 rounded-lg p-2 mb-4">
+            <div className="flex flex-wrap justify-center items-center gap-2 mb-2">
+                <select
+                    className="border rounded p-2"
+                    value={currentFilter.label}
+                    onChange={(e) => {
+                        const selected = AVAILABLE_FILTERS.find((f) => f.label === e.target.value);
+                        if (selected) setCurrentFilter(selected);
+                    }}
+                >
+                    {AVAILABLE_FILTERS.map((filter) => (
+                        <option key={filter.label} value={filter.label}>
+                            {filter.label}
+                        </option>
+                    ))}
+                </select>
+
+                {currentFilter.inputMethod === "select" ? (
                     <select
-                        className="border rounded px-2 py-1 bg-white dark:bg-gray-700 dark:text-white dark:border-gray-600"
-                        value={currentFilter.label}
-                        onChange={(e) => {
-                            const selected = AVAILABLE_FILTERS.find((f) => f.label === e.target.value);
-                            if (selected) setCurrentFilter(selected);
-                        }}
+                        className="border rounded p-2"
+                        value={localValue}
+                        onChange={(e) => setLocalValue(e.target.value)}
                     >
-                        {AVAILABLE_FILTERS.map((filter) => (
-                            <option key={filter.label} value={filter.label}>
-                                {filter.label}
+                        <option value="">Value...</option>
+                        {currentFilter.inputValues.map((type) => (
+                            <option key={type} value={type}>
+                                {type}
                             </option>
                         ))}
                     </select>
-
-                    {[">", "<", "==", "!="].includes(currentFilter.operator) && (
-                        <select
-                            className="border rounded px-2 py-1 bg-white dark:bg-gray-700 dark:text-white dark:border-gray-600"
-                            value={currentFilter.operator}
-                            onChange={(e) =>
-                                setCurrentFilter({
-                                    ...currentFilter,
-                                    operator: e.target.value as FilterOperator,
-                                })
+                ) : (
+                    <input
+                        className="border rounded p-2"
+                        type={typeof currentFilter.value === "number" ? "number" : "text"}
+                        value={localValue}
+                        onChange={(e) => setLocalValue(e.target.value)}
+                        placeholder="Value..."
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                handleAdd();
                             }
-                        >
-                            <option value="==">=</option>
-                            <option value="!=">≠</option>
-                            <option value=">">&gt;</option>
-                            <option value="<">&lt;</option>
-                        </select>
-                    )}
-                </div>
-                <div>
-                    {currentFilter.inputMethod === "select" ? (
-                        <select
-                            className="border rounded px-2 py-1 bg-white dark:bg-gray-700 dark:text-white dark:border-gray-600"
-                            value={localValue}
-                            onChange={(e) => setLocalValue(e.target.value)}
-                        >
-                            <option value="">Value...</option>
-                            {currentFilter.inputValues.map((type) => (
-                                <option key={type} value={type}>
-                                    {type}
-                                </option>
-                            ))}
-                        </select>
-                    ) : (
-                        <input
-                            className="border rounded px-2 py-1 bg-white dark:bg-gray-700 dark:text-white dark:border-gray-600"
-                            type={typeof currentFilter.value === "number" ? "number" : "text"}
-                            value={localValue}
-                            onChange={(e) => setLocalValue(e.target.value)}
-                            placeholder="Value..."
-                            onKeyDown={(e) => {
-                                if (e.key === "Enter") {
-                                    handleAdd();
-                                }
-                            }}
-                        />
-                    )}
+                        }}
+                    />
+                )}
 
-                    <BasicButton onClick={handleAdd}>Add Filter</BasicButton>
-                </div>
-                <div className="active-filters flex flex-wrap gap-2">
-                    {filters.map((filter, index) => (
-                        <div
-                            key={index}
-                            className="filter-chip flex items-center gap-2 px-3 py-1 bg-gray-200 rounded shadow-sm dark:bg-gray-700"
-                        >
-                            <span className="text-sm dark:text-white">
-                                {filter.label} {filter.operator} {filter.value}
-                            </span>
-                            <button
-                                className="text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-500"
-                                onClick={() => removeFilter(index)}
-                            >
-                                ×
-                            </button>
-                        </div>
-                    ))}
-                </div>
+                <BasicButton onClick={handleAdd}>Add Filter</BasicButton>
+            </div>
+            <div className="flex flex-wrap gap-2">
+                {filters.map((filter, index) => (
+                    <div
+                        key={index}
+                        className="pr-2 py-1 rounded-full bg-gray-700 hover:bg-rose-800 font-bold cursor-pointer border"
+                        onClick={() => removeFilter(index)}
+                    >
+                        <span className="mr-1 px-2 py-1.5 rounded-full border border-white bg-gray-900/50">x</span>
+                        {filter.label} {filter.operator} {filter.value}
+                    </div>
+                ))}
             </div>
         </div>
     );
