@@ -364,7 +364,10 @@ export class LoadedTrainer extends LoadedData<LoadedTrainer> {
         this.populateMap["Gender"] = (_, self, value) => (self.currentPokemon.gender = value);
         this.populateMap["Moves"] = (_, self, value) => (self.currentPokemon.moves = value.split(","));
         this.populateMap["AbilityIndex"] = (_, self, value) => (self.currentPokemon.abilityIndex = parseInt(value));
-        this.populateMap["Items"] = (_, self, value) => (self.currentPokemon.items = value.split(","));
+        this.populateMap["Item"] = (_, self, value) =>
+            (self.currentPokemon.items = self.currentPokemon.items.concat(value.split(",")));
+        this.populateMap["ExtraItems"] = (_, self, value) =>
+            (self.currentPokemon.items = self.currentPokemon.items.concat(value.split(",")));
         this.populateMap["ItemType"] = (_, self, value) => (self.currentPokemon.itemType = value);
         this.populateMap["EV"] = (_, self, value) =>
             (self.currentPokemon.sp = value.split(",").map((v) => parseInt(v)));

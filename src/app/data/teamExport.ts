@@ -219,7 +219,7 @@ const decodeChunk = (
 
     mon.species = loadedMon;
     const formIndex = loadedMon.forms.findIndex((f) => f.formId === formId);
-    mon.form = formIndex;
+    mon.form = Math.max(formIndex, 0);
     const abilities = loadedMon.getAbilities(mon.form);
     if (abilities.length === 1) {
         mon.ability = abilities[0];
