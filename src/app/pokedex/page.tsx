@@ -18,7 +18,7 @@ import TypeBadge, { TypeBadgeElementEnum } from "@/components/TypeBadge";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { FilterInput } from "../../components/FilterInput";
 import MoveTable from "../../components/MoveTable";
 import PokemonModal from "../../components/PokemonModal";
@@ -89,7 +89,7 @@ const itemDisplayData = Object.values(TectonicData.items)
     })
     .filter((i) => i.item.isTM || i.item.isHeldItem || i.wildMons.length > 0);
 
-const Home: NextPage = () => {
+const HomeContent = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [pokedexAsCards, setPokedexAsCards] = useState<boolean>(true);
@@ -522,6 +522,20 @@ const Home: NextPage = () => {
                 )}
             </main>
         </div>
+    );
+};
+
+const Home: NextPage = () => {
+    return (
+        <Suspense
+            fallback={
+                <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+                    <div className="text-white text-xl">Loading...</div>
+                </div>
+            }
+        >
+            <HomeContent />
+        </Suspense>
     );
 };
 
