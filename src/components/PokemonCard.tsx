@@ -2,7 +2,7 @@
 
 import { ExtraTypeAbility } from "@/app/data/abilities/ExtraTypeAbility";
 import { TwoItemAbility } from "@/app/data/abilities/TwoItemAbility";
-import { BattleState, nullState } from "@/app/data/battleState";
+import { BattleState, nullBattleState } from "@/app/data/battleState";
 import { StatusEffect, statusEffects, VolatileStatusEffect, volatileStatusEffects } from "@/app/data/conditions";
 import { TypeChangingItem } from "@/app/data/items/TypeChangingItem";
 import {
@@ -232,7 +232,9 @@ export default function PokemonCard({
                                 <div className="w-12 flex justify-center">
                                     {data.moves[moveIndex].isAttackingMove() && (
                                         <TypeBadge
-                                            types={[data.moves[moveIndex].getType(data, battleState || nullState)]}
+                                            types={[
+                                                data.moves[moveIndex].getType(data, battleState || nullBattleState),
+                                            ]}
                                             element={TypeBadgeElementEnum.ICONS}
                                         />
                                     )}

@@ -135,4 +135,8 @@ export class Trainer {
         }
         return name;
     }
+
+    public getImageSrc(): string {
+        return "/Trainers/" + this.class + ".png";
+    }
 }

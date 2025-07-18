@@ -23,9 +23,11 @@ export class PartyPokemon {
     form: number;
     level: number;
     stylePoints: StylePoints;
+    nickname: string | undefined = undefined;
     statSteps: Stats;
     statusEffect?: StatusEffect;
     volatileStatusEffects: Record<VolatileStatusEffect, boolean>;
+
     constructor(data?: Partial<PartyPokemon>) {
         this.species = data?.species || Pokemon.NULL;
         this.moves = data?.moves || Array(4).fill(Move.NULL);
@@ -35,6 +37,7 @@ export class PartyPokemon {
         this.form = data?.form || Pokemon.NULL.formId;
         this.level = data?.level || MAX_LEVEL;
         this.stylePoints = data?.stylePoints || defaultStylePoints;
+        this.nickname = data?.nickname;
         this.statSteps = data?.statSteps || blankStats;
         this.statusEffect = data?.statusEffect;
         this.volatileStatusEffects =

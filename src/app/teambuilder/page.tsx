@@ -38,7 +38,7 @@ const TeamBuilder: NextPage = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gray-900">
+        <div className="min-h-screen bg-gray-900 pb-10">
             <Head>
                 <title>Pokémon Tectonic Team Builder</title>
                 <meta name="description" content="Analyse team composition for the fangame Pokémon Tectonic" />
@@ -46,7 +46,7 @@ const TeamBuilder: NextPage = () => {
             <PageHeader currentPage={PageType.Builder} />
 
             <main className="container mx-auto">
-                <div className="flex flex-col justify-center items-center pb-10 relative">
+                <div className="flex flex-col justify-center items-center">
                     <MiniDexFilter onMon={addPokemon} />
 
                     <hr className="my-3 w-full text-blue-500/50" />

@@ -1,16 +1,27 @@
 "use client";
 
 import { TwoItemAbility } from "@/app/data/abilities/TwoItemAbility";
-import { nullState } from "@/app/data/battleState";
+import { nullBattleState } from "@/app/data/battleState";
+import { StatusEffect, statusEffects, volatileStatusEffects } from "@/app/data/conditions";
 import { TypeChangingItem } from "@/app/data/items/TypeChangingItem";
-import { MAX_LEVEL, MAX_SP, MIN_LEVEL, MIN_SP, STYLE_POINT_CAP, styleFromStat } from "@/app/data/teamExport";
+import {
+    MAX_LEVEL,
+    MAX_SP,
+    MAX_STEP,
+    MIN_LEVEL,
+    MIN_SP,
+    MIN_STEP,
+    STYLE_POINT_CAP,
+    styleFromStat,
+} from "@/app/data/teamExport";
 import { Item } from "@/app/data/tectonic/Item";
 import { Move } from "@/app/data/tectonic/Move";
-import { Pokemon, StylePoints, zeroStylePoints } from "@/app/data/tectonic/Pokemon";
+import { blankStats, Pokemon, Stat, StylePoints, zeroStylePoints } from "@/app/data/tectonic/Pokemon";
 import { TectonicData } from "@/app/data/tectonic/TectonicData";
 import { PartyPokemon } from "@/app/data/types/PartyPokemon";
 import { isNull, negativeMod, safeKeys } from "@/app/data/util";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Checkbox from "./Checkbox";
 import { getTypeColorClass } from "./colours";
 import Dropdown from "./DropDown";
 import ImageFallback from "./ImageFallback";
@@ -24,13 +35,21 @@ export default function PokemonCardHorizontal({
     partyMon,
     onRemove,
     onUpdate,
+    showBattleConfig = false,
 }: {
     partyMon: PartyPokemon;
     onRemove: () => void;
     onUpdate: () => void;
+    showBattleConfig?: boolean;
 }) {
     const [modalMon, setModalMon] = useState<Pokemon | null>(null);
     const [moveIndex, setMoveIndex] = useState<number | null>(null);
+    const [statusEffect, setStatusEffect] = useState<StatusEffect>(partyMon.statusEffect ?? "None");
+
+    useEffect(() => {
+        // For some reason the status dropdown just refuses to update when changing mons unless it's wrapped in state and a useEffect
+        setStatusEffect(partyMon.statusEffect ?? "None");
+    }, [partyMon]);
 
     function showInfoModal() {
         setMoveIndex(null);
@@ -61,8 +80,15 @@ export default function PokemonCardHorizontal({
         }
     }
 
+    function updateStatSteps(stat: Stat, value: number) {
+        if (value >= MIN_STEP && value <= MAX_STEP) {
+            partyMon.statSteps = { ...partyMon.statSteps, [stat]: value };
+            onUpdate();
+        }
+    }
+
     return (
-        <div className="w-fit h-76 m-1 rounded-lg p-1.5 text-white bg-gray-800 border-white/50 border-1">
+        <div className="w-fit h-fit m-1 rounded-lg p-1.5 text-white bg-gray-800 border-white/50 border-1">
             <div className="flex justify-between ml-1">
                 <LeftRightCycleButtons
                     buttonsVisible={partyMon.species.forms.length > 0}
@@ -76,7 +102,7 @@ export default function PokemonCardHorizontal({
                     }}
                 >
                     <span onClick={showInfoModal} className="text-xl cursor-pointer">{`${partyMon.species.name} ${
-                        partyMon.species.getFormName(partyMon.form)
+                        partyMon.nickname ?? partyMon.species.getFormName(partyMon.form)
                             ? `(${partyMon.species.getFormName(partyMon.form)})`
                             : ""
                     }`}</span>
@@ -200,7 +226,7 @@ export default function PokemonCardHorizontal({
                                             <div
                                                 key={i}
                                                 className={`flex flex-col justify-center items-center h-10 cursor-pointer hover:bg-gray-500 ${getTypeColorClass(
-                                                    m.getType(partyMon, nullState),
+                                                    m.getType(partyMon, nullBattleState),
                                                     "bg",
                                                     "bg"
                                                 )}`}
@@ -213,7 +239,7 @@ export default function PokemonCardHorizontal({
                                                 <div className="flex w-full items-center space-x-1.5 ml-2">
                                                     <div className="flex justify-center space-x-1">
                                                         <TypeBadge
-                                                            types={[m.getType(partyMon, nullState)]}
+                                                            types={[m.getType(partyMon, nullBattleState)]}
                                                             element={TypeBadgeElementEnum.ICONS}
                                                         />
                                                         <ImageFallback
@@ -251,7 +277,7 @@ export default function PokemonCardHorizontal({
                 </thead>
                 <tbody>
                     <tr className="bg-gray-900">
-                        <td className="w-10">
+                        <td>
                             <input
                                 type="number"
                                 min={MIN_LEVEL}
@@ -265,9 +291,7 @@ export default function PokemonCardHorizontal({
                             />
                         </td>
                         {safeKeys(partyMon.getBaseStats()).map((k) => (
-                            <td key={k} className="w-15">
-                                {partyMon.getStats()[k]}
-                            </td>
+                            <td key={k}>{partyMon.getStats()[k]}</td>
                         ))}
                     </tr>
                     <tr className="bg-emerald-700">
@@ -284,6 +308,7 @@ export default function PokemonCardHorizontal({
                             <td key={k}>
                                 <input
                                     type="number"
+                                    className="text-center"
                                     min={MIN_SP}
                                     max={MAX_SP}
                                     value={partyMon.stylePoints[styleFromStat(k)]}
@@ -292,8 +317,70 @@ export default function PokemonCardHorizontal({
                             </td>
                         ))}
                     </tr>
+                    {showBattleConfig && (
+                        <tr className="bg-fuchsia-700">
+                            <td
+                                className="bg-fuchsia-800 cursor-pointer"
+                                onClick={() => {
+                                    partyMon.statSteps = blankStats;
+                                    onUpdate();
+                                }}
+                            >
+                                Steps
+                            </td>
+                            <td></td>
+                            {safeKeys(partyMon.getBaseStats())
+                                .filter((k) => k != "hp")
+                                .map((k) => (
+                                    <td key={k}>
+                                        <input
+                                            type="number"
+                                            className="text-center"
+                                            min={MIN_STEP}
+                                            max={MAX_STEP}
+                                            value={partyMon.statSteps[k]}
+                                            onChange={(e) => updateStatSteps(k, parseInt(e.target.value))}
+                                        />
+                                    </td>
+                                ))}
+                        </tr>
+                    )}
                 </tbody>
             </table>
+
+            {showBattleConfig && (
+                <div className="flex gap-2 mt-2">
+                    <Dropdown
+                        value={statusEffect}
+                        onChange={(e) => {
+                            partyMon.statusEffect = e.target.value as StatusEffect;
+                            setStatusEffect(partyMon.statusEffect);
+                            onUpdate();
+                        }}
+                    >
+                        <option value="None" className="bg-gray-800">
+                            Status Effect
+                        </option>
+                        {Object.values(statusEffects).map((s) => (
+                            <option key={s} value={s} className="bg-gray-800">
+                                {s}
+                            </option>
+                        ))}
+                    </Dropdown>
+                    {volatileStatusEffects.map((k) => (
+                        <Checkbox
+                            key={k}
+                            checked={partyMon.volatileStatusEffects[k]}
+                            onChange={() => {
+                                partyMon.volatileStatusEffects[k] = !partyMon.volatileStatusEffects[k];
+                                onUpdate();
+                            }}
+                        >
+                            {k}
+                        </Checkbox>
+                    ))}
+                </div>
+            )}
 
             {modalMon && (
                 <PokemonModal

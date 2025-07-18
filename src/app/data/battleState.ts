@@ -1,14 +1,27 @@
 import { WeatherCondition } from "./conditions";
 
-export const battleBooleans = ["Multi Battle", "Aurora Veil", "Reflect", "Light Screen", "Gravity"] as const;
-export type BattleBoolean = (typeof battleBooleans)[number];
-export type BattleBools = Record<BattleBoolean, boolean>;
-export interface BattleState {
-    bools: BattleBools;
-    weather: WeatherCondition;
+export interface SideState {
+    reflect: boolean;
+    lightScreen: boolean;
+    auroraVeil: boolean;
 }
 
-export const nullState: BattleState = {
-    bools: Object.fromEntries(battleBooleans.map((b) => [b, false])) as BattleBools,
+export const nullSideState: SideState = {
+    reflect: false,
+    lightScreen: false,
+    auroraVeil: false,
+};
+
+export interface BattleState {
+    multiBattle: boolean;
+    gravity: boolean;
+    weather: WeatherCondition;
+    sideState: SideState;
+}
+
+export const nullBattleState: BattleState = {
+    multiBattle: false,
+    gravity: false,
     weather: "None",
+    sideState: nullSideState,
 };
