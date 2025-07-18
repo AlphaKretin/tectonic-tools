@@ -17,7 +17,8 @@ import TribeCapsule from "@/components/TribeCapsule";
 import TypeBadge, { TypeBadgeElementEnum } from "@/components/TypeBadge";
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 import { FilterInput } from "../../components/FilterInput";
 import MoveTable from "../../components/MoveTable";
 import PokemonModal from "../../components/PokemonModal";
@@ -89,10 +90,33 @@ const itemDisplayData = Object.values(TectonicData.items)
     .filter((i) => i.item.isTM || i.item.isHeldItem || i.wildMons.length > 0);
 
 const Home: NextPage = () => {
+    const router = useRouter();
+    const searchParams = useSearchParams();
     const [pokedexAsCards, setPokedexAsCards] = useState<boolean>(true);
     const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
     const [filters, setFilters] = useState<PokemonFilterType[]>([]);
     const [activeTab, setActiveTab] = useState<string>("Pokemon");
+
+    // Initialize selected Pokemon from URL
+    useEffect(() => {
+        const pokemonId = searchParams.get("pokemon");
+        if (pokemonId && pokemonId in TectonicData.pokemon) {
+            setSelectedPokemon(TectonicData.pokemon[pokemonId]);
+        }
+    }, [searchParams]);
+
+    const updateSelectedPokemon = (pokemon: Pokemon | null) => {
+        setSelectedPokemon(pokemon);
+        const options = { replace: true, scroll: false };
+        if (pokemon) {
+            router.push(`?pokemon=${pokemon.id}`, options);
+        } else {
+            const currentParams = new URLSearchParams(searchParams);
+            currentParams.delete("pokemon");
+            const newUrl = currentParams.toString() ? `?${currentParams.toString()}` : window.location.pathname;
+            router.push(newUrl, options);
+        }
+    };
     const [currentFilter, setCurrentFilter] = useState<PokemonFilterType>(AVAILABLE_FILTERS[0]);
     const [itemFilter, setItemFilter] = useState<string | undefined>();
     const [typeChartAtkDualType, setTypeChartAtkDualType] = useState<PokemonType | undefined>();
@@ -174,7 +198,7 @@ const Home: NextPage = () => {
                                 {filteredPokemon.map((mon) => (
                                     <tr
                                         key={mon.id}
-                                        onClick={() => setSelectedPokemon(mon)}
+                                        onClick={() => updateSelectedPokemon(mon)}
                                         className={`flex rounded-md px-1 py-2 my-2 cursor-pointer border border-white ${getTypeGradient(
                                             mon
                                         )}`}
@@ -265,7 +289,7 @@ const Home: NextPage = () => {
                                 {filteredPokemon.map((pokemon) => (
                                     <tr
                                         key={pokemon.id}
-                                        onClick={() => setSelectedPokemon(pokemon)}
+                                        onClick={() => updateSelectedPokemon(pokemon)}
                                         className={`cursor-pointer ${getTypeGradient(pokemon)}`}
                                     >
                                         <TableCell>
@@ -493,7 +517,9 @@ const Home: NextPage = () => {
                     </table>
                 </TabContent>
 
-                {selectedPokemon && <PokemonModal pokemon={selectedPokemon} handlePokemonClick={setSelectedPokemon} />}
+                {selectedPokemon && (
+                    <PokemonModal pokemon={selectedPokemon} handlePokemonClick={updateSelectedPokemon} />
+                )}
             </main>
         </div>
     );
