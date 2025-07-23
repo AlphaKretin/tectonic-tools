@@ -81,6 +81,9 @@ function getTextForMult(mult: number): string {
     if (mult == 1.5) {
         return "\u00B3\u2044\u2082";
     }
+    if (mult == 1.25) {
+        return "1¼";
+    }
 
     return mult.toString();
 }
