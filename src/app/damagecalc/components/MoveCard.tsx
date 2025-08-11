@@ -117,7 +117,12 @@ export default function MoveCard(props: MoveCardProps): ReactNode {
                     />
                     <ImageFallback
                         src={Move.getMoveCategoryImgSrc(
-                            props.moveData.move.getDamageCategory(props.moveData, props.user, props.target)
+                            props.moveData.move.getDamageCategory(
+                                props.moveData,
+                                props.user,
+                                props.target,
+                                props.battleState
+                            )
                         )}
                         alt={props.moveData.move.category}
                         title={props.moveData.move.category}

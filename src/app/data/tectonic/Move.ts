@@ -179,11 +179,15 @@ export class Move {
         return false;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getDamageCategory(move: MoveData, user: PartyPokemon, target: PartyPokemon): "Physical" | "Special" {
+    public getDamageCategory(
+        move: MoveData,
+        user: PartyPokemon,
+        target: PartyPokemon,
+        battleState: BattleState
+    ): "Physical" | "Special" {
         let trueCategory: "Physical" | "Special";
         if (this.category === "Adaptive") {
-            if (user.getStats(move, "player").attack >= user.getStats(move, "player").spatk) {
+            if (user.getStats(battleState, move, "player").attack >= user.getStats(battleState, move, "player").spatk) {
                 trueCategory = "Physical";
             } else {
                 trueCategory = "Special";

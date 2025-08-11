@@ -1,6 +1,7 @@
 import { MoveData } from "@/app/damagecalc/components/MoveCard";
 import { Side } from "@/app/damagecalc/damageCalc";
 import { TwoItemAbility } from "../abilities/TwoItemAbility";
+import { BattleState } from "../battleState";
 import { StatusEffect, VolatileStatusEffect, volatileStatusEffects } from "../conditions";
 import { TypeChangingItem } from "../items/TypeChangingItem";
 import { IgnoreStatMove } from "../moves/IgnoreStatMove";
@@ -54,7 +55,7 @@ export class PartyPokemon {
         return stats;
     }
 
-    public getStats(move?: MoveData, side?: Side): Stats {
+    public getStats(move?: MoveData, side?: Side, battleState: BattleState): Stats {
         const stylish = this.ability.id === "STYLISH";
         const steps = { ...this.statSteps };
         if (move?.criticalHit) {
@@ -96,7 +97,7 @@ export class PartyPokemon {
             calculatedStats = item.modifyStats(calculatedStats);
         }
 
-        calculatedStats = this.ability.modifyStats(calculatedStats);
+        calculatedStats = this.ability.modifyStats(calculatedStats, battleState);
 
         return calculatedStats;
     }

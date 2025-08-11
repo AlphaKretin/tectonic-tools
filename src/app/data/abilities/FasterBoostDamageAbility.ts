@@ -1,12 +1,13 @@
 import { MoveData } from "@/app/damagecalc/components/MoveCard";
+import { BattleState } from "../battleState";
 import { Ability } from "../tectonic/Ability";
 import { PartyPokemon } from "../types/PartyPokemon";
 
 export class FasterBoostDamageAbility extends Ability {
-    public movePowerMultiplier(move: MoveData, user: PartyPokemon, target: PartyPokemon) {
+    public movePowerMultiplier(move: MoveData, user: PartyPokemon, target: PartyPokemon, battleState: BattleState) {
         let damageMult = 1.0;
-        const userSpeed = user.getStats(move, "player").speed;
-        const targetSpeed = target.getStats(move, "opponent").speed;
+        const userSpeed = user.getStats(battleState, move, "player").speed;
+        const targetSpeed = target.getStats(battleState, move, "opponent").speed;
         if (userSpeed > targetSpeed) {
             let speedMult = userSpeed / targetSpeed;
             if (speedMult > 2) {
