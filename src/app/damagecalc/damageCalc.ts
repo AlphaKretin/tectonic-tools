@@ -43,7 +43,7 @@ export function calculateDamage(
 
     // Calculate the actual damage dealt, and assign it to the damage state for tracking
     const [damage, typeEffectMult] = calculateDamageForHit(move, user, target, baseDmg, battleState);
-    const percentage = damage / target.getStats(move, "opponent").hp;
+    const percentage = damage / target.getStats(battleState, move, "opponent").hp;
     const hits = Math.ceil(1 / percentage);
     if (move.move instanceof MultiHitMove) {
         const minTotal = damage * move.move.minHits;
@@ -55,8 +55,8 @@ export function calculateDamage(
             typeEffectMult,
             minTotal,
             maxTotal,
-            minPercentage: minTotal / target.getStats(move, "opponent").hp,
-            maxPercentage: maxTotal / target.getStats(move, "opponent").hp,
+            minPercentage: minTotal / target.getStats(battleState, move, "opponent").hp,
+            maxPercentage: maxTotal / target.getStats(battleState, move, "opponent").hp,
         };
     }
     return { damage, percentage, hits, typeEffectMult };
@@ -70,7 +70,7 @@ function calculateDamageForHit(
     battleState: BattleState
 ): [number, number] {
     // Get the relevant attacking and defending stat values (after steps)
-    const [attack, defense] = damageCalcStats(move, user, target);
+    const [attack, defense] = damageCalcStats(move, user, target, battleState);
 
     // Calculate all multiplier effects
     const [multipliers, typeEffectMult] = calcDamageMultipliers(move, user, target, battleState);
@@ -128,9 +128,14 @@ function calcBasicDamage(
     return Math.floor(2.0 + (levelMultiplier * baseDamage * userAttackingStat) / targetDefendingStat / 50.0);
 }
 
-function damageCalcStats(move: MoveData, userStats: PartyPokemon, targetStats: PartyPokemon): [number, number] {
+function damageCalcStats(
+    move: MoveData,
+    userStats: PartyPokemon,
+    targetStats: PartyPokemon,
+    battleState: BattleState
+): [number, number] {
     // Calculate category for adaptive moves
-    const trueCategory = move.move.getDamageCategory(move, userStats, targetStats);
+    const trueCategory = move.move.getDamageCategory(move, userStats, targetStats, battleState);
 
     const stats: Record<Side, PartyPokemon> = {
         player: userStats,
@@ -152,14 +157,14 @@ function damageCalcStats(move: MoveData, userStats: PartyPokemon, targetStats: P
 
     // attack_step = 0 if target.hasActiveAbility("UNAWARE") && !battle.moldBreaker;
     // TODO: figure out how crits interact with foul play
-    const attack = attacking_stat_holder.getStats(move, "player")[attacking_stat];
+    const attack = attacking_stat_holder.getStats(battleState, move, "player")[attacking_stat];
 
     // Calculate target's defense stat
     const defending_stat_holder = targetStats;
     const defending_stat: Stat = move.move.getDefendingStat(trueCategory);
 
     // defense_step = 0 if user.hasActiveAbility("UNAWARE");
-    const defense = defending_stat_holder.getStats(move, "opponent")[defending_stat];
+    const defense = defending_stat_holder.getStats(battleState, move, "opponent")[defending_stat];
 
     return [attack, defense];
 }
@@ -187,7 +192,7 @@ function pbCalcAbilityDamageMultipliers(
     // }
 
     // User or user ally ability effects that alter damage
-    multipliers.base_damage_multiplier *= user.ability.movePowerMultiplier(move, user, target);
+    multipliers.base_damage_multiplier *= user.ability.movePowerMultiplier(move, user, target, battleState);
     multipliers.attack_multiplier *= user.ability.attackMultiplier(move, user, battleState);
     // user.eachAlly((b: any) => {
     //     b.eachAbilityShouldApply(aiCheck, (ability: any) => {
@@ -469,8 +474,10 @@ function pbCalcProtectionsDamageMultipliers(
     if (!move.move.ignoresScreens() && !doesMoveCrit(move, target) /* && !user.ignoreScreens(checkingForAI)*/) {
         if (
             battleState.sideState.auroraVeil ||
-            (battleState.sideState.reflect && move.move.getDamageCategory(move, user, target) === "Physical") ||
-            (battleState.sideState.lightScreen && move.move.getDamageCategory(move, user, target) === "Special")
+            (battleState.sideState.reflect &&
+                move.move.getDamageCategory(move, user, target, battleState) === "Physical") ||
+            (battleState.sideState.lightScreen &&
+                move.move.getDamageCategory(move, user, target, battleState) === "Special")
         ) {
             multipliers.final_damage_multiplier *= battleState.multiBattle ? 2 / 3.0 : 0.5;
 
